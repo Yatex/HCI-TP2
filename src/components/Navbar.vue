@@ -1,5 +1,6 @@
 <template>
-            <v-toolbar>
+    <div>
+            <v-app-bar dark class="grey darken-4">
                 <v-toolbar-title>
                     <v-btn text to="/">
                         LOGO
@@ -23,7 +24,8 @@
                 <v-btn icon>
                 <v-icon>mdi-account-circle</v-icon>
                 </v-btn>
-            </v-toolbar>  
+            </v-app-bar>
+    </div>
 </template>
 
 <script>
