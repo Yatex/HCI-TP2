@@ -21,26 +21,37 @@ const routes = [
   {
     path: '/favourites',
     name: 'Favourites',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/Favourites.vue')
+    component: () => import('../views/Favourites.vue')
   },
   {
     path: '/exercises',
     name: 'Exercises',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/Exercises.vue')
+    component: () => import('../views/Exercises.vue')
   },
   {
     path: '/inprogress',
     name: 'InProgress',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/InProgress.vue')
+    component: () => import('../views/InProgress.vue')
+  },
+  {
+    path: '/aboutus',
+    name: 'AboutUs',
+    component: () => import('../views/AboutUs.vue')
+  },
+  {
+    path: '/login',
+    name: 'LogIn',
+    component: () => import('../views/LogIn.vue')
+  },
+  {
+    path: '/upgrademembership',
+    name: 'UpgradeMembership',
+    component: () => import('../views/UpgradeMembership.vue')
+  },
+  {
+    path: '/editprofile',
+    name: 'EditProfile',
+    component: () => import('../views/EditProfile.vue')
   }
 ]
 
