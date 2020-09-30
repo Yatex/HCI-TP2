@@ -2,17 +2,17 @@
     <div>
             <v-app-bar dark class="grey darken-4">
                 <v-toolbar-title>
-                    <v-btn text to="/">
+                    <v-btn text to="/main">
                         LOGO
                     </v-btn> 
                 </v-toolbar-title>
 
                 <v-spacer></v-spacer>
 
-                <v-btn text to="/"> Home </v-btn> |
+                <v-btn text to="/main"> Home </v-btn> | <!-- Aca confunde pero Home vendria a ser la view Main!!!!! -->
                 <v-btn text to="/exercises"> Exercises </v-btn> |
                 <v-btn text to="/routines"> Routines </v-btn> |
-                <v-btn text to="/inprogress"> In Progress</v-btn> |
+                <v-btn text to="/inprogress"> In Progress</v-btn> | <!-- Esto no es necesario, propongo sacarlo y si sobra tiempo meterlo -->
                 <v-btn text to="/favourites"> Favourites </v-btn>
 
                 <v-spacer></v-spacer>
@@ -50,9 +50,8 @@ export default {
     item: 0,
     items: [
         { text: 'Edit Profile', icon: 'mdi-pencil', to: '/editprofile' },
-        { text: 'Upgrade Membership', icon: 'mdi-arrow-up-bold', to: '/upgrademembership' },
         { text: 'About Us', icon: 'mdi-information-variant', to: '/aboutus' },
-        { text: 'Sign Out', icon: 'mdi-logout-variant', to: '/login' }
+        { text: 'Sign Out', icon: 'mdi-logout-variant', to: '/' }
     ],
     })
 }

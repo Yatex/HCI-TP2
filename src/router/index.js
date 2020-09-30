@@ -39,14 +39,9 @@ const routes = [
     component: () => import('../views/AboutUs.vue')
   },
   {
-    path: '/login',
-    name: 'LogIn',
-    component: () => import('../views/LogIn.vue')
-  },
-  {
-    path: '/upgrademembership',
-    name: 'UpgradeMembership',
-    component: () => import('../views/UpgradeMembership.vue')
+    path: '/main',
+    name: 'Main',
+    component: () => import('../views/Main.vue')
   },
   {
     path: '/editprofile',

@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <Navbar />
+    <!-- <Navbar /> -->
     <v-content>
       <router-view></router-view>
     </v-content>
@@ -9,13 +9,13 @@
 
 <script>
 // import HelloWorld from './components/HelloWorld';
-import Navbar from './components/Navbar';
+// import Navbar from './components/Navbar';
 
 export default {
   name: 'App',
 
   components: {
-    Navbar
+    // Navbar
   },
 
   data: () => ({
