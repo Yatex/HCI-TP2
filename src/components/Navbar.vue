@@ -31,7 +31,7 @@
                         <v-list-item-group>
                             <v-list-item v-for="(item, i) in items" :key="i" :to="item.to">
                                 <v-list-group-icon>
-                                    <v-icon v-text="item.icon"></v-icon>
+                                    <v-icon v-text="item.icon" left></v-icon>
                                 </v-list-group-icon>
                                 <v-list-item-content>
                                     <v-list-item-title v-text="item.text"></v-list-item-title>
