@@ -1,6 +1,7 @@
 <template>
   <v-app>
     <v-content>
+      <v-parallax src="../assets/gym2.jpg" height="800">
       <v-container class="fill-height" fluid>
         <v-row align="center" justify="center">
           <v-col cols="12" sm="8" md="8">
@@ -117,6 +118,7 @@
           </v-col>
         </v-row>
       </v-container>
+      </v-parallax>
     </v-content>
   </v-app>
 </template>
