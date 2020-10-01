@@ -21,25 +21,54 @@
                 <v-icon>mdi-magnify</v-icon>
                 </v-btn>
 
-                <v-menu bottom origin="center center" transition="scale-transition">
-                    <template v-slot:activator="{ on, attrs }">
-                    <v-btn icon v-bind="attrs" v-on="on">
-                        <v-icon>mdi-account-circle</v-icon>
-                    </v-btn>
+                <v-menu
+                    bottom
+                    min-width="200px"
+                    rounded
+                    offset-y
+                    >
+                    <template v-slot:activator="{ on }">
+                        <v-btn
+                        icon
+                        x-large
+                        v-on="on"
+                        >
+                        <v-avatar
+                            color="brown"
+                            size="40"
+                        >
+                            <span class="white--text headline">{{ user.initials }}</span>
+                        </v-avatar>
+                        </v-btn>
                     </template>
-                    <v-list dense nav>
-                        <v-list-item-group>
-                            <v-list-item v-for="(item, i) in items" :key="i" :to="item.to">
-                                <v-list-group-icon>
-                                    <v-icon v-text="item.icon" left></v-icon>
-                                </v-list-group-icon>
-                                <v-list-item-content>
-                                    <v-list-item-title v-text="item.text"></v-list-item-title>
-                                </v-list-item-content>
-                            </v-list-item>
-                        </v-list-item-group>
-                    </v-list>
-                </v-menu>
+                    <v-card>
+                        <v-list-item-content class="justify-center">
+                        <div class="mx-auto text-center">
+                            <v-avatar
+                            color="brown"
+                            >
+                            <span class="white--text headline">{{ user.initials }}</span>
+                            </v-avatar>
+                            <h3>{{ user.fullName }}</h3>
+                            <p class="caption mt-1">
+                            {{ user.email }}
+                            </p>
+                            <v-divider class="my-3"></v-divider>
+                            <v-btn depressed rounded text to="/editprofile">
+                            Edit Account
+                            </v-btn>
+                            <v-divider class="my-3"></v-divider>
+                            <v-btn depressed rounded text to="/aboutus">
+                            About Us
+                            </v-btn>
+                            <v-divider class="my-3"></v-divider>
+                            <v-btn depressed rounded text to="/">
+                            Sign Out
+                            </v-btn>
+                        </div>
+                        </v-list-item-content>
+                    </v-card>
+                    </v-menu>
             </v-app-bar>
     </div>
 </template>
@@ -48,6 +77,11 @@
 export default {
     data: () => ({
     item: 0,
+    user: {
+      initials: 'JD',
+      fullName: 'John Doe',
+      email: 'john.doe@doe.com',
+    },
     items: [
         { text: 'Edit Profile', icon: 'mdi-pencil', to: '/editprofile' },
         { text: 'About Us', icon: 'mdi-information-variant', to: '/aboutus' },
