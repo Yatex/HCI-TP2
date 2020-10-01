@@ -1,15 +1,8 @@
 <template>
     <div id="app">
     <v-app id="inspire">
-        <v-footer
-        dark
-        padless
-        >
-        <v-card
-            flat
-            tile
-            class="indigo lighten-1 white--text text-center"
-        >
+        <v-footer dark padless>
+        <v-card flat tile class="grey darken-4 white--text text-center">
             <v-card-text>
             <v-btn v-for="link in links" :key="link" color="white" text rounded class="my-2">
                 {{ link }}

@@ -2,7 +2,6 @@
   <div class="AboutUs">
     <Navbar />
     <h1>This is the About Us page</h1>
-    <v-spacer />
     <Footer />
   </div>
 </template>

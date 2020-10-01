@@ -2,7 +2,7 @@
     <div>
             <v-app-bar dark class="grey darken-4">
                 <v-toolbar-title>
-                    <v-btn text to="/main">
+                    <v-btn x-large text to="/main" color="rgb(79,138,139)">
                         LOGO
                     </v-btn> 
                 </v-toolbar-title>
@@ -17,26 +17,14 @@
 
                 <v-spacer></v-spacer>
         
-                <v-btn icon>
+                <v-btn icon color="rgb(79,138,139)">
                 <v-icon>mdi-magnify</v-icon>
                 </v-btn>
 
-                <v-menu
-                    bottom
-                    min-width="200px"
-                    rounded
-                    offset-y
-                    >
+                <v-menu bottom min-width="200px" rounded offset-y>
                     <template v-slot:activator="{ on }">
-                        <v-btn
-                        icon
-                        x-large
-                        v-on="on"
-                        >
-                        <v-avatar
-                            color="brown"
-                            size="40"
-                        >
+                        <v-btn icon x-large v-on="on">
+                        <v-avatar color="rgb(79,138,139)" size="40">
                             <span class="white--text headline">{{ user.initials }}</span>
                         </v-avatar>
                         </v-btn>
@@ -45,7 +33,7 @@
                         <v-list-item-content class="justify-center">
                         <div class="mx-auto text-center">
                             <v-avatar
-                            color="brown"
+                            color="rgb(79,138,139)"
                             >
                             <span class="white--text headline">{{ user.initials }}</span>
                             </v-avatar>
