@@ -46,7 +46,6 @@ export default {
       'mdi-instagram',
     ],
     links: [
-      'Home',
       'About Us',
       'Team',
       'Services',
