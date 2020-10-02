@@ -43,7 +43,7 @@
                             </p>
                             <v-divider class="my-3"></v-divider>
                             <v-btn depressed rounded text to="/editprofile">
-                            Edit Account
+                            Edit Profile
                             </v-btn>
                             <v-divider class="my-3"></v-divider>
                             <v-btn depressed rounded text to="/aboutus">

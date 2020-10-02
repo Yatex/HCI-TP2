@@ -26,9 +26,9 @@
                         </div>
                           <v-form ref="form" v-model="valid" lazy-validation>
                             <v-text-field id="email" :rules="emailRules" label="Email" name="Email" prepend-icon="email" type="text" color="teal-accent-3"></v-text-field>
-                            <v-text-field id="password" :rules="passwordRules" label="Password" name="Password" prepend-icon="lock" type="password" color="teal-accent-3"></v-text-field>
+                            <v-text-field id="password" v-model="password" :rules="passwordRules" :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'" label="Password" name="Password" prepend-icon="lock" :type="show2 ? 'text' : 'password'" color="teal-accent-3" @click:append="show2 = !show2"></v-text-field>
                           </v-form>
-                          <v-dialog v-model="dialog" width="500">
+                          <v-dialog v-model="dialog" width="500" overlay-color="rgb(255,255,255)">
                             <template v-slot:activator="{ on, attrs }">
                               <v-btn class="text-decoration-underline text-center mt-3" v-bind="attrs" v-on="on" text>
                                 Forgot your password?
@@ -36,7 +36,7 @@
                             </template>
                       
                             <v-card>
-                              <v-card-title class="headline yellow darken-1 text-end">
+                              <v-card-title class="headline teal darken-1">
                                 Forgot your password?
                               </v-card-title>
                       
@@ -103,8 +103,8 @@
                        <v-form ref="form2" v-model="valid2" lazy-validation>
                             <v-text-field id="name" label="Name" name="Name" :rules="nameRules" prepend-icon="person" type="text" color="teal-accent-3"></v-text-field>
                             <v-text-field id="email" :rules="emailRules" label="Email" name="Email" prepend-icon="email" type="text" color="teal-accent-3"></v-text-field>
-                            <v-text-field id="password" v-model="password" :rules="passwordRules" label="Password" name="Password" prepend-icon="lock" type="password" color="teal-accent-3"></v-text-field>
-                            <v-text-field label="Confirm Password" v-model="password2" :rules="cPasswordRules" name="CPassword" prepend-icon="lock" type="password" color="teal-accent-3"></v-text-field>
+                            <v-text-field id="password" v-model="newPassword" :rules="passwordRules" :append-icon="show3 ? 'mdi-eye' : 'mdi-eye-off'" label="Password" name="Password" prepend-icon="lock" :type="show3 ? 'text' : 'password'" color="teal-accent-3" @click:append="show3 = !show3"></v-text-field>
+                            <v-text-field id="cpassword" v-model="confirmNewPassword" :append-icon="show4 ? 'mdi-eye' : 'mdi-eye-off'" label="Confirm Password" name="Cpassword" prepend-icon="lock" :type="show4 ? 'text' : 'password'" color="teal-accent-3" @click:append="show4 = !show4"></v-text-field>
                           </v-form>
                           <div class="text-center mt-5">
                             <v-btn rounded :disabled="!valid2" x-large color="amber lighten-3 text-center" class="mr-4" @click="validate2" to="/main">SIGN UP</v-btn>
@@ -130,12 +130,16 @@ export default {
     step: 1 ,
     valid: true,
     valid2: true,
+    show1: false,
+    show3: false,
+    show4: false,
     name: '',
     password: '',
-    password2: '',
+    newPassword: '',
+    confirmNewPassword: '',
     dialog: false,
     dialog2: false,
-    show1: false,
+    show2: false,
     email: '',
     passwordRules: [
         value => !!value || 'Required.',
@@ -148,10 +152,6 @@ export default {
     emailRules: [
       v => !!v || 'E-mail is required',
       v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
-    ],
-    cPasswordRules: [
-      v => !!v || 'Confirmation is Required',
-      v => (v && v === this.password) || 'It must be the same as the password above.',
     ]
   }),
   props: {
@@ -167,6 +167,6 @@ export default {
     reset () {
       this.$refs.form.reset()
     },
-  }
+}
 }
 </script>
