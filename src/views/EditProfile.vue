@@ -1,7 +1,7 @@
 <template>
   <div class="EditProfile">
     <Navbar />
-      <v-app id="inspire">
+    <v-app id="editprofile">
     <v-container>
       <v-row justify="space-between">
         <v-col cols="12" md="4">
