@@ -1,6 +1,6 @@
 <template>
     <div>
-            <v-app-bar dark class="grey darken-4">
+            <v-app-bar fixed app dark class="grey darken-4">
                 <v-toolbar-title>
                     <v-btn x-large text to="/main" color="rgb(79,138,139)">
                         LOGO
