@@ -2,10 +2,10 @@
   <div class="AboutUs">
     <Navbar />
     <v-container class="my-5">
-      <h1>Members:</h1>
+      <h1>Team:</h1>
       <v-layout row wrap>
         <v-flex v-for="person in team" :key="person.name">
-          <v-card max-width="290" class="mt-8">
+          <v-card max-width="290" class="mt-4">
             <v-img :src="person.img" height="200px" width="300"></v-img>
         
             <v-card-title>
@@ -26,7 +26,13 @@
 
       <h1 class="mt-8">About Us</h1>
 
-      <h4 class="mt-8"> We are group 6, also known as π. We are students from the ITBA University. Our objective is to create a web page for the subject HCI, Human Computer Interaction.</h4>
+      <h4 class="mt-4"> We are group 6, also known as π. We are students from the ITBA University. Our objective is to create a web page for the subject HCI, Human Computer Interaction.</h4>
+
+      <h1 class="mt-8">Contact Us</h1>
+
+      <h4 class="mt-4"> Email: grupo6hci@itba.edu.ar </h4>
+      <h4> Phone: 0810-333-9894</h4>
+
     </v-container>
   </div>
 </template>

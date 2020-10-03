@@ -1,11 +1,11 @@
 <template>
     <div id="app">
     <v-app id="inspire">
-        <v-footer dark padless>
+        <v-footer absolute dark padless>
         <v-card flat tile class="grey darken-4 white--text text-center">
             <v-card-text>
-            <v-btn v-for="link in links" :key="link" color="white" text rounded class="my-2">
-                {{ link }}
+            <v-btn v-for="link in links" :key="link" color="white" text rounded class="my-2" :to="link.to">
+                {{ link.name }}
             </v-btn>
             </v-card-text>
     
@@ -46,11 +46,9 @@ export default {
       'mdi-instagram',
     ],
     links: [
-      'About Us',
-      'Team',
-      'Services',
-      'Blog',
-      'Contact Us',
+      { name: 'About Us', to: "/aboutus"},
+      { name: 'Team', to: "/aboutus"},
+      { name: 'Contact Us', to: "/"}
     ],
     })
 }
