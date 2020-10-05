@@ -1,15 +1,22 @@
 <template>
     <v-card :max-width="maxWidth">
-        <v-img v-bind:src="img"></v-img>
-        <v-card-title>{{title}}</v-card-title>
+        <v-img v-bind:src="exercise.img"></v-img>
+        <v-card-title>{{exercise.title}}</v-card-title>
+        <v-card-text>{{exercise.desc}}</v-card-text>
         <v-card-actions>
-            <v-btn icon><v-icon>mdi-heart</v-icon></v-btn>
+            <ExerciseDetail :exercise="exercise"/>
+            <v-btn icon>
+                <v-icon>mdi-heart</v-icon>
+            </v-btn>
         </v-card-actions>
     </v-card>
 </template>
 
 <script>
+    import ExerciseDetail from '../views/ExerciseDetail';
+
     export default {
-        props:['maxWidth','title','img']
+        components: { ExerciseDetail },
+        props:['maxWidth','exercise']
     };
 </script>

@@ -28,7 +28,7 @@
                             <v-text-field id="email" :rules="emailRules" label="Email" name="Email" prepend-icon="email" type="text" color="teal-accent-3"></v-text-field>
                             <v-text-field id="password" v-model="password" :rules="passwordRules" :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'" label="Password" name="Password" prepend-icon="lock" :type="show2 ? 'text' : 'password'" color="teal-accent-3" @click:append="show2 = !show2"></v-text-field>
                           </v-form>
-                          <v-dialog v-model="dialog" width="500" overlay-color="rgb(255,255,255)">
+                          <v-dialog v-model="dialog" width="500" overlay-color="white">
                             <template v-slot:activator="{ on, attrs }">
                               <v-btn class="text-decoration-underline text-center mt-3" v-bind="attrs" v-on="on" text>
                                 Forgot your password?

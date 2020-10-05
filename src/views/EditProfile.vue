@@ -14,7 +14,7 @@
             <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field>
 
           </v-form>
-          <v-btn color="rgb(251,212,109)">
+          <v-btn color="accent">
               Save
             </v-btn>
         </v-col>
@@ -31,7 +31,7 @@
             <v-text-field v-model="cNewPassword" :append-icon="show3 ? 'mdi-eye' : 'mdi-eye-off'" :rules="passwordRules" :type="show3 ? 'text' : 'password'" name="input-10-1" label="Confirm New Password" counter @click:append="show3 = !show3"></v-text-field>
           </v-form>
           <v-card-actions>
-            <v-btn color="rgb(251,212,109)">
+            <v-btn color="accent">
               Save
             </v-btn>
           </v-card-actions>

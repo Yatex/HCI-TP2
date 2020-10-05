@@ -8,5 +8,14 @@ Vue.use(Vuetify);
 export default new Vuetify({
     icons: {
         iconfont: 'md' || 'fa'
+    },
+    theme: {
+        themes: {
+            light: {
+                primary: "#222831",
+                secondary: "#4F8A8B",
+                accent: "#FBD46D",
+            }
+        }
     }
 });
