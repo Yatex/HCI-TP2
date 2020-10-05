@@ -1,6 +1,6 @@
 <template>
     <v-card>
-        <v-img src= card.src
+        <v-img v-bind:src="card.img"
         class="white--text align-end"
         gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
         height="200px">
@@ -12,6 +12,6 @@
 </template>
 <script>
 export default {
-    props:['text','src2']
+    props:['card']
 };
-</script>
+</script> 
