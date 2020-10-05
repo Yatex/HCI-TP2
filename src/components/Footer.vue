@@ -48,7 +48,7 @@ export default {
     links: [
       { id: 0, name: 'About Us', to: "/aboutus"},
       { id: 1, name: 'Team', to: "/aboutus"},
-      { id: 2, name: 'Contact Us', to: "/"}
+      { id: 2, name: 'Contact Us', to: "/aboutus"}
     ],
     })
 }
