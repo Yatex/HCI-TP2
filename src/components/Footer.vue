@@ -4,7 +4,7 @@
         <v-footer absolute dark padless>
         <v-card flat tile class="grey darken-4 white--text text-center">
             <v-card-text>
-            <v-btn v-for="link in links" :key="link" color="white" text rounded class="my-2" :to="link.to">
+            <v-btn v-for="link in links" :key="link.id" color="white" text rounded class="my-2" :to="link.to">
                 {{ link.name }}
             </v-btn>
             </v-card-text>
@@ -46,9 +46,9 @@ export default {
       'mdi-instagram',
     ],
     links: [
-      { name: 'About Us', to: "/aboutus"},
-      { name: 'Team', to: "/aboutus"},
-      { name: 'Contact Us', to: "/"}
+      { id: 0, name: 'About Us', to: "/aboutus"},
+      { id: 1, name: 'Team', to: "/aboutus"},
+      { id: 2, name: 'Contact Us', to: "/"}
     ],
     })
 }
