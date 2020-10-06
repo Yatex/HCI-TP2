@@ -43,7 +43,7 @@
                 </v-layout>
               <v-card-text></v-card-text>
               <v-card-actions>
-                <v-btn color="rgb(251,212,109)" absolute="" large bottom right>Add exercise</v-btn>
+                <v-btn color="accent" absolute="" large bottom right>Add exercise</v-btn>
               </v-card-actions>
               </v-card>
 
@@ -57,7 +57,7 @@
                   </v-flex>
                 </v-layout>
                 <v-card-actions>
-                <v-btn color="rgb(251,212,109)" absolute="" large bottom right>Add exercise</v-btn>
+                <v-btn color="accent" absolute="" large bottom right>Add exercise</v-btn>
               </v-card-actions>
               </v-card>
 
@@ -69,13 +69,13 @@
                   </v-flex>
                 </v-layout>
                 <v-card-actions>
-                <v-btn color="rgb(251,212,109)" absolute="" large bottom right>Add exercise</v-btn>
+                <v-btn color="accent" absolute="" large bottom right>Add exercise</v-btn>
               </v-card-actions>
               </v-card>
           </v-card-text>
           <v-card-actions>
             <v-spacer />
-            <v-btn color="rgb(251,212,109)" @click="dialog = false" class="mb-10 mt-5" bottom x-large>Save</v-btn>
+            <v-btn color="accent" @click="dialog = false" class="mb-10 mt-5" bottom x-large>Save</v-btn>
             <v-spacer />
           </v-card-actions>
         </v-card>
