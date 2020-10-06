@@ -49,15 +49,15 @@
       },
       data: ()=>({
         dialog: '',
-        modeImage: require('../assets/questionMark.png'),
+        modeImage: require('../../assets/questionMark.png'),
         ExerciseName: '',
         ExerciseDescription: '',
         ExerciseInstruction: '',
         ExerciseImage: null,
         items: [
-          { text: 'Warm Up', value: { image: require('../assets/warmup.jpeg')}},
-          { text: 'Training', value: { image: require('../assets/training.jpeg')}},
-          { text: 'Cool Down', value: { image: require('../assets/cooldown.jpeg')}},
+          { text: 'Warm Up', value: { image: require('../../assets/warmup.jpeg')}},
+          { text: 'Training', value: { image: require('../../assets/training.jpeg')}},
+          { text: 'Cool Down', value: { image: require('../../assets/cooldown.jpeg')}},
         ]
       })
   }

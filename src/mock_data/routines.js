@@ -4,7 +4,7 @@ export default [
         exercises: [{id: 0, duration: "20s"}, {id: 1, duration: "x10"}, {id: 2, duration: "15s"}],
         author: 'Mr Musculo', img: 'https://images.pexels.com/photos/4058411/pexels-photo-4058411.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'},
     
-    {id: 1, title: 'Routine 2', desc: 'This is a routine', difficulty: 'Medium',
+    {id: 1, title: 'Routine 2', desc: 'This is a routine', difficulty: 'Moderate',
         exercises: [{id: 1, duration: "x20"}, {id: 2, duration: "30s"}],
         author: 'Mr Musculo', img: 'https://images.pexels.com/photos/4058411/pexels-photo-4058411.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'},
 

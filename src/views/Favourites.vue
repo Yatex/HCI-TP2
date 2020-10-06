@@ -9,7 +9,7 @@
         <v-card-title>Exercises:</v-card-title>
         <v-row >
           <v-flex v-for="exercise in exercises" :key="exercise.id">
-            <ExerciseCard :maxWidth="250" :exercise="exercise"/>
+            <!-- <ExerciseCard :maxWidth="250" :exercise="exercise"/> -->
           </v-flex>
         </v-row>
       </v-card>
@@ -18,7 +18,7 @@
         <v-card-title>Routines:</v-card-title>  
         <v-layout row wrap>
           <v-flex v-for="routine in routines" :key="routine.id">
-            <ExerciseCard :maxWidth="250" :exercise="routine"/>
+            <!-- <ExerciseCard :maxWidth="250" :exercise="routine"/> -->
           </v-flex>
         </v-layout>
       </v-card>
@@ -33,7 +33,6 @@
 <script>
   import Navbar from '../components/Navbar';
   import Footer from '../components/Footer';
-  import ExerciseCard from '../components/ExerciseCard';
   import mockExercises from '../mock_data/exercices';
   import mockRoutines from '../mock_data/routines';
 
@@ -42,6 +41,6 @@
         exercises: mockExercises,
         routines: mockRoutines,
       }),
-      components: { Navbar, Footer, ExerciseCard },
+      components: { Navbar, Footer },
   }
 </script>

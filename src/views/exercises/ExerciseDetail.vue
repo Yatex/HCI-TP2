@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="dialog" max-width="600px">
+  <v-dialog max-width="600px">
 
     <template v-slot:activator="{on, attrs}">
       <v-btn icon v-bind="attrs" v-on="on">
@@ -17,17 +17,17 @@
         ></v-progress-linear>
       </template>
 
-      <v-img height="250" :src="exercise.img"></v-img>
+      <v-img height="250" :src="data.img"></v-img>
 
-      <v-card-title>{{exercise.title}}</v-card-title>
+      <v-card-title>{{data.title}}</v-card-title>
 
       <v-card-text>
         <div class="subtitle-1">
-          {{exercise.type}}
+          {{data.type}}
         </div>
 
         <div class="my-2">
-          {{exercise.desc}}
+          {{data.desc}}
         </div>
       </v-card-text>
 
@@ -36,7 +36,7 @@
       <v-card-title>Instructions</v-card-title>
 
       <v-card-text>
-        {{exercise.instructions}}
+        {{data.instructions}}
       </v-card-text>
 
       <v-card-actions>
@@ -52,6 +52,6 @@
 
 <script>
     export default {
-      props: ['exercise']
+      props: ['data']
     }
 </script>
