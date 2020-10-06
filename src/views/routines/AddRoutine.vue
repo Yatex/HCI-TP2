@@ -37,7 +37,7 @@
           <v-card-title>Warm up exercises:</v-card-title>
 
           <v-layout row wrap>
-            <v-flex v-for="exercise in warmpUpExercises" :key="exercise.name">
+            <v-flex v-for="exercise in warmUpExercises" :key="exercise.name">
               <!-- <Prueba /> -->
             </v-flex>
           </v-layout>

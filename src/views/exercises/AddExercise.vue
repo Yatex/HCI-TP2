@@ -1,58 +1,42 @@
 <template>
-  <div class="Exercises">
+  <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
 
-    <Navbar/>
-    
-    <h1 class="ml-6 mt-6"> Your Exercises: </h1>
+    <template v-slot:activator="{ on, attrs }">
+      <v-btn v-bind="attrs" v-on="on" color="accent" class="mt-5" elevation="2"
+        fab fixed right bottom x-large>
+        <v-icon>mdi-plus</v-icon>
+      </v-btn>
+    </template>
 
-    <v-container>
-      <v-row class="mb-6" no-gutters>
-        <v-col v-for="exercise in exercises" :key="exercise.id">
-              <ExerciseCard :maxWidth="250" :exercise="exercise" class="mt-4"/>
-        </v-col>
-      </v-row>
-      <v-pagination v-model="currPage" :length="amountOfPages"></v-pagination>
-    </v-container>
+    <v-card>
 
-    <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
+      <v-toolbar dark color="grey darken-4">
+        <v-btn icon dark @click="dialog = false">
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+        <v-toolbar-title>New Exercise</v-toolbar-title>
+        <v-spacer></v-spacer>
+      </v-toolbar>
 
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn v-bind="attrs" v-on="on" color="accent" class="mt-5" elevation="2"
-            fab fixed right bottom x-large>
-            <v-icon>mdi-plus</v-icon>
-          </v-btn>
-        </template>
+      <v-card-title>
+        <v-text-field label="Exercise's name" v-model="ExerciseName"></v-text-field>
+      </v-card-title>
 
-        <v-card>
+      <v-card-text>
+        <v-textarea label="Exercise's Instructions" v-model="ExerciseInstruction"></v-textarea>
+        <v-textarea label="Exercise's Description" v-model="ExerciseDescription"></v-textarea>
+        <v-select :items="items" label="Type of exercise" v-model="ExerciseImage" v-on:change="changeImg(ExerciseImage.image)"></v-select>
+        <v-img :src="modeImage" height="250" width="250"></v-img>
+      </v-card-text>
 
-          <v-toolbar dark color="grey darken-4">
-            <v-btn icon dark @click="dialog = false">
-              <v-icon>mdi-close</v-icon>
-            </v-btn>
-            <v-toolbar-title>New Exercise</v-toolbar-title>
-            <v-spacer></v-spacer>
-          </v-toolbar>
-
-          <v-card-title>
-            <v-text-field label="Exercise's name" v-model="ExerciseName"></v-text-field>
-          </v-card-title>
-
-          <v-card-text>
-            <v-textarea label="Exercise's Instructions" v-model="ExerciseInstruction"></v-textarea>
-            <v-textarea label="Exercise's Description" v-model="ExerciseDescription"></v-textarea>
-            <v-select :items="items" label="Type of exercise" v-model="ExerciseImage" v-on:change="changeImg(ExerciseImage.image)"></v-select>
-            <v-img :src="modeImage" height="250" width="250"></v-img>
-          </v-card-text>
-
-          <v-card-actions>
-            <v-spacer />
-            <v-btn color="accent" @click="dialog = false" class="mb-10 mt-5" bottom x-large>Save</v-btn>
-            <v-spacer />
-          </v-card-actions>
-          
-        </v-card>
-      </v-dialog>
-  </div>
+      <v-card-actions>
+        <v-spacer />
+        <v-btn color="accent" @click="dialog = false" class="mb-10 mt-5" bottom x-large>Save</v-btn>
+        <v-spacer />
+      </v-card-actions>
+      
+    </v-card>
+  </v-dialog>
 </template>
 
 

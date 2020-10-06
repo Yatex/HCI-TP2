@@ -5,23 +5,38 @@
     
     <v-container>
 
-      <v-card class="mt-8">
-        <v-card-title>Exercises:</v-card-title>
-        <v-row >
-          <v-flex v-for="exercise in exercises" :key="exercise.id">
-            <!-- <ExerciseCard :maxWidth="250" :exercise="exercise"/> -->
-          </v-flex>
-        </v-row>
-      </v-card>
+      <v-expansion-panels>
 
-      <v-card class="mt-8 mb-8">
-        <v-card-title>Routines:</v-card-title>  
-        <v-layout row wrap>
-          <v-flex v-for="routine in routines" :key="routine.id">
-            <!-- <ExerciseCard :maxWidth="250" :exercise="routine"/> -->
-          </v-flex>
-        </v-layout>
-      </v-card>
+        <v-expansion-panel>
+          <v-expansion-panel-header>
+            Exercises
+          </v-expansion-panel-header>
+
+          <v-expansion-panel-content>
+            <v-row >
+              <v-col v-for="exercise in exercises" :key="exercise.id">
+                <ActivityCard
+                  :maxWidth="250" :data="exercise" :detailComponent="exerciseDetailComponent"/>
+              </v-col>
+            </v-row>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+
+        <v-expansion-panel>
+          <v-expansion-panel-header>
+            Routines
+          </v-expansion-panel-header>
+
+          <v-expansion-panel-content>
+            <v-row>
+              <v-col v-for="routine in routines" :key="routine.id">
+                <ActivityCard :maxWidth="250" :data="routine" :detailComponent="routineDetailComponent"/>
+              </v-col>
+            </v-row>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+
+      </v-expansion-panels>
 
     </v-container>
     
@@ -33,6 +48,9 @@
 <script>
   import Navbar from '../components/Navbar';
   import Footer from '../components/Footer';
+  import ActivityCard from '../components/ActivityCard';
+  import ExerciseDetail from './exercises/ExerciseDetail';
+  import RoutineDetail from './routines/RoutineDetail';
   import mockExercises from '../mock_data/exercices';
   import mockRoutines from '../mock_data/routines';
 
@@ -40,7 +58,9 @@
       data: () => ({
         exercises: mockExercises,
         routines: mockRoutines,
+        exerciseDetailComponent: ExerciseDetail,
+        routineDetailComponent: RoutineDetail
       }),
-      components: { Navbar, Footer },
+      components: { Navbar, Footer, ActivityCard },
   }
 </script>
