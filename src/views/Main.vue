@@ -5,7 +5,7 @@
      <div id="app">
       <v-app id="inspire">
         <v-container class="grey lighten-5">
-          <v-row>
+          <v-row align="center" justify="space-around" >
             <v-col sm="4">
               <v-row no-gutters>
                 <HomeCard topLine='Crear rutina de ejercicios' bottomLine='Empezar una nueva rutina.'/>
@@ -15,18 +15,18 @@
               </v-row>
             </v-col>
             <v-col cols="12" md="4">
-              <ImageTitleCard :card= "{ title: 'Testing', src: '../assets/capamerica.jpg' }"/>
+              <ImageTitleCard :card= "{ title: 'Testing', img:'https://images.pexels.com/photos/2294354/pexels-photo-2294354.jpeg?cs=srgb&dl=pexels-li-sun-2294354.jpg&fm=jpg' }"/>
             </v-col>
             <v-col cols="6" md="4">
-              <ImageTitleCard :card= "{  src: 'https://images.pexels.com/photos/4058411/pexels-photo-4058411.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',title: 'Testing2' }"/>
+              <ImageTitleCard :card= "{ title: 'Testing2', img: '' }"/>
             </v-col>
           </v-row>
-          <v-row>
-            <v-col cols="6">
-              <ImageTitleCard :card= "{ title: 'Testing3', src: 'https://images.pexels.com/photos/4058411/pexels-photo-4058411.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500' }"/>
+          <v-row  justify="space-around">
+            <v-col cols="5">
+              <ImageTitleCard :card= "{ title: 'Testing3', img:'https://images.pexels.com/photos/4058411/pexels-photo-4058411.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500' }"/>
             </v-col>
-            <v-col cols="6">
-              <ImageTitleCard :card= "{ title: 'Testing4', src: 'https://images.pexels.com/photos/4058411/pexels-photo-4058411.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500' }"/>
+            <v-col cols="5">
+              <ImageTitleCard :card= "{ title: 'Testing4', img:'https://images.pexels.com/photos/841131/pexels-photo-841131.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500' }"/>
             </v-col>
           </v-row>
         </v-container>

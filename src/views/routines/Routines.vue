@@ -15,17 +15,20 @@
       <v-pagination v-model="currPage" :length="amountOfPages"></v-pagination>
     </v-container>
 
+    <AddRoutine/>
+
   </div>
 </template>
 
 <script>
+  import AddRoutine from './AddRoutine'
   import RoutineDetail from './RoutineDetail';
   import Navbar from '../../components/Navbar';
   import ActivityCard from '../../components/ActivityCard';
   import mockRoutines from '../../mock_data/routines';
 
   export default {
-      components: { Navbar, ActivityCard },
+      components: { Navbar, ActivityCard, AddRoutine },
       computed: {
         routines: function(){
           return mockRoutines.slice(this.currPage*8 - 8,this.currPage*8);

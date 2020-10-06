@@ -1,4 +1,19 @@
 <template>
+  <div class="Exercises">
+
+    <Navbar/>
+    
+    <h1 class="ml-6 mt-6"> Your Exercises: </h1>
+
+    <v-container>
+      <v-row class="mb-6" no-gutters>
+        <v-col v-for="exercise in exercises" :key="exercise.id">
+              <ExerciseCard :maxWidth="250" :exercise="exercise" class="mt-4"/>
+        </v-col>
+      </v-row>
+      <v-pagination v-model="currPage" :length="amountOfPages"></v-pagination>
+    </v-container>
+
     <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
 
         <template v-slot:activator="{ on, attrs }">
@@ -37,6 +52,7 @@
           
         </v-card>
       </v-dialog>
+  </div>
 </template>
 
 
