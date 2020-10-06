@@ -54,7 +54,6 @@
   import ExerciseCard from '../components/ExerciseCard';
   import mockExercices from '../mock_data/exercices';
   import Footer from '../components/Footer';
-  import exercices from '../mock_data/exercices';
 
   export default {
       components: { Navbar, ExerciseCard, Footer },
@@ -64,7 +63,9 @@
         },
         amountOfPages: function(){
           return Math.floor(mockExercices.length / 8) + 1;
-        },
+        }
+      },
+      methods: {
         changeImg: function(image){
           this.modeImage = image;
         }
