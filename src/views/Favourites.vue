@@ -5,23 +5,19 @@
     
     <v-container>
 
-      <v-card class="mt-8">
-        <v-card-title>Exercises:</v-card-title>
-        <v-row >
-          <v-flex v-for="exercise in exercises" :key="exercise.id">
-            <ExerciseCard :maxWidth="250" :exercise="exercise"/>
-          </v-flex>
+        <v-card-title> Exercises: </v-card-title>
+        <v-row class="mb-6" no-gutters>
+          <v-col v-for="exercise in exercises" :key="exercise.id">
+                <ExerciseCard :maxWidth="250" :exercise="exercise" class="mt-6"/>
+          </v-col>
         </v-row>
-      </v-card>
 
-      <v-card class="mt-8 mb-8">
-        <v-card-title>Routines:</v-card-title>  
-        <v-layout row wrap>
-          <v-flex v-for="routine in routines" :key="routine.id">
-            <ExerciseCard :maxWidth="250" :exercise="routine"/>
-          </v-flex>
-        </v-layout>
-      </v-card>
+        <v-card-title> Routines: </v-card-title>
+        <v-row class="mb-6" no-gutters>
+          <v-col v-for="routine in routines" :key="routine.id">
+                <ExerciseCard :maxWidth="250" :exercise="routine" class="mt-6"/>
+          </v-col>
+        </v-row>
 
     </v-container>
     
