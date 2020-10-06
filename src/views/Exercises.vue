@@ -3,6 +3,8 @@
 
     <Navbar/>
     
+    <h1 class="ml-6 mt-6"> Your Exercises: </h1>
+
     <v-container>
       <v-row class="mb-6" no-gutters>
         <v-col v-for="exercise in exercises" :key="exercise.id">
