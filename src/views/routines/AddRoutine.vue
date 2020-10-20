@@ -83,7 +83,7 @@
 
       <v-card-actions>
         <v-spacer />
-        <v-btn color="accent" @click="dialog = false" class="mb-10 mt-5" bottom x-large>Save</v-btn>
+        <v-btn color="accent" @click=addRoutineWrapper() class="mb-10 mt-5" bottom x-large>Save</v-btn>
         <v-spacer />
       </v-card-actions>
 
@@ -95,9 +95,34 @@
 <script>
 import ExerciseDetail from './../exercises/ExerciseDetail';
 import mockExercises from '../../mock_data/exercices';
-import CheckCard from '../../components/CheckCard';
+import CheckCard from '../../components/CheckCard'; 
 
-export default {
+
+import { RoutineApi,/*Routine*/ } from '../../api/routines.js';
+
+export default { 
+  methods:{
+    addRoutine(){
+      RoutineApi.add({
+        "name": this.RoutineName,
+        "detail": this.RoutineDescription,
+        "isPublic": true,//hay que cambiar por mejor logica esto
+        "difficulty": "rookie",//agregar dificultades
+        "category": {           //agregar categorias?
+          "id": 1
+        }
+      }).catch(//lanzar error
+      )
+    },
+    close(){
+      "dialog = false"
+    },
+    addRoutineWrapper(){
+      this.addRoutine();
+      this.close();
+    },
+
+  },
     data: () => ({
       dialog: false,
       routines: [],
@@ -112,6 +137,6 @@ export default {
     }),
     components: { 
       CheckCard
-    },
+    }
 }
 </script>

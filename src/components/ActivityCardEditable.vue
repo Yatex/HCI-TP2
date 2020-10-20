@@ -9,7 +9,7 @@
                 <v-icon>mdi-heart</v-icon>
             </v-btn>
             <v-btn icon>
-                <v-icon>fas fa-edit</v-icon>
+                <v-icon>mdi-pencil</v-icon>
             </v-btn>
         </v-card-actions>
     </v-card>
