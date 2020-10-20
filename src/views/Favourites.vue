@@ -39,15 +39,12 @@
       </v-expansion-panels>
 
     </v-container>
-    
-    <Footer/>
 
   </div>
 </template>
 
 <script>
   import Navbar from '../components/Navbar';
-  import Footer from '../components/Footer';
   import ActivityCard from '../components/ActivityCard';
   import ExerciseDetail from './exercises/ExerciseDetail';
   import RoutineDetail from './routines/RoutineDetail';
@@ -61,6 +58,6 @@
         exerciseDetailComponent: ExerciseDetail,
         routineDetailComponent: RoutineDetail
       }),
-      components: { Navbar, Footer, ActivityCard },
+      components: { Navbar, ActivityCard },
   }
 </script>

@@ -33,49 +33,52 @@
           <v-radio value="category 5" label="Category 5"></v-radio>
         </v-radio-group>
 
-        <v-card height="300" class="mt-8">
-          <v-card-title>Warm up exercises:</v-card-title>
+        <v-expansion-panels>
 
-          <v-layout row wrap>
-            <v-flex v-for="exercise in warmUpExercises" :key="exercise.name">
-              <!-- <Prueba /> -->
-            </v-flex>
-          </v-layout>
-          
-          <v-card-actions>
-            <v-btn color="accent" absolute="" large bottom right>Add exercise</v-btn>
-          </v-card-actions>
-        </v-card>
+        <v-expansion-panel>
+          <v-expansion-panel-header>
+            Add warm up exercises:
+          </v-expansion-panel-header>
 
-        <v-card height="300" class="mt-8">
-          <v-row>
-            <v-card-title>Training exercises:</v-card-title>
-          </v-row>
+          <v-expansion-panel-content>
+            <v-row >
+              <v-col v-for="exercise in exercises" :key="exercise.id">
+                <CheckCard :maxWidth="250" :data="exercise" :detailComponent="exerciseDetailComponent"/>
+              </v-col>
+            </v-row>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
 
-          <v-layout row wrap>
-            <v-flex v-for="exercise in trainingExercises" :key="exercise.name">
-              <!-- <Prueba /> -->
-            </v-flex>
-          </v-layout>
+        <v-expansion-panel>
+          <v-expansion-panel-header>
+            Add training exercises:
+          </v-expansion-panel-header>
 
-          <v-card-actions>
-            <v-btn color="accent" absolute="" large bottom right>Add exercise</v-btn>
-          </v-card-actions>
-        </v-card>
+          <v-expansion-panel-content>
+            <v-row>
+              <v-col v-for="exercise in exercises" :key="exercise.id">
+                <CheckCard :maxWidth="250" :data="exercise" :detailComponent="exerciseDetailComponent"/>
+              </v-col>
+            </v-row>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
 
-        <v-card height="300" class="mt-8">
-          <v-card-title>Cool down exercises:</v-card-title>
+        <v-expansion-panel>
+          <v-expansion-panel-header>
+            Add cool down exercises:
+          </v-expansion-panel-header>
 
-          <v-layout row wrap>
-            <v-flex v-for="exercise in coolDownExercises" :key="exercise.name">
-              <!-- <Prueba /> -->
-            </v-flex>
-          </v-layout>
+          <v-expansion-panel-content>
+            <v-row>
+              <v-col v-for="exercise in exercises" :key="exercise.id">
+                <CheckCard :maxWidth="250" :data="exercise" :detailComponent="exerciseDetailComponent"/>
+              </v-col>
+            </v-row>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
 
-          <v-card-actions>
-            <v-btn color="accent" absolute="" large bottom right>Add exercise</v-btn>
-          </v-card-actions>
-        </v-card>
+      </v-expansion-panels>
+       
       </v-card-text>
 
       <v-card-actions>
@@ -90,6 +93,9 @@
 </template>
 
 <script>
+import ExerciseDetail from './../exercises/ExerciseDetail';
+import mockExercises from '../../mock_data/exercices';
+import CheckCard from '../../components/CheckCard';
 
 export default {
     data: () => ({
@@ -101,6 +107,11 @@ export default {
       RoutineName: '',
       RoutineDescription: '',
       RoutineCategory: '',
-    })
+      exercises: mockExercises,
+      exerciseDetailComponent: ExerciseDetail,
+    }),
+    components: { 
+      CheckCard
+    },
 }
 </script>
