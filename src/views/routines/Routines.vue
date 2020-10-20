@@ -28,18 +28,18 @@
   import mockRoutines from '../../mock_data/routines';
 
   export default {
-      components: { Navbar, ActivityCard, AddRoutine },
-      computed: {
-        routines: function(){
-          return mockRoutines.slice(this.currPage*8 - 8,this.currPage*8);
-        },
-        amountOfPages: function(){
-          return Math.floor(mockRoutines.length / 8) + 1;
-        }
+    components: { Navbar, ActivityCard, AddRoutine },
+    computed: {
+      routines: function(){
+        return mockRoutines.slice(this.currPage*8 - 8,this.currPage*8);
       },
-      data: ()=>({
-        currPage: 1,
-        detailComponent: RoutineDetail
-      })
+      amountOfPages: function(){
+        return Math.floor(mockRoutines.length / 8) + 1;
+      }
+    },
+    data: ()=>({
+      currPage: 1,
+      detailComponent: RoutineDetail
+    })
   }
-  </script>
+</script>
