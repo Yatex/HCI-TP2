@@ -31,7 +31,7 @@
 
       <v-card-actions>
         <v-spacer />
-        <v-btn color="accent" @click="dialog = false" class="mb-10 mt-5" bottom x-large>Save</v-btn>
+        <v-btn color="accent" @click="addExercise" class="mb-10 mt-5" bottom x-large>Save</v-btn>
         <v-spacer />
       </v-card-actions>
       
@@ -41,10 +41,19 @@
 
 
 <script>
+  import {SportApi} from '../../api/sport'
+
   export default {
       methods: {
         changeImg: function(image){
           this.modeImage = image;
+        },
+        addExercise (){
+          this.dialog = false,
+          SportApi.add({
+            "name": this.ExerciseName,
+            "detail": this.ExerciseDescription
+          })
         }
       },
       data: ()=>({
@@ -52,13 +61,14 @@
         modeImage: require('../../assets/questionMark.png'),
         ExerciseName: '',
         ExerciseDescription: '',
-        ExerciseInstruction: '',
+        Duration: 30,
+        Repetitions: 0,
         ExerciseImage: null,
         items: [
           { text: 'Warm Up', value: { image: require('../../assets/warmup.jpeg')}},
           { text: 'Training', value: { image: require('../../assets/training.jpeg')}},
           { text: 'Cool Down', value: { image: require('../../assets/cooldown.jpeg')}},
         ]
-      })
+      }),
   }
 </script>

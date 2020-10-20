@@ -10,8 +10,8 @@
             <v-spacer></v-spacer>
 
             <v-btn text to="/main"> Home </v-btn> | <!-- Aca confunde pero Home vendria a ser la view Main!!!!! -->
-            <v-btn text to="/exercises"> Exercises </v-btn> |
-            <v-btn text to="/routines"> Routines </v-btn> |
+            <v-btn text to="/exercises"> My Exercises </v-btn> |
+            <v-btn text to="/routines"> My Routines </v-btn> |
             <v-btn text to="/inprogress"> In Progress</v-btn> | <!-- Esto no es necesario, propongo sacarlo y si sobra tiempo meterlo -->
             <v-btn text to="/favourites"> Favourites </v-btn>
 

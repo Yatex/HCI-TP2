@@ -11,6 +11,16 @@ const routes = [
     component: Home
   },
   {
+    path: '/allexercises',
+    name: 'AllExercises',
+    component: () => import('../views/exercises/AllExercises.vue')
+  },
+  {
+    path: '/allroutines',
+    name: 'AllRoutines',
+    component: () => import('../views/routines/AllRoutines.vue')
+  },
+  {
     path: '/routines',
     name: 'Routines',
     component: () => import('../views/routines/Routines.vue')
