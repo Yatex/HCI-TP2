@@ -7,6 +7,10 @@ class UserApi {
         return `${Api.baseUrl}/user`;
     }
 
+    static async signup(data, controller) {
+        return await Api.post(`${UserApi.url}`, false, data, controller);
+    }
+
     static async login(credentials, controller) {
         const result = await Api.post(`${UserApi.url}/login`, false, credentials, controller);
         Api.token = result.token;

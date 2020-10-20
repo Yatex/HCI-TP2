@@ -101,8 +101,8 @@
                        </div>
                        <h4 class="text-center mt-4">Ensure your email for registration</h4>
                        <v-form ref="form2" v-model="valid2" lazy-validation>
-                            <v-text-field id="name" label="Name" name="Name" :rules="nameRules" prepend-icon="person" type="text" color="teal-accent-3"></v-text-field>
-                            <v-text-field id="email" :rules="emailRules" label="Email" name="Email" prepend-icon="email" type="text" color="teal-accent-3"></v-text-field>
+                            <v-text-field id="name" v-model="name" label="Name" name="Name" :rules="nameRules" prepend-icon="person" type="text" color="teal-accent-3"></v-text-field>
+                            <v-text-field id="email" :v-model="email" rules="emailRules" label="Email" name="Email" prepend-icon="email" type="text" color="teal-accent-3"></v-text-field>
                             <v-text-field id="password" v-model="newPassword" :rules="passwordRules" :append-icon="show3 ? 'mdi-eye' : 'mdi-eye-off'" label="Password" name="Password" prepend-icon="lock" :type="show3 ? 'text' : 'password'" color="teal-accent-3" @click:append="show3 = !show3"></v-text-field>
                             <v-text-field id="cpassword" v-model="confirmNewPassword" :append-icon="show4 ? 'mdi-eye' : 'mdi-eye-off'" label="Confirm Password" name="Cpassword" prepend-icon="lock" :type="show4 ? 'text' : 'password'" color="teal-accent-3" @click:append="show4 = !show4"></v-text-field>
                           </v-form>
@@ -125,6 +125,9 @@
 
 <script>
 // @ is an alias to /src
+
+import {UserApi} from '../api/user'
+
 export default {
   data: () => ({
     step: 1 ,
@@ -162,7 +165,19 @@ export default {
       this.$refs.form.validate()
     },
     validate2 () {
-      this.$refs.form2.validate()
+      // this.$refs.form2.validate()
+
+      UserApi.signup({
+        "username": "test",
+        "password": "test",
+        "fullName": this.name,
+        "gender": "male",
+        "birthdate": 284007600000,
+        "email": "test@test.com",
+        "phone": "98295822",
+        "avatarUrl": "https://flic.kr/p/3ntH2u"
+      })
+
     },
     reset () {
       this.$refs.form.reset()
