@@ -151,6 +151,13 @@
 
             this.showSnackbar = true;
         }
+    },
+
+    beforeCreate(){
+
+        if(UserApi.isAuthenticated)
+            this.$router.push('/main');
+
     }
   }
 </script>

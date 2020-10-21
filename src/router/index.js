@@ -4,6 +4,7 @@ import Home from '../views/welcome/Home.vue'
 
 Vue.use(VueRouter)
 
+
 const routes = [
   {
     path: '/',

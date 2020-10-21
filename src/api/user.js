@@ -1,8 +1,13 @@
+import Vue from 'vue';
 import { Api } from './api.js';
 
 export { UserApi, Credentials };
 
 class UserApi {
+    static get isAuthenticated(){
+        return Vue.$cookies.isKey('api-token');
+    }
+
     static get url() {
         return `${Api.baseUrl}/user`;
     }
@@ -14,6 +19,7 @@ class UserApi {
     static async signin(credentials, controller) {
         const result = await Api.post(`${UserApi.url}/login`, false, credentials, controller);
         Api.token = result.token;
+        Vue.$cookies.set('api-token', Api.token);
     }
 
     static async resendVerifyEmail(data, controller) {
@@ -21,8 +27,9 @@ class UserApi {
     }
 
     static async signout(controller) {
-        await Api.post(`${UserApi.url}/logout`, true, controller);
         Api.token = undefined;
+        Vue.$cookies.remove('api-token');
+        Api.post(`${UserApi.url}/logout`, true, controller);
     }
 }
 
