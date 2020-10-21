@@ -88,7 +88,7 @@
     data: () => ({
         password: 'Password1',
         username: 'username',
-
+        email:'example@email.com',
         validForm: true,
         showPass: false,
         dialog: false,
