@@ -12,7 +12,7 @@
               </v-row>
             </v-col>
             <v-col cols="5" md="4">
-              <ImageTitleCard :card="{ title: 'Testing', img:'https://images.pexels.com/photos/2294354/pexels-photo-2294354.jpeg?cs=srgb&dl=pexels-li-sun-2294354.jpg&fm=jpg' }"/>
+              <ImageTitleCard :card="{ title: 'Poner algo aca', img:'https://images.pexels.com/photos/2294354/pexels-photo-2294354.jpeg?cs=srgb&dl=pexels-li-sun-2294354.jpg&fm=jpg' }"/>
             </v-col>
             <v-row no-gutters>
                 <HomeCard topLine='Crear nuevos Ejercicios' bottomLine='Armar instructivos de un ejercicio.'/>
@@ -20,7 +20,7 @@
           </v-row>
           <v-row  justify="space-around">
             <v-col cols="5">
-              <ImageTitleCard :card="{ title: 'All Exercises', img:'https://images.pexels.com/photos/4058411/pexels-photo-4058411.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500', link:'/allexercises'}"/>
+              <ImageTitleCard :card="{ title: 'My Exercises', img:'https://images.pexels.com/photos/4058411/pexels-photo-4058411.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500', link:'/exercises'}"/>
             </v-col>
             <v-col cols="5">
               <ImageTitleCard :card="{ title: 'All Routines', img:'https://images.pexels.com/photos/841131/pexels-photo-841131.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500', link:'/allroutines'}"/>
