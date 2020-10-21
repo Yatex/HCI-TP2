@@ -10,16 +10,13 @@
               <v-row no-gutters>
                 <HomeCard topLine='Crear rutina de ejercicios' bottomLine='Empezar una nueva rutina.'/>
               </v-row>
-              <v-row no-gutters>
-                <HomeCard topLine='Crear nuevos Ejercicios' bottomLine='Armar instructivos de un ejercicio.'/>
-              </v-row>
             </v-col>
             <v-col cols="5" md="4">
               <ImageTitleCard :card="{ title: 'Testing', img:'https://images.pexels.com/photos/2294354/pexels-photo-2294354.jpeg?cs=srgb&dl=pexels-li-sun-2294354.jpg&fm=jpg' }"/>
             </v-col>
-            <v-col cols="3" md="4">
-              <GraphCardMain :graph="{title:'Graph', visual:'https://images.pexels.com/photos/2294354/pexels-photo-2294354.jpeg?cs=srgb&dl=pexels-li-sun-2294354.jpg&fm=jpg'}"/>
-            </v-col>
+            <v-row no-gutters>
+                <HomeCard topLine='Crear nuevos Ejercicios' bottomLine='Armar instructivos de un ejercicio.'/>
+              </v-row>
           </v-row>
           <v-row  justify="space-around">
             <v-col cols="5">
@@ -42,15 +39,13 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import HomeCard from '../components/HomeCard';
 import ImageTitleCard from '../components/ImageTitleCard';
-import GraphCardMain from '../components/GraphCardMain';
 
 export default {
     components: {
         Navbar,
         Footer,
         HomeCard,
-        ImageTitleCard,
-        GraphCardMain    
+        ImageTitleCard  
 },
 
 }
