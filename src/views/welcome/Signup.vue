@@ -75,7 +75,7 @@
         username: 'Username',
         gender: '',
         genders: [{text:'Male', value:'male'}, {text:'Female', value:'female'}, {text:'Other', value:'other'}],
-        date: null,
+        date: '',
         menu: false,
 
         validForm: true,
@@ -118,13 +118,13 @@
                 try{
 
                     this.showOverlay = true;
-
+                    var d = new Date(this.date);
                     await UserApi.signup({
                         "username": this.username,
                         "password": this.password,
                         "fullName": this.name,
                         "gender": this.gender,
-                        "birthdate": this.date.getTime(),
+                        "birthdate": d.getTime(),
                         "email": this.email,
                     });
 
