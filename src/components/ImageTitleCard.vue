@@ -5,7 +5,10 @@
         gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
         height="200px">
         
-        <v-card-title v-text="card.title"></v-card-title>
+        <v-card-actions>
+            <v-spacer />
+            <v-btn text :to="card.link" color="primary" class="accent">{{card.title}}</v-btn>
+        </v-card-actions>
         </v-img>
     </v-card>
 </template>

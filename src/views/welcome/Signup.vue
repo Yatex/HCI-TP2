@@ -1,7 +1,7 @@
 <template>
     <v-row class="fill-height">
 
-        <v-col cols="12" md="4" class="teal darken-1">
+        <v-col cols="12" md="4" class="secondary">
             <v-card-text class="mt-12">
                 <h1 class="text-center display-1">Welcome Back!</h1>
                 <h4 class="text-center">To keep connected with us please login with your info</h4>
@@ -34,7 +34,7 @@
                 </v-form>
 
                 <div class="text-center mt-5">
-                    <v-btn rounded :disabled="!validForm" x-large color="amber lighten-3 text-center" class="mr-4"
+                    <v-btn rounded :disabled="!validForm" x-large color="primary text-center black--text" class="accent"
                         @click="signUp">SIGN UP</v-btn>
                 </div>
             </v-card-text>

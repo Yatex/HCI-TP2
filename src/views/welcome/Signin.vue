@@ -48,12 +48,12 @@
 
 
             <div class="text-center mt-3">
-                <v-btn rounded :disabled="!validForm" x-large class="amber lighten-3 text-center"
+                <v-btn rounded :disabled="!validForm" x-large color="primary text-center black--text" class="accent"
                     @click="signIn">SIGN IN</v-btn>
             </div>
         </v-col>
 
-        <v-col cols="12" md="4" class="teal darken-1">
+        <v-col cols="12" md="4" class="secondary">
             <v-card-text class="mt-12">
                 <h1 class="text-center display-1">Hello, Friends!</h1>
                 <h4 class="text-center">Enter your personal info and join us!</h4>
