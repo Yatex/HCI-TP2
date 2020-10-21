@@ -1,38 +1,25 @@
 <template>
-  <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
-
-    <template v-slot:activator="{ on, attrs }">
-      <v-btn v-bind="attrs" v-on="on" color="accent" class="mt-5" elevation="2"
-        fab fixed right bottom x-large>
-        <v-icon>mdi-plus</v-icon>
-      </v-btn>
-    </template>
-
+  <v-dialog v-model="dialog" hide-overlay transition="dialog-bottom-transition">
     <v-card>
 
-      <v-toolbar dark color="grey darken-4">
-        <v-btn icon dark @click="dialog = false">
-          <v-icon>mdi-close</v-icon>
-        </v-btn>
-        <v-toolbar-title>New Exercise</v-toolbar-title>
-        <v-spacer></v-spacer>
-      </v-toolbar>
-
-      <v-card-title>
-        <v-text-field label="Exercise's name" v-model="ExerciseName"></v-text-field>
-      </v-card-title>
+      <v-card-title>New Exercise</v-card-title>
 
       <v-card-text>
-        <v-textarea label="Exercise's Instructions" v-model="ExerciseInstruction"></v-textarea>
-        <v-textarea label="Exercise's Description" v-model="ExerciseDescription"></v-textarea>
-        <v-select :items="items" label="Type of exercise" v-model="ExerciseImage" v-on:change="changeImg(ExerciseImage.image)"></v-select>
-        <v-img :src="modeImage" height="250" width="250"></v-img>
+        <v-text-field label="Name" v-model="exercise.name" outlined/>
+
+        <v-textarea label="Details" v-model="exercise.detail" outlined/>
+
+        <v-textfield label="Duration" v-model="exercise.duration" outlined/>
+
+        <v-textfield label="Repetitions" v-model="exercise.repetitions" outlined/>
+
+        <v-select :items="types" label="Type" v-model="exercise.type" outlined/>
       </v-card-text>
 
       <v-card-actions>
-        <v-spacer />
-        <v-btn color="accent" @click="addExercise" class="mb-10 mt-5" bottom x-large>Save</v-btn>
-        <v-spacer />
+        <v-spacer/>
+        <v-btn color="primary" @click="$emit('save', exercise);" bottom large>Save</v-btn>
+        <v-spacer/>
       </v-card-actions>
       
     </v-card>
@@ -41,34 +28,16 @@
 
 
 <script>
-  import {SportApi} from '../../api/sport'
-
   export default {
-      methods: {
-        changeImg: function(image){
-          this.modeImage = image;
-        },
-        addExercise (){
-          this.dialog = false,
-          SportApi.add({
-            "name": this.ExerciseName,
-            "detail": this.ExerciseDescription
-          })
-        }
-      },
+      props: ['dialog'],
+
       data: ()=>({
-        dialog: '',
-        modeImage: require('../../assets/questionMark.png'),
-        ExerciseName: '',
-        ExerciseDescription: '',
-        Duration: 30,
-        Repetitions: 0,
-        ExerciseImage: null,
-        items: [
-          { text: 'Warm Up', value: { image: require('../../assets/warmup.jpeg')}},
-          { text: 'Training', value: { image: require('../../assets/training.jpeg')}},
-          { text: 'Cool Down', value: { image: require('../../assets/cooldown.jpeg')}},
-        ]
-      }),
+        types: ['exercise', 'rest'],
+
+        exercise: {
+          name: 'Jumping frog', description: "Ever felt like a frog? Let it be!", type: 'exercise',
+          repetitions: 2, duration: 0
+        }
+      })
   }
 </script>

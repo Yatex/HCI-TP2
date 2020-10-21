@@ -14,7 +14,7 @@
       </v-row>
       <v-pagination v-model="currPage" :length="amountOfPages"></v-pagination>
     </v-container>
-    
+
     <!-- <v-container>
       <v-row class="mb-6" no-gutters>
         <v-col v-for="routine in routines.results" :key="routine.id">
@@ -47,6 +47,11 @@
       },
       amountOfPages: function(){
         return Math.floor(mockRoutines.length / 8) + 1;
+      }
+    },
+    methods: {
+      addRoutine(){
+        this.$router.push('/addRoutine');
       }
     },
     data: ()=>({

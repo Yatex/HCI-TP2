@@ -23,6 +23,10 @@ class Api {
     const timer = setTimeout(() => controller.abort(), Api.timeout);
     init.signal = controller.signal
 
+    url = new URL(url);
+    if(init.method == 'GET')
+      url.search = new URLSearchParams(init.params).toString();
+
     try {
       const response = await fetch(url, init);
       const text = await response.text();
@@ -42,8 +46,11 @@ class Api {
     }
   }
 
-  static async get(url, secure, controller) {
-    return await Api.fetch(url, secure, {}, controller)
+  static async get(url, secure, params, controller) {
+    return await Api.fetch(url, secure, {
+      method: 'GET',
+      params: params
+    }, controller)
   }
 
   static async post(url, secure, data, controller) {

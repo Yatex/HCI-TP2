@@ -1,5 +1,102 @@
 <template>
-  <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
+  <v-dialog v-model="dialog" hide-overlay transition="dialog-bottom-transition">
+    <v-stepper v-model="e1">
+
+      <v-stepper-header>
+        <v-stepper-step :complete="e1>1" step="1">
+          Basic information
+        </v-stepper-step>
+
+        <v-stepper-step :complete="e1>2" step="2">
+          Add cycles
+        </v-stepper-step>
+
+        <v-stepper-step :complete="e1>3" step="3">
+          Add exercises
+        </v-stepper-step>
+      </v-stepper-header>
+
+      <v-stepper-items>
+        
+        <v-stepper-content step="1">
+          <v-text-field label="Name" v-model="routine.name" outlined/>
+
+          <v-select label="Category" :items="categories" item-text="name"
+            v-model="routine.category" item-value="id" outlined/>
+
+          <v-select label="Difficulty" :items="difficulties"
+           v-model="routine.difficulty" outlined/>
+
+          <v-textarea label="Description" v-model="routine.description" outlined/>
+
+          <v-btn color="primary" @click="e1=2">Next</v-btn>
+        </v-stepper-content>
+
+
+        <v-stepper-content step="2">
+          <v-list two-line v-if="routine.cycles.length > 0">
+            <template v-for="cycle in routine.cycles">
+              <v-list-item :key="cycle.name">
+                <v-list-item-content>
+                  <v-list-item-title v-text="cycle.name"/>
+                  <v-list-item-subtitle v-text="cycle.type"/>
+                </v-list-item-content>
+
+                <v-list-item-action>
+                  <v-icon color="grey lighten-1" @click="removeCycle(cycle.name)">
+                    mdi-close
+                  </v-icon>
+                </v-list-item-action>
+              </v-list-item>
+            </template>
+          </v-list>
+
+          <div v-else>
+            Here you can add the cycles for the routine
+          </div>
+
+          <div class="mt-4">
+            <v-btn color="primary" @click="showAddCycleDialog=true">Add Cycle</v-btn>
+            <v-btn color="primary" @click="e1=3" class="ml-4">Continue</v-btn>
+          </div>
+
+          <AddCycle :dialog="showAddCycleDialog" v-on:save="addCycle($event)"/>
+        </v-stepper-content>
+
+
+        <v-stepper-content step="3">
+          <v-list two-line v-if="routine.exercises.length > 0">
+            <template v-for="exercise in routine.exercises">
+              <v-list-item :key="exercise.name">
+                <v-list-item-content>
+                  <v-list-item-title v-text="exercise.name"/>
+                  <v-list-item-subtitle v-text="exercise.type"/>
+                </v-list-item-content>
+
+                <v-list-item-action>
+                  <v-icon color="grey lighten-1" @click="removeExercise(exercise.name)">
+                    mdi-close
+                  </v-icon>
+                </v-list-item-action>
+              </v-list-item>
+            </template>
+          </v-list>
+
+          <div v-else>
+            Here you can add the exercises for your cycles
+          </div>
+
+          <div class="mt-4">
+            <v-btn color="primary" @click="showAddExerciseDialog=true">Add Exercise</v-btn>
+            <v-btn color="primary" @click="addRoutine" class="ml-4">Continue</v-btn>
+          </div>
+
+          <AddExercise :dialog="showAddExerciseDialog" v-on:save="addExercise($event)"/>
+        </v-stepper-content>
+
+
+      </v-stepper-items>
+    </v-stepper>
 
     <template v-slot:activator="{ on, attrs }">
       <v-btn v-bind="attrs" v-on="on" color="accent" class="mt-5" elevation="2" fab fixed right bottom x-large>
@@ -7,136 +104,80 @@
       </v-btn>
     </template>
 
-    <v-card>
-
-      <v-toolbar dark color="grey darken-4">
-        <v-btn icon dark @click="dialog = false">
-          <v-icon>mdi-close</v-icon>
-        </v-btn>
-        <v-toolbar-title>New Routine</v-toolbar-title>
-        <v-spacer></v-spacer>
-      </v-toolbar>
-
-      <v-card-title>
-        <v-text-field label="Routine's name" v-model="RoutineName"></v-text-field>
-      </v-card-title>
-
-      <v-card-text>
-
-        <v-textarea label="Routine's Description" v-model="RoutineDescription"></v-textarea>
-
-        <v-radio-group label="Routine's Category" column v-model="RoutineCategory">
-          <v-radio value="category 1" label="Category 1" class="mt-4"></v-radio>
-          <v-radio value="category 2" label="Category 2"></v-radio>
-          <v-radio value="category 3" label="Category 3"></v-radio>
-          <v-radio value="category 4" label="Category 4"></v-radio>
-          <v-radio value="category 5" label="Category 5"></v-radio>
-        </v-radio-group>
-
-        <v-expansion-panels>
-
-        <v-expansion-panel>
-          <v-expansion-panel-header>
-            Add warm up exercises:
-          </v-expansion-panel-header>
-
-          <v-expansion-panel-content>
-            <v-row >
-              <v-col v-for="exercise in exercises" :key="exercise.id">
-                <CheckCard :maxWidth="250" :data="exercise" :detailComponent="exerciseDetailComponent"/>
-              </v-col>
-            </v-row>
-          </v-expansion-panel-content>
-        </v-expansion-panel>
-
-        <v-expansion-panel>
-          <v-expansion-panel-header>
-            Add training exercises:
-          </v-expansion-panel-header>
-
-          <v-expansion-panel-content>
-            <v-row>
-              <v-col v-for="exercise in exercises" :key="exercise.id">
-                <CheckCard :maxWidth="250" :data="exercise" :detailComponent="exerciseDetailComponent"/>
-              </v-col>
-            </v-row>
-          </v-expansion-panel-content>
-        </v-expansion-panel>
-
-        <v-expansion-panel>
-          <v-expansion-panel-header>
-            Add cool down exercises:
-          </v-expansion-panel-header>
-
-          <v-expansion-panel-content>
-            <v-row>
-              <v-col v-for="exercise in exercises" :key="exercise.id">
-                <CheckCard :maxWidth="250" :data="exercise" :detailComponent="exerciseDetailComponent"/>
-              </v-col>
-            </v-row>
-          </v-expansion-panel-content>
-        </v-expansion-panel>
-
-      </v-expansion-panels>
-       
-      </v-card-text>
-
-      <v-card-actions>
-        <v-spacer />
-        <v-btn color="accent" @click=addRoutineWrapper() class="mb-10 mt-5" bottom x-large>Save</v-btn>
-        <v-spacer />
-      </v-card-actions>
-
-    </v-card>
-
   </v-dialog>
 </template>
 
 <script>
-import ExerciseDetail from './../exercises/ExerciseDetail';
-import mockExercises from '../../mock_data/exercices';
-import CheckCard from '../../components/CheckCard'; 
+  import { RoutineApi } from '../../api/routines.js';
+  import { CategoryApi } from '../../api/categories.js';
 
+  import AddCycle from './AddCycle';
+  import AddExercise from '../exercises/AddExercise';
 
-import { RoutineApi,/*Routine*/ } from '../../api/routines.js';
+  export default { 
+    methods:{
+      addRoutine(){
+        RoutineApi.add({
+          "name": this.name,
+          "detail": this.description,
+          "isPublic": true,//hay que cambiar por mejor logica esto
+          "difficulty": "rookie",//agregar dificultades
+          "category": {           //agregar categorias?
+            "id": 1
+          }
+        }).catch(//lanzar error
+        )
+      },
 
-export default { 
-  methods:{
-    addRoutine(){
-      RoutineApi.add({
-        "name": this.RoutineName,
-        "detail": this.RoutineDescription,
-        "isPublic": true,//hay que cambiar por mejor logica esto
-        "difficulty": "rookie",//agregar dificultades
-        "category": {           //agregar categorias?
-          "id": 1
-        }
-      }).catch(//lanzar error
-      )
+      addCycle(cycle){
+        this.showAddCycleDialog = false;
+        this.routine.cycles.push(cycle);
+      },
+      removeCycle(cycle){
+        this.routine.cycles = this.routine.cycles.filter(c => c.name == cycle.name);
+      },
+
+      addExercise(cycle){
+        this.showAddExerciseDialog = false;
+        this.routine.exercises.push(cycle);
+      },
+      removeExercise(cycle){
+        this.routine.exercises = this.routine.exercises.filter(c => c.name == cycle.name);
+      },
+
+      addRoutineWrapper(){
+        this.addRoutine();
+        this.dialog = false;
+      }
     },
-    close(){
-      "dialog = false"
-    },
-    addRoutineWrapper(){
-      this.addRoutine();
-      this.close();
-    },
 
-  },
     data: () => ({
+      e1: 1,
       dialog: false,
-      routines: [],
-      coolDownExercises: [],
-      trainingExercises: [],
-      warmUpExercises: [],
-      RoutineName: '',
-      RoutineDescription: '',
-      RoutineCategory: '',
-      exercises: mockExercises,
-      exerciseDetailComponent: ExerciseDetail,
+      showAddCycleDialog: false,
+      showAddExerciseDialog: false,
+      difficulties: ['rookie', 'beginner', 'intermediate', 'advanced', 'expert'],
+
+      routine: {
+        name: '',
+        description: '',
+        difficulty: '',
+        category: 0,
+        cycles: [],
+        exercises: []
+      },
+      
     }),
+
+    asyncComputed: {
+      async categories(){
+        return await CategoryApi.getAll();
+      }
+    },
+
     components: { 
-      CheckCard
+      AddCycle,
+      AddExercise
     }
-}
+  }
 </script>
