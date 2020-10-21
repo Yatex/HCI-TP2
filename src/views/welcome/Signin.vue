@@ -6,8 +6,8 @@
                 <h1 class="text-center display-2">Sign in</h1>
                 
                 <v-form ref="form" v-model="validForm" lazy-validation>
-                    <v-text-field v-model="email" :rules="emailRules" label="Email"
-                         prepend-icon="email" type="text" color="teal-accent-3"/>
+                    <v-text-field v-model="username" label="Username"
+                         prepend-icon="mdi-account" type="text" color="teal-accent-3"/>
 
                     <v-text-field v-model="password" :rules="passwordRules" label="Password" 
                         prepend-icon="lock" :type="showPass ? 'text' : 'password'" color="teal-accent-3"
@@ -86,8 +86,9 @@
 
   export default {
     data: () => ({
-        email: 'test@test.com', password: 'Password1',
-
+        password: 'Password1',
+        username: 'username',
+        email:'example@email.com',
         validForm: true,
         showPass: false,
         dialog: false,
@@ -114,7 +115,7 @@
                     this.showOverlay = true;
 
                     await UserApi.signin({
-                        "username": this.email,
+                        "username": this.username,
                         "password": this.password
                     });
 
