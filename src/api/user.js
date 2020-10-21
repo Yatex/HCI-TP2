@@ -11,12 +11,16 @@ class UserApi {
         return await Api.post(`${UserApi.url}`, false, data, controller);
     }
 
-    static async login(credentials, controller) {
+    static async signin(credentials, controller) {
         const result = await Api.post(`${UserApi.url}/login`, false, credentials, controller);
         Api.token = result.token;
     }
 
-    static async logout(controller) {
+    static async resendVerifyEmail(data, controller) {
+        return await Api.post(`${UserApi.url}/resend_verification`, false, data, controller);
+    }
+
+    static async signout(controller) {
         await Api.post(`${UserApi.url}/logout`, true, controller);
         Api.token = undefined;
     }

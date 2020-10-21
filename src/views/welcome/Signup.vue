@@ -8,7 +8,7 @@
             </v-card-text>
 
             <div class="text-center">
-                <v-btn rounded outlined @click="step--">SIGN IN</v-btn>
+                <v-btn rounded outlined v-on:click="$emit('go-signin')">SIGN IN</v-btn>
             </div>
         </v-col>
 
@@ -21,39 +21,52 @@
 
                 <v-form ref="form" v-model="validForm" lazy-validation>
                     <v-text-field label="Name" prepend-icon="person" type="text" color="teal-accent-3"
-                        :v-model="name" :rules="nameRules"/>
+                        v-model="name" :rules="nameRules"/>
 
                     <v-text-field label="Email" prepend-icon="email" type="text" color="teal-accent-3"
-                         :v-model="email"  :rules="emailRules"/>
+                         v-model="email"  :rules="emailRules"/>
 
                     <v-text-field label="Password" prepend-icon="lock" :type="showPass ? 'text' : 'password'" color="teal-accent-3" :append-icon="showPass ? 'mdi-eye' : 'mdi-eye-off'"
-                         :v-model="newPassword" :rules="passwordRules" @click:append="showPass = !showPass"/>
+                         v-model="password" :rules="passwordRules" @click:append="showPass = !showPass"/>
 
                     <v-text-field label="Confirm Password" prepend-icon="lock" :type="showConfPass ? 'text' : 'password'" color="teal-accent-3" :append-icon="showConfPass ? 'mdi-eye' : 'mdi-eye-off'"
-                        :v-model="confirmNewPassword" :rules="confirmPasswordRules" @click:append="showConfPass = !showConfPass"/>
+                        v-model="confirmPassword" @click:append="showConfPass = !showConfPass"/>
                 </v-form>
 
                 <div class="text-center mt-5">
                     <v-btn rounded :disabled="!validForm" x-large color="amber lighten-3 text-center" class="mr-4"
-                        to="/main">SIGN UP</v-btn>
+                        @click="signUp">SIGN UP</v-btn>
                 </div>
             </v-card-text>
         </v-col>
+
+        <v-overlay :value="showOverlay">
+            <v-progress-circular indeterminate size="64"/>
+        </v-overlay>
+
+        <v-snackbar v-model="showSnackbar">
+            {{ snackbarText }}
+        </v-snackbar>
 
     </v-row>
 </template>
 
 
 <script>
-//   import {UserApi} from '../../api/user'
+  import {UserApi} from '../../api/user'
 
   export default {
     data: () => ({
-        email: '', password: '',
+        name: 'Test User', email: 'test2@test.com',
+        password: 'Password1', confirmPassword: 'Password1',
 
         validForm: true,
         showPass: false,
         showConfPass: false,
+
+        showOverlay: false,
+        showSnackbar: false,
+        snackbarText: '',
 
         nameRules: [
             v => !!v || 'Name is required',
@@ -66,14 +79,44 @@
         passwordRules: [
           value => !!value || 'Required.',
           v => v.length >= 8 || 'Min 8 characters',
-        ] 
+        ]
     }),
 
     methods:{
-        signUp(){
-            // if(this.$refs.form.validate()){
+        async signUp(){
+            if(this.$refs.form.validate()){
+                try{
 
-            // }
+                    this.showOverlay = true;
+
+                    await UserApi.signup({
+                        "username": this.email,
+                        "password": this.password,
+                        "fullName": this.name,
+                        "gender": "male",
+                        "birthdate": 284007600000,
+                        "email": this.email,
+                        "phone": "98295822",
+                        "avatarUrl": "https://flic.kr/p/3ntH2u"
+                    });
+
+                    this.snackbarText = 'Email confirmation sent! Please complete it';
+
+                }catch(e){
+
+                    if(e.code == 2){
+                        this.snackbarText = 'This email already exists, please sign in';
+                    }else{
+                        this.snackbarText = 'Ups! Something went wrong';
+                    }
+
+                    console.log(e);
+
+                }
+
+                this.showOverlay = false;
+                this.showSnackbar = true;
+           }
         }
     }
   }

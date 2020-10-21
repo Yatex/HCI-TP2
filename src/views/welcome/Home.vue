@@ -10,11 +10,11 @@
                 <v-window v-model="step" class="dark">
 
                   <v-window-item :value="1">
-                    <Signin v-model="step"/>
+                    <Signin v-on:go-signup="step++"/>
                   </v-window-item>
 
                   <v-window-item :value="2">
-                    <Signup/>
+                    <Signup v-on:go-signin="step--"/>
                   </v-window-item>
 
                 </v-window>
@@ -36,9 +36,6 @@
     components: {Signin, Signup},
     data: () => ({
       step: 1,
-    }),
-    props: {
-      source: String
-    }
+    })
   }
 </script>
