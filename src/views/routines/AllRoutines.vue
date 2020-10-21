@@ -7,7 +7,7 @@
       <v-row class="mb-6" no-gutters>
         <v-col v-for="routine in routines" :key="routine.id">
           
-          <NoEditCard :maxWidth="250" class="mt-4"
+          <ActivityCard :maxWidth="250" class="mt-4"
             :data="routine" :detailComponent="detailComponent"/>
           
         </v-col>
@@ -21,11 +21,11 @@
 <script>
   import RoutineDetail from './RoutineDetail';
   import Navbar from '../../components/Navbar';
-  import NoEditCard from '../../components/NoEditCard';
+  import ActivityCard from '../../components/ActivityCard';
   import mockRoutines from '../../mock_data/routines';
 
   export default {
-    components: { Navbar, NoEditCard },
+    components: { Navbar, ActivityCard },
     computed: {
       routines: function(){
         return mockRoutines.slice(this.currPage*8 - 8,this.currPage*8);
