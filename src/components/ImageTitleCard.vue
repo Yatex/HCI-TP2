@@ -7,7 +7,6 @@
         
         <v-card-title v-text="card.title"></v-card-title>
         </v-img>
-       
     </v-card>
 </template>
 <script>
