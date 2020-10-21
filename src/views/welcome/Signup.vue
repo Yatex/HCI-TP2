@@ -86,7 +86,6 @@
         async signUp(){
             if(this.$refs.form.validate()){
                 try{
-
                     this.showOverlay = true;
 
                     await UserApi.signup({
@@ -101,17 +100,13 @@
                     });
 
                     this.snackbarText = 'Email confirmation sent! Please complete it';
-
                 }catch(e){
-
-                    if(e.code == 2){
+                    if(e.code == 2)
                         this.snackbarText = 'This email already exists, please sign in';
-                    }else{
+                    else
                         this.snackbarText = 'Ups! Something went wrong';
-                    }
-
+                    
                     console.log(e);
-
                 }
 
                 this.showOverlay = false;

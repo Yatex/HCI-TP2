@@ -13,7 +13,10 @@
 
         <v-textfield label="Repetitions" v-model="exercise.repetitions" outlined/>
 
-        <v-select :items="types" label="Type" v-model="exercise.type" outlined/>
+        <v-select label="Type" v-model="exercise.type" outlined :items="types"/>
+
+        <v-select label="Cycle" v-model="exercise.cycle" outlined
+          :items="cycles" item-value="name" item-text="name"/>
       </v-card-text>
 
       <v-card-actions>
@@ -29,14 +32,14 @@
 
 <script>
   export default {
-      props: ['dialog'],
+      props: ['dialog', 'cycles'],
 
       data: ()=>({
         types: ['exercise', 'rest'],
 
         exercise: {
-          name: 'Jumping frog', description: "Ever felt like a frog? Let it be!", type: 'exercise',
-          repetitions: 2, duration: 0
+          name: 'Jumping frog', description: "Ever felt like a frog? Let it be!",
+          type: 'exercise', cycle: '', repetitions: 2, duration: 0
         }
       })
   }
