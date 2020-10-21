@@ -5,7 +5,7 @@
             <v-row align="center"  justify="space-between">
                 <v-col cols="2" >
                     <v-card-actions>
-                        <v-btn class="mx-2" fab dark color="secondary" >
+                        <v-btn fab dark color="primary black--text" class="accent mx-2">
                             <v-icon dark>mdi-plus</v-icon>
                         </v-btn>
                     </v-card-actions>
