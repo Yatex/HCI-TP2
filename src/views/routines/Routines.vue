@@ -3,29 +3,20 @@
 
     <Navbar/>
 
+  
+
     <v-container>
       <v-row class="mb-6" no-gutters>
-        <v-col v-for="routine in routines" :key="routine.id">
+        <v-col v-for="Routine in Routines.result" :key="Routine.id">
           
           <ActivityCardEditable :maxWidth="250" class="mt-4"
-            :data="routine" :detailComponent="detailComponent"/>
+            :data="{title:Routine.name,desc:Routine.detail}" :detailComponent="detailComponent"/>
           
         </v-col>
       </v-row>
-      <v-pagination v-model="currPage" :length="amountOfPages"></v-pagination>
+      <v-pagination v-model="currPage" :length="amountOfPages" @input="changePage" ></v-pagination>
     </v-container>
-
-    <!-- <v-container>
-      <v-row class="mb-6" no-gutters>
-        <v-col v-for="routine in routines.results" :key="routine.id">
-          
-          <ActivityCardEditable :maxWidth="250" class="mt-4"
-            :data="{title:routine.name,desc:routine.detail}" :detailComponent="detailComponent"/>
-          
-        </v-col>
-      </v-row>
-      <v-pagination v-model="currPage" :length="amountOfPages" @input="changePage"></v-pagination>
-    </v-container> -->
+   
 
     <AddRoutine/>
 
@@ -37,50 +28,37 @@
   import RoutineDetail from './RoutineDetail';
   import Navbar from '../../components/Navbar';
   import ActivityCardEditable from '../../components/ActivityCardEditable';
-  import mockRoutines from '../../mock_data/routines';
+
+  //import { RoutineApi } from '../../api/routines.js';
+  import { UserApi } from '../../api/user.js';
 
   export default {
-    components: { Navbar, ActivityCardEditable, AddRoutine },
-    computed: {
-      routines: function(){
-        return mockRoutines.slice(this.currPage*8 - 8,this.currPage*8);
-      },
-      amountOfPages: function(){
-        return Math.floor(mockRoutines.length / 8) + 1;
-      }
-    },
-    methods: {
-      addRoutine(){
-        this.$router.push('/addRoutine');
-      }
+     
+      components: { Navbar, ActivityCardEditable, AddRoutine},
+      methods:{
+        changePage(){
+          UserApi.getAllRoutines(null,this.currPage-1,8).then(data=>{this.Routines=data.results;});
+        },
+        fillRoutines(){
+          UserApi.getAllRoutines(null,this.currPage-1,8).then(data=>{this.Routines=data.results;});
+        },
+        amountOfPagesFunc(){
+          this.amountOfPages=Math.floor(this.Routines.totalCount / this.Routines.size) + 1;
+        }
+        
+      }, 
+      computed: {
+        
     },
     data: ()=>({
       currPage: 1,
-      detailComponent: RoutineDetail
-    })
-  }
-
-
-  // import { RoutineApi/*,Routine,Routines*/ } from '../../api/routines.js';
-
-  // export default {
-  //     components: { Navbar, ActivityCardEditable, AddRoutine },
-  //     methods:{
-  //       changePage(){
-  //         return RoutineApi.getAll(null,"rookie",this.currPage-1);
-  //       }
-  //     },
-  //     computed: {
-  //       routines: function(){
-  //         return RoutineApi.getAll(null,"rookie",this.currPage-1);
-  //       },
-  //       amountOfPages: function(){
-  //         return Math.floor(this.routines.totalCount / this.routines.size) + 1;
-  //       }
-  //   },
-  //   data: ()=>({
-  //     currPage: 1,
-  //     detailComponent: RoutineDetail
-  //   })
-  // } 
+      detailComponent: RoutineDetail,
+      Routines:{},
+      amountOfPages:undefined 
+    }),
+     created(){
+        this.fillRoutines();
+        this.amountOfPagesFunc();
+      }
+  } 
 </script>
