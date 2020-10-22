@@ -44,15 +44,8 @@
             this.Routines=data;
             this.amountOfPages=Math.floor(this.Routines.totalCount / this.Routines.size) + 1;}
             );
-        },
-        // amountOfPagesFunc(){
-        //   this.amountOfPages=Math.floor(this.Routines.totalCount / this.Routines.size) + 1;
-        // }
-        
+        }      
       }, 
-      computed: {
-        
-    },
     data: ()=>({
       currPage: 1,
       detailComponent: RoutineDetail,
@@ -69,7 +62,6 @@
     }),
      created(){
         this.fillRoutines();
-       // this.amountOfPagesFunc();
       }
   } 
 </script>

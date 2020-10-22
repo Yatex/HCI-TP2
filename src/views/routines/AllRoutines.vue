@@ -39,14 +39,14 @@
       components: { Navbar, ActivityCardEditable },
       methods:{
         changePage(){
-          RoutineApi.getAll(null,this.currPage-1,8).then(data=>{this.Routines=data.results;});
+          RoutineApi.getAll(null,this.currPage-1,8).then(data=>{this.Routines=data;});
         },
         fillRoutines(){
-          RoutineApi.getAll(null,this.currPage-1,8).then(data=>{this.Routines=data.results;});
+          RoutineApi.getAll(null,this.currPage-1,8).then(data=>{
+            this.Routines=data;
+            this.amountOfPages=Math.floor(this.Routines.totalCount / this.Routines.size) + 1;}
+          );
         },
-        amountOfPagesFunc(){
-          this.amountOfPages=Math.floor(this.Routines.totalCount / this.Routines.size) + 1;
-        }
         
       }, 
       computed: {
@@ -55,12 +55,19 @@
     data: ()=>({
       currPage: 1,
       detailComponent: RoutineDetail,
-      Routines:{},
+      Routines:{
+        totalCount: undefined,
+        orderBy: '',
+        direction: '',
+        results: [],
+        size: undefined,
+        page: undefined,
+        isLastPage: true
+      },
       amountOfPages:undefined 
     }),
      created(){
         this.fillRoutines();
-        this.amountOfPagesFunc();
       }
   } 
 </script>
