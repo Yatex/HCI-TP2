@@ -25,7 +25,7 @@
 
 <script>
   import AddRoutine from './AddRoutine'
-  import RoutineDetail from './RoutineDetail';
+  import MyRoutineDetailEditable from './MyRoutineDetailEditable';
   import Navbar from '../../components/Navbar';
   import ActivityCardEditable from '../../components/ActivityCardEditable';
 
@@ -48,7 +48,7 @@
       }, 
     data: ()=>({
       currPage: 1,
-      detailComponent: RoutineDetail,
+      detailComponent: MyRoutineDetailEditable,
       Routines:{
         totalCount: undefined,
         orderBy: '',

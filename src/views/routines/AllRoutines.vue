@@ -9,7 +9,7 @@
       <v-row class="mb-6" no-gutters>
         <v-col v-for="Routine in Routines.result" :key="Routine.id">
           
-          <ActivityCardEditable :maxWidth="250" class="mt-4"
+          <ActivityCard :maxWidth="250" class="mt-4"
             :data="{title:Routine.name,desc:Routine.detail}" :detailComponent="detailComponent"/>
           
         </v-col>
@@ -25,7 +25,7 @@
   
   import RoutineDetail from './RoutineDetail';
   import Navbar from '../../components/Navbar';
-  import ActivityCardEditable from '../../components/ActivityCardEditable';
+  import ActivityCard from '../../components/ActivityCard';
 
 
   
@@ -36,7 +36,7 @@
 
   export default {
      
-      components: { Navbar, ActivityCardEditable },
+      components: { Navbar, ActivityCard },
       methods:{
         changePage(){
           RoutineApi.getAll(null,this.currPage-1,8).then(data=>{this.Routines=data;});
