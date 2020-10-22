@@ -7,7 +7,7 @@
 
     <v-container>
       <v-row class="mb-6" no-gutters>
-        <v-col v-for="Routine in Routines.result" :key="Routine.id">
+        <v-col v-for="Routine in Routines.results" :key="Routine.id">
           
           <ActivityCard :maxWidth="250" class="mt-4"
             :data="{title:Routine.name,desc:Routine.detail}" :detailComponent="detailComponent"/>
