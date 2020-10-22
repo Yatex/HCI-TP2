@@ -1,6 +1,6 @@
 import { Api } from './api.js';
 
-export { RoutineApi,/* Routine*/ };
+export { RoutineApi,/*Routines, Routine */};
 
 class RoutineApi {
   static get url() {
@@ -26,10 +26,6 @@ class RoutineApi {
     return await Api.get(`${RoutineApi.url}/${id}`,true,  controller);
   }
 
-  static async getAll(controller,difficulty,page) {
-    return await Api.get(RoutineApi.url+"?difficulty="+difficulty+"&page="+page+"&size=8&orderBy=dateCreated&direction=asc", true, controller);
-  }
-
   static async addCycle(routineId, cycle, controller) {
     // console.log(`${RoutineApi.url}/${routineId}/cycles`);
     // console.log(JSON.stringify(cycle));
@@ -41,6 +37,13 @@ class RoutineApi {
     // console.log(JSON.stringify(exercise));
     return await Api.post(`${RoutineApi.url}/${routineId}/cycles/${cycleId}/exercises`, true, exercise, controller);
   }
+  static async getAll(controller,page,size) {
+      return await Api.get(RoutineApi.url, true,{page,size}, controller);
+    }
+
+    
+
+
 }
 /*
 class Routine {
@@ -57,17 +60,17 @@ class Routine {
         this.creator=creator;
         this.category=category;
     }
-}
-
-class Routines {
-    constructor(totalCount,orderBy) {
-
-        this.totalCount=totalCount;
-        this.orderBy=orderBy;
-        this.direction;
-        this.results= [];
-        this.size;
-        this.page;
-        this.isLastPage;
-    }
 }*/
+
+// class Routines {
+//     constructor(totalCount,orderBy) {
+
+//         this.totalCount=totalCount;
+//         this.orderBy=orderBy;
+//         this.direction;
+//         this.results= [];
+//         this.size;
+//         this.page;
+//         this.isLastPage;
+//     }
+// }
