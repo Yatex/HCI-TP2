@@ -85,7 +85,7 @@
         <v-stepper-content step="3">
           <v-list two-line v-if="exercises.length > 0">
             <template v-for="exercise in exercises">
-              <v-list-item :key="exercise.name">
+              <v-list-item :key="exercise.id">
                 <v-list-item-content>
                   <v-list-item-title v-text="exercise.name"/>
                   <v-list-item-subtitle v-text="exercise.type.capitalize()"/>
@@ -164,7 +164,7 @@
 
       addCycle(cycle){
         this.showAddCycleDialog = false;
-        cycle.id = this.cycles.length;
+        cycle.id = this.cid++;
         this.cycles.push(cycle);
       },
 
@@ -197,8 +197,9 @@
 
       addExercise(exercise){
         this.showAddExerciseDialog = false;
-        exercise.id = this.exercises.length;
+        exercise.id = this.eid++;
         this.exercises.push(exercise);
+        console.log(this.exercises);
       },
 
       removeExercise(exercise){
@@ -271,6 +272,7 @@
       showAddCycleDialog: false,
       showAddExerciseDialog: false,
       showSnackbar: false, snackbarText: '',
+      cid: 3, eid: 1,
       difficulties: [
         {name: 'Rookie', value: 'rookie'}, {name: 'Begginer', value: 'begginer'},
         {name: 'Intermediate', value: 'intermediate'}, {name: 'Advanced', value: 'advanced'},

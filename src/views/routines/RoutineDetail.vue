@@ -51,14 +51,7 @@
 
 
 <script>
-    import mockExercises from '../../mock_data/exercices'
-
     export default {
-      props: ['data'],
-      methods: {
-        getExercise: function(id){
-          return mockExercises[id]
-        }
-      }
+      props: ['id']
     }
 </script>

@@ -49,7 +49,7 @@
 
         exercise: {
           name: 'Jumping frog 2', detail: "Ever felt like a frog? Let it be!",
-          type: 'Exercise', cycle: 1, repetitions: 2, duration: 1
+          type: 'exercise', cycle: 1, repetitions: 2, duration: 1
         },
 
         rules: {
