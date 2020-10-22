@@ -4,7 +4,7 @@
         <v-card-title>{{data.title}}</v-card-title>
         <v-card-text>{{data.desc}}</v-card-text>
         <v-card-actions class="justify-space-around">
-            <component :is="detailComponent" :data="data"/>
+            <component :is="detailComponent" :data="data" :id="data.id"/>
             <v-btn icon>
                 <v-icon>mdi-heart</v-icon>
             </v-btn>

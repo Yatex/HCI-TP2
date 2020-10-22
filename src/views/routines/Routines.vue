@@ -8,7 +8,7 @@
         <v-col v-for="Routine in Routines.results" :key="Routine.id">
           
           <ActivityCardEditable :maxWidth="250" class="mt-4"
-            :data="{title:Routine.name,desc:Routine.detail}" :detailComponent="detailComponent"/>
+            :data="{title:Routine.name,desc:Routine.detail,id:Routine.id}"  :detailComponent="detailComponent"/>
           
         </v-col>
       </v-row>
@@ -16,7 +16,7 @@
     </v-container>
     
     <div v-else>
-      Here you can add the cycles for the routine
+      Here you can see all your routines
     </div>
 
     <AddRoutine/>
