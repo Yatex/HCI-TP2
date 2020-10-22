@@ -3,9 +3,7 @@
 
     <Navbar/>
 
-  
-
-    <v-container>
+    <v-container v-if="Routines.totalCount > 0">
       <v-row class="mb-6" no-gutters>
         <v-col v-for="Routine in Routines.results" :key="Routine.id">
           
@@ -16,7 +14,10 @@
       </v-row>
       <v-pagination v-model="currPage" :length="amountOfPages" @input="changePage" ></v-pagination>
     </v-container>
-   
+    
+    <div v-else>
+      Here you can add the cycles for the routine
+    </div>
 
     <AddRoutine/>
 
