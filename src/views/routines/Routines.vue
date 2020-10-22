@@ -7,7 +7,7 @@
 
     <v-container>
       <v-row class="mb-6" no-gutters>
-        <v-col v-for="Routine in Routines.result" :key="Routine.id">
+        <v-col v-for="Routine in Routines.results" :key="Routine.id">
           
           <ActivityCardEditable :maxWidth="250" class="mt-4"
             :data="{title:Routine.name,desc:Routine.detail}" :detailComponent="detailComponent"/>
@@ -37,14 +37,17 @@
       components: { Navbar, ActivityCardEditable, AddRoutine},
       methods:{
         changePage(){
-          UserApi.getAllRoutines(null,this.currPage-1,8).then(data=>{this.Routines=data.results;});
+          UserApi.getAllRoutines(null,this.currPage-1,8).then(data=>{this.Routines=data;});
         },
         fillRoutines(){
-          UserApi.getAllRoutines(null,this.currPage-1,8).then(data=>{this.Routines=data.results;});
+          UserApi.getAllRoutines(null,this.currPage-1,8).then(data=>{
+            this.Routines=data;
+            this.amountOfPages=Math.floor(this.Routines.totalCount / this.Routines.size) + 1;}
+            );
         },
-        amountOfPagesFunc(){
-          this.amountOfPages=Math.floor(this.Routines.totalCount / this.Routines.size) + 1;
-        }
+        // amountOfPagesFunc(){
+        //   this.amountOfPages=Math.floor(this.Routines.totalCount / this.Routines.size) + 1;
+        // }
         
       }, 
       computed: {
@@ -53,12 +56,20 @@
     data: ()=>({
       currPage: 1,
       detailComponent: RoutineDetail,
-      Routines:{},
+      Routines:{
+        totalCount: undefined,
+        orderBy: '',
+        direction: '',
+        results: [],
+        size: undefined,
+        page: undefined,
+        isLastPage: true
+      },
       amountOfPages:undefined 
     }),
      created(){
         this.fillRoutines();
-        this.amountOfPagesFunc();
+       // this.amountOfPagesFunc();
       }
   } 
 </script>

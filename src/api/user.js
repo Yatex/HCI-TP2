@@ -33,7 +33,7 @@ class UserApi {
         Api.token = undefined;
     }
     static async getAllRoutines(controller,page,size) {
-        return await Api.get(`${UserApi.url}/current/routines`, true,{page,size}, controller);
+        return await Api.get(`${UserApi.url}/current/routines/`, true,{page,size}, controller);
     }
 }
 
