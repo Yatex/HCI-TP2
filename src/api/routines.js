@@ -7,8 +7,11 @@ class RoutineApi {
     return `${Api.baseUrl}/routines`;
   }
 
+  static rid = 0;
   static async add(routine, controller) {
-   return await Api.post(RoutineApi.url, true, routine, controller);
+    // console.log(RoutineApi.url);
+    // console.log(JSON.stringify(routine));
+    return await Api.post(RoutineApi.url, true, routine, controller);
   }
 
   static async modify(routine, controller) {
@@ -25,6 +28,18 @@ class RoutineApi {
 
   static async getAll(controller,difficulty,page) {
     return await Api.get(RoutineApi.url+"?difficulty="+difficulty+"&page="+page+"&size=8&orderBy=dateCreated&direction=asc", true, controller);
+  }
+
+  static async addCycle(routineId, cycle, controller) {
+    // console.log(`${RoutineApi.url}/${routineId}/cycles`);
+    // console.log(JSON.stringify(cycle));
+    return await Api.post(`${RoutineApi.url}/${routineId}/cycles`, true, cycle, controller);
+  }
+
+  static async addExercise(routineId, cycleId, exercise, controller) {
+    // console.log(`${RoutineApi.url}/${routineId}/cycles/${cycleId}/exercises`);
+    // console.log(JSON.stringify(exercise));
+    return await Api.post(`${RoutineApi.url}/${routineId}/cycles/${cycleId}/exercises`, true, exercise, controller);
   }
 }
 /*
