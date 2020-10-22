@@ -32,6 +32,9 @@ class UserApi {
         Api.post(`${UserApi.url}/logout`, true, controller);
         Api.token = undefined;
     }
+    static async getAllRoutines(controller,page,size) {
+        return await Api.get(`${UserApi.url}/current/routines/`, true,{page,size}, controller);
+    }
 }
 
 class Credentials {

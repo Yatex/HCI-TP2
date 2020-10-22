@@ -2,41 +2,72 @@
   <div>
 
     <Navbar/>
-    
+
+  
+
     <v-container>
       <v-row class="mb-6" no-gutters>
-        <v-col v-for="routine in routines" :key="routine.id">
+        <v-col v-for="Routine in Routines.result" :key="Routine.id">
           
           <ActivityCard :maxWidth="250" class="mt-4"
-            :data="routine" :detailComponent="detailComponent"/>
+            :data="{title:Routine.name,desc:Routine.detail}" :detailComponent="detailComponent"/>
           
         </v-col>
       </v-row>
-      <v-pagination v-model="currPage" :length="amountOfPages"></v-pagination>
+      <v-pagination v-model="currPage" :length="amountOfPages" @input="changePage" ></v-pagination>
     </v-container>
+    
 
   </div>
 </template>
 
 <script>
+  
   import RoutineDetail from './RoutineDetail';
   import Navbar from '../../components/Navbar';
   import ActivityCard from '../../components/ActivityCard';
-  import mockRoutines from '../../mock_data/routines';
+
+
+  
+
+
+
+  import { RoutineApi } from '../../api/routines.js';
 
   export default {
-    components: { Navbar, ActivityCard },
-    computed: {
-      routines: function(){
-        return mockRoutines.slice(this.currPage*8 - 8,this.currPage*8);
-      },
-      amountOfPages: function(){
-        return Math.floor(mockRoutines.length / 8) + 1;
-      }
+     
+      components: { Navbar, ActivityCard },
+      methods:{
+        changePage(){
+          RoutineApi.getAll(null,this.currPage-1,8).then(data=>{this.Routines=data;});
+        },
+        fillRoutines(){
+          RoutineApi.getAll(null,this.currPage-1,8).then(data=>{
+            this.Routines=data;
+            this.amountOfPages=Math.floor(this.Routines.totalCount / this.Routines.size) + 1;}
+          );
+        },
+        
+      }, 
+      computed: {
+        
     },
     data: ()=>({
       currPage: 1,
-      detailComponent: RoutineDetail
-    })
-  }
+      detailComponent: RoutineDetail,
+      Routines:{
+        totalCount: undefined,
+        orderBy: '',
+        direction: '',
+        results: [],
+        size: undefined,
+        page: undefined,
+        isLastPage: true
+      },
+      amountOfPages:undefined 
+    }),
+     created(){
+        this.fillRoutines();
+      }
+  } 
 </script>
