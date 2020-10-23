@@ -62,7 +62,7 @@
           repetitions: [ v => !!v || 'Repetitions is required', v => v > 0
             || 'Repetitions must be positive'],
           type: [ v => !!v || 'Type is required'],
-          cycle: [ v => !!v || 'Cycle is required'],
+          cycle: [ v => v!=undefined || 'Cycle is required'],
         },
       })
   }

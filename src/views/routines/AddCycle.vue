@@ -12,7 +12,7 @@
           <v-select label="Type" :items="types" v-model="cycle.type"
             :rules="rules.type" item-text="name" item-value="value" outlined/>
 
-          <v-textarea label="detail" v-model="cycle.detail"
+          <v-textarea label="Detail" v-model="cycle.detail"
             :rules="rules.detail" outlined/>
 
           <v-text-field label="Repetitions" v-model="cycle.repetitions"

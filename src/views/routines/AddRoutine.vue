@@ -31,7 +31,7 @@
             <v-select label="Difficulty" :items="difficulties" item-text="name" item-value="value"
               :rules="rules.difficulty" v-model="routine.difficulty" outlined/>
 
-            <v-textarea label="detail" v-model="routine.detail"
+            <v-textarea label="Detail" v-model="routine.detail"
               :rules="rules.detail" outlined/>
 
             <v-btn color="primary" @click="verifyRoutine">
@@ -88,7 +88,7 @@
               <v-list-item :key="exercise.id">
                 <v-list-item-content>
                   <v-list-item-title v-text="exercise.name"/>
-                  <v-list-item-subtitle v-text="exercise.type.capitalize()"/>
+                  <v-list-item-subtitle v-text="getCycleById(exercise.cycle).name"/>
                 </v-list-item-content>
 
                 <v-list-item-action>
@@ -166,7 +166,8 @@
       addCycle(cycle){
         this.showAddCycleDialog = false;
         cycle.id = this.cycles.length;
-        this.cycles.push(cycle);
+        let cycleCopy = Object.assign({}, cycle);
+        this.cycles.push(cycleCopy);
       },
 
       removeCycle(cycle){
@@ -175,7 +176,9 @@
 
       verifyCycles(){
         for(let i=0; i<this.cycles.length; i++){
-          if((i == 0 && this.cycles[i].type != "warmup") || (i == this.cycles.length-1 && this.cycles[i].type != "cooldown")){
+          if( (i == 0 && this.cycles[i].type != "warmup")
+              || (i == this.cycles.length-1 && this.cycles[i].type != "cooldown")
+          ){
             this.snackbarText = "Warmup cycle should be first and cooldown cycle should be last";
             this.showSnackbar = true;
             return;
@@ -194,12 +197,17 @@
         }
       },
 
+      getCycleById(id){
+        return this.cycles.filter(c => c.id == id)[0];
+      },
+
       // --------------------------  EXERCISES  ------------------------------------------
 
       addExercise(exercise){
         this.showAddExerciseDialog = false;
-        exercise.id = this.exercises.length;
-        this.exercises.push(exercise);
+        let exerciseCopy = Object.assign({}, exercise);
+        exerciseCopy.id = this.exercises.length;
+        this.exercises.push(exerciseCopy);
       },
 
       removeExercise(exercise){
@@ -207,10 +215,17 @@
       },
 
       async verifyExercises(){
-        if(this.exercises.length == 0){
-          this.snackbarText = 'You have to add at least 1 exercise';
+        let cycleIds = this.exercises.reduce((r, e) => {
+          r[e.cycle] = [...r[e.cycle] || [], e];
+          return r;
+        }, {});
+
+        if(Object.keys(cycleIds).length < this.cycles.length){
+          this.snackbarText = 'You have to add at least 1 exercise per cycle';
           this.showSnackbar = true;
         }else{
+          this.snackbarText = 'Verified';
+          this.showSnackbar = true;
           this.upload();
         }
       },
@@ -295,25 +310,30 @@
         category: {id: 1},
       },
 
-      cycles: [],
+      cycles: [
+        {id: 0, name: 'Move The Booty 1', detail: "It's time to move the ass!", type: 'warmup', repetitions: 2},
+        {id: 1, name: 'Shake The Booty 1', detail: "It's time to shake the ass!", type: 'exercise', repetitions: 2},
+        {id: 2, name: 'Cool The Booty 1', detail: "It's time to cool the ass!", type: 'cooldown', repetitions: 2},
+      ],
 
-      exercises: []
-
-      // cycles: [
-      //   {id: 0, name: 'Move The Booty', detail: "It's time to move the ass!", type: 'warmup', repetitions: 2},
-      //   {id: 1, name: 'Shake The Booty', detail: "It's time to shake the ass!", type: 'exercise', repetitions: 2},
-      //   {id: 2, name: 'Cool The Booty', detail: "It's time to cool the ass!", type: 'cooldown', repetitions: 2},
-      // ],
-
-      // exercises: [
-      //   {id: 0, name: 'Jumping frog', detail: "Ever felt like a frog? Let it be!", type: 'exercise', cycle: 1, repetitions: 6, duration: 10}
-      // ]
+      exercises: [
+        {id: 0, name: 'Jumping frog', detail: "Ever felt like a frog? Let it be!", type: 'exercise', cycle: 1, repetitions: 6, duration: 10}
+      ]
       
     }),
 
     asyncComputed: {
       async categories(){
-        return await CategoryApi.getAll();
+        try{
+
+          return await CategoryApi.getAll();
+
+        }catch(e){
+
+          this.snackbarText = "Ups! Something went wrong"
+          this.showSnackbar = true;
+
+        }
       }
     },
 
