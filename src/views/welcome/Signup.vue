@@ -50,6 +50,33 @@
             </v-card-text>
         </v-col>
 
+        <v-dialog v-model="dialog" max-width="290" >
+        <v-card>
+          <v-card-title class="headline">
+            Verify your email
+          </v-card-title>
+          <v-card-subtitle class="mt-1">
+              Check your email
+          </v-card-subtitle>
+  
+          <v-card-text>
+              <v-text-field label="Enter Code" type="text" color="teal-accent-3" v-model="code"/>
+          </v-card-text>
+  
+          <v-card-actions>
+            <v-btn color="grey lighten-1" text @click="dialog = false" >
+              Cancel
+            </v-btn>
+
+            <v-spacer />
+
+            <v-btn color="primary text-center black--text" class="accent" text @click="verifyEmail()" >
+              Verify
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+
         <v-overlay :value="showOverlay">
             <v-progress-circular indeterminate size="64"/>
         </v-overlay>
@@ -74,6 +101,8 @@
         genders: [{text:'Male', value:'male'}, {text:'Female', value:'female'}, {text:'Other', value:'other'}],
         date: '2020-01-01',
         menu: false,
+        code: '',
+        dialog: false,
 
         validForm: false,
         showPass: false,
@@ -110,6 +139,21 @@
         save (date) {
             this.$refs.menu.save(date)
         },
+        async verifyEmail(){
+            try{
+                this.showOverlay = true;
+                await UserApi.verifyEmail({
+                    "email": this.email,
+                    "code": this.code,
+                });
+                this.dialog = false;
+                this.snackbarText = 'Email verified! Welcome!';
+            }catch(e){
+                this.snackbarText = 'Ups! Something went wrong with the verification';
+            }
+            this.showOverlay = false;
+            this.showSnackbar = true;
+        },
         async signUp(){
             if(this.$refs.form.validate()){
                 try{
@@ -123,11 +167,11 @@
                         "birthdate": d.getTime(),
                         "email": this.email,
                     });
-
-                    this.snackbarText = 'Email confirmation sent! Please complete it';
+                    this.dialog = true;
+                    this.snackbarText = 'Email confirmation sent! Please verify you email';
                 }catch(e){
                     if(e.code == 2)
-                        this.snackbarText = 'This email already exists, please sign in';
+                        this.snackbarText = 'This email or username already exists';
                     else
                         this.snackbarText = 'Ups! Something went wrong';
                     

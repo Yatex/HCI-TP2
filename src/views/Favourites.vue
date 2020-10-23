@@ -72,7 +72,7 @@ import { UserApi } from '../api/user';
         exerciseDetailComponent: ExerciseDetail,
         routineDetailComponent: RoutineDetail,
         currPage: 1,
-        //img: require('../../assets/gym-animated.webp'),
+        img: require('../assets/gym-animated.webp'),
         detailComponent: RoutineDetail,
         Routines:{
           totalCount: undefined,

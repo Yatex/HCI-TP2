@@ -28,6 +28,10 @@
 
         </v-card-actions>
 
+        <v-snackbar v-model="showSnackbar">
+            {{ snackbarText }}
+        </v-snackbar>
+
     </v-card>
 </template>
 
@@ -41,9 +45,14 @@
         data: function(){
             return {
                 showDetailDialog: false,
+                showSnackbar: false,
+                snackbarText: '',
+
                 activity: Vue.util.extend({}, this.data),
-                img: require('../assets/gym.jpg'),
-                isFavourite: false,
+                isFavourite:false,
+                totalCount:0,
+               
+                img: require('../assets/gym.jpg'),          
             }
         },
 
@@ -59,30 +68,25 @@
             async favouriteRoutine(){
                 try{
 
+                    this.showOv
                     await UserApi.addFavouriteRoutine(this.activity.id, null);
 
                 }catch(e){
                      
                     if(e.code == 2){
-                        // this.showSnackbar = true;
-                        // this.snackbarText = 'Its already a Favourite of yours'; 
-                        // this.showSnackbar = true;
-                        // console.log('esto 1');
+                        this.showSnackbar = true;
+                        this.snackbarText = 'Its already a Favourite of yours'; 
                         this.isFavourite=true;
                     }else{
-                        // this.showSnackbar = true;
-                        // this.snackbarText = 'Ups! Something went wrong'; 
-                        // this.showSnackbar = true;
-                        // console.log('esto 2');
+                        this.showSnackbar = true;
+                        this.snackbarText = 'Ups! Something went wrong'; 
                     }
                               
                     console.log(e);
 
                 }
+
                 this.isFavourite=true;
-                // this.showOverlay = false;
-                // this.snackbarText = 'Success!'; 
-                // this.showSnackbar = true;
             },
 
             async unfavouriteRoutine(){
@@ -105,8 +109,7 @@
                         // this.showSnackbar = true;
                         // console.log('esto 2');
                     }
-                
-               
+
                     console.log(e);
 
                 }
@@ -114,7 +117,33 @@
                 // this.showOverlay = false;
                 // this.snackbarText = 'Success!'; 
                 // this.showSnackbar = true;
+
+            },
+
+            async checkIfFavourite(){
+                await UserApi.getAllFavourites(null,0,10).then(data => {
+
+                    this.activity.totalCount=data.totalCount;
+
+                    while(this.activity.totalCount > 0){
+                        data.results.forEach(element => {
+                            if(element.id==this.activity.id)
+                                this.isFavourite=true;
+                        });
+
+                        this.activity.totalCount -= data.results.length;
+
+                        if(this.activity.totalCount>0)
+                            UserApi.getAllFavourites(null,0,10).then(data2=>{data=data2});       
+                    }
+
+                });
+                
             }
+        },
+
+        created(){
+            this.checkIfFavourite();
         }
     };
 </script>
