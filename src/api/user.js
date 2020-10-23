@@ -44,6 +44,9 @@ class UserApi {
      static async delete(controller) {
         return await Api.delete(`${UserApi.url}/current`, true, controller);
     }
+    static async addFavouriteRoutine(routine_id,controller) {
+        return await Api.post(`${UserApi.url}/current/routines/${routine_id}/favourites`, true, controller);
+    }
 }
 
 class Credentials {

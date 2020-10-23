@@ -174,7 +174,7 @@ export default {
         async upload(){
         
         this.showOverlay = true;
-
+      
         try{
 
          await UserApi.modify({
