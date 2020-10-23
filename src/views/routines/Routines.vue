@@ -8,7 +8,7 @@
         <v-col v-for="Routine in Routines.results" :key="Routine.id">
           
           <ActivityCard :maxWidth="250" class="mt-4" :own="isOwn()"
-            :data="Routine" :detailComponent="detailComponent"/>
+            :data="Routine" :isRoutine="true" :detailComponent="detailComponent"/>
           
         </v-col>
       </v-row>
