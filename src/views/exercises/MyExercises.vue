@@ -7,7 +7,7 @@
       <v-row class="mb-6" no-gutters>
         <v-col v-for="exercise in exercises" :key="exercise.id">
 
-          <ActivityCard :maxWidth="250" class="mt-4" :own="true"
+          <ActivityCard :maxWidth="250" class="mt-4" :own="true" :isRoutine="false"
             :data="exercise" :detailComponent="detailComponent"/>
 
         </v-col>
@@ -28,13 +28,6 @@
 
   export default {
     methods: {
-      async test(){
-        for(let i=0; i<5; i++){
-          await new Promise(r => setTimeout(r, 1000));
-          console.log(i);
-        }
-        console.log('Skipped');
-      },
       async getExercises(){
 
         let ownRoutines = await UserApi.getAllRoutines(null, this.currPage-1, 8);

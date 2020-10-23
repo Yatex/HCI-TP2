@@ -9,7 +9,7 @@
           <v-text-field label="Name" v-model="exercise.name"
             :rules="rules.name" outlined/>
 
-          <v-textarea label="detail" v-model="exercise.detail"
+          <v-textarea label="Detail" v-model="exercise.detail"
             :rules="rules.detail" outlined/>
 
           <v-text-field label="Duration" v-model="exercise.duration"
