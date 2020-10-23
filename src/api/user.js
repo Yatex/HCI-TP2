@@ -35,6 +35,15 @@ class UserApi {
     static async getAllRoutines(controller,page,size) {
         return await Api.get(`${UserApi.url}/current/routines/`, true,{page,size}, controller);
     }
+    static async getUser(controller) {
+        return await Api.get(`${UserApi.url}/current`, true,null, controller);
+    }
+    static async modify(user, controller) {
+        return await Api.put(`${UserApi.url}/current`, true, user, controller);
+    }
+     static async delete(controller) {
+        return await Api.delete(`${UserApi.url}/current`, true, controller);
+    }
 }
 
 class Credentials {
