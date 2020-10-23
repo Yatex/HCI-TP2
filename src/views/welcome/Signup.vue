@@ -32,9 +32,6 @@
                     <v-text-field label="Password" prepend-icon="lock" :type="showPass ? 'text' : 'password'" color="teal-accent-3" :append-icon="showPass ? 'mdi-eye' : 'mdi-eye-off'"
                          v-model="password" :rules="passwordRules" @click:append="showPass = !showPass"/>
 
-                    <v-text-field label="Confirm Password" prepend-icon="lock" :type="showConfPass ? 'text' : 'password'" color="teal-accent-3" :append-icon="showConfPass ? 'mdi-eye' : 'mdi-eye-off'"
-                        v-model="confirmPassword" @click:append="showConfPass = !showConfPass"/>
-
                     <v-menu ref="menu" v-model="menu" :close-on-content-click="false" transition="scale-transition" offset-y min-width="290px" >
                         <template v-slot:activator="{ on, attrs }">
                             <v-text-field v-model="date" label="Birthday date" prepend-icon="mdi-calendar" readonly v-bind="attrs" v-on="on" ></v-text-field>
@@ -73,12 +70,12 @@
         name: 'Test User', email: 'test2@test.com',
         password: 'Password1', confirmPassword: 'Password1',
         username: 'Username',
-        gender: '',
+        gender: 'other',
         genders: [{text:'Male', value:'male'}, {text:'Female', value:'female'}, {text:'Other', value:'other'}],
-        date: '',
+        date: '2020-01-01',
         menu: false,
 
-        validForm: true,
+        validForm: false,
         showPass: false,
         showConfPass: false,
 

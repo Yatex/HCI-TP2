@@ -53,6 +53,11 @@ class RoutineApi {
     // console.log(JSON.stringify(exercise));
     return await Api.post(`${RoutineApi.url}/${routineId}/cycles/${cycleId}/exercises`, true, exercise, controller);
   }
+
+  static async updateExercise(routineId, cycleId, exerciseId, data, controller) {
+      return await Api.put(`${RoutineApi.url}/${routineId}/cycles/${cycleId}/exercises/${exerciseId}`,
+        true, data, controller);
+  }
   
   
 

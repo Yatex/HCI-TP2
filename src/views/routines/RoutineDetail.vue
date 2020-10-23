@@ -49,6 +49,7 @@
                   <v-progress-circular indeterminate/>
                 </div>
                 <div v-else-if="snapshot.isSettled">
+                  
                   <v-col v-for="exercise in snapshot.result" :key="exercise.id">
                     {{exercise.name}} - {{exercise.duration}}
                   </v-col>
