@@ -59,11 +59,37 @@
 
         </v-expansion-panels>
 
-      <v-card-actions>
-        <v-btn color="accent darken-3" text>
-          Add to Favs
+      <v-card-actions> 
+  
+      <v-dialog v-model="dialog" max-width="290" >
+        <v-card>
+          <v-card-title class="headline">
+            Delete {{ data.name }}
+          </v-card-title>
+  
+          <v-card-text>
+            This can not be undone! Continue?
+          </v-card-text>
+  
+          <v-card-actions>
+            <v-btn color="red darken-1" text @click="deleteRoutine()" >
+              Yes, delete
+            </v-btn>
+            <v-spacer />
+            <v-btn color="grey lighten-1" text @click="dialog = false" >
+              No
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+        <v-btn color="red darken-1" @click.stop="dialog = true" text>
+          Delete
         </v-btn>
-        <v-btn v-if="editable" color="accent darken-3" text>
+        <v-spacer />
+        <v-btn color="accent darken-3" text>
+          Add to Favourites
+        </v-btn>
+        <v-btn color="accent darken-3" :own="isOwn()" text>
           Edit Excercise
         </v-btn>
       </v-card-actions>
@@ -82,13 +108,21 @@
     props: ['data', 'editable'],
 
     data: () => ({
-      img: require('../../assets/gym.jpg')
+      img: require('../../assets/gym.jpg'),
+      dialog: false
     }),
 
     methods: {
       async getExercises(id){
         return await RoutineApi.getExercises(this.data.id, id);
       },
+      deleteRoutine(){
+        RoutineApi.delete(this.data.id);
+        this.dialog = false;
+      },
+      isOwn(){
+        return this.$route.params.of == "own";
+      }
     },
 
     asyncComputed: {

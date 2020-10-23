@@ -15,12 +15,28 @@
       <v-pagination v-model="currPage" :length="amountOfPages" @input="changePage" ></v-pagination>
     </v-container>
     
-    <div v-else>
-      Here you can see all your routines
+    <div v-else class="text-h5 mb-6 text-center mt-15">
+      <div v-if="isOwn()">
+        <h1>You do not have any routines! Add one to start now!</h1>
+        <v-row>
+          <v-spacer />
+          <v-img class="mt-6" :src="img" max-width="500"></v-img>
+          <v-spacer />
+        </v-row>
+      </div>
+      <div v-else>
+        <h1>There are no routines yet! Add one in "My Routines"!</h1>
+        <v-row>
+          <v-spacer />
+          <v-img class="mt-6" :src="img" max-width="500"></v-img>
+          <v-spacer />
+        </v-row>
+      </div>
     </div>
 
-    <AddRoutine/>
-
+    <div v-if="isOwn()">
+      <AddRoutine/>
+    </div>
   </div>
 </template>
 
@@ -58,6 +74,7 @@
 
     data: ()=>({
       currPage: 1,
+      img: require('../../assets/gym-animated.webp'),
       detailComponent: RoutineDetail,
       Routines:{
         totalCount: undefined,
