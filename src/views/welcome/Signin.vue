@@ -62,6 +62,11 @@
             <div class="text-center">
                 <v-btn rounded outlined v-on:click="$emit('go-signup')">SIGN UP</v-btn>
             </div>
+            <v-row>
+                <v-spacer />
+                    <v-img src="../../assets/logo.png" width="100" class="mt-2"></v-img>
+                <v-spacer />
+            </v-row>
         </v-col>
 
         <v-overlay :value="showOverlay">

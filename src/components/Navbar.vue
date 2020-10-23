@@ -3,8 +3,8 @@
         <v-app-bar fixed app dark color="primary">
 
             <v-toolbar-title>
-                <v-btn x-large text to="/main" color="secondary">
-                    LOGO
+                <v-btn width="50" height="50" to="/main">
+                    <v-img src="../assets/logo.png" width="50"></v-img>
                 </v-btn> 
             </v-toolbar-title>
 
