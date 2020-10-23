@@ -12,7 +12,7 @@
               </v-row>
             </v-col>
             <v-col cols="5" md="4">
-              <ImageTitleCard :card="{ title: 'Poner algo aca', img:'https://images.pexels.com/photos/2294354/pexels-photo-2294354.jpeg?cs=srgb&dl=pexels-li-sun-2294354.jpg&fm=jpg' }"/>
+              <ImageTitleCard :card="{ title: 'Profile', img:'https://images.pexels.com/photos/2294354/pexels-photo-2294354.jpeg?cs=srgb&dl=pexels-li-sun-2294354.jpg&fm=jpg', link:'/editprofile' }"/>
             </v-col>
             <v-row no-gutters>
                 <HomeCard topLine='Crear nuevos Ejercicios' bottomLine='Armar instructivos de un ejercicio.'/>

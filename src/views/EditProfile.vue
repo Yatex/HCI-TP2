@@ -6,7 +6,7 @@
       <v-row justify="center">
         <v-col cols="12" md="8">
           <v-card-text>
-            <h1 class="text-center display-1">Change Personal Details</h1>
+            <h1 class="text-center display-1">{{this.username}}'s Profile</h1>
           </v-card-text>
           <v-form ref="form">
 <!--             
@@ -34,18 +34,48 @@
             
             <v-select :items="genders" label="Gender" prepend-icon="mdi-gender-male-female" v-model="gender" item-value="value" item-text="text" :readonly="rdonly"></v-select>
           </v-form>
+          <v-dialog v-model="dialog" max-width="290" >
+            <v-card>
+              <v-card-title class="headline">
+                Delete {{ this.username }}
+              </v-card-title>
+      
+              <v-card-text>
+                This can not be undone! Continue?
+              </v-card-text>
+      
+              <v-card-actions>
+                <v-btn color="red lighten-1" text @click="Delete()" >
+                  Yes, delete
+                </v-btn>
+                <v-spacer />
+                <v-btn color="grey darken-1" text @click="dialog = false" >
+                  No
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
           <div v-if="rdonly">
-            <v-btn x-large color="accent" @click="enableEdit">
-                Edit
+            <v-row>
+            <v-btn color="red darken-1" @click.stop="dialog = true" text>
+              Delete User
             </v-btn>
+            <v-spacer />
+            <v-btn color="primary text-center black--text" class="accent" @click="enableEdit">
+                Edit Profile
+            </v-btn>
+            </v-row>
           </div>
           <div v-else>
-            <v-btn x-large color="accent" @click="saveChanges">
-                Save
-            </v-btn>
-            <v-btn x-large color="grey lighten-1" @click="Cancel">
+            <v-row>
+            <v-btn color="grey lighten-1" @click="Cancel">
                 Cancel
             </v-btn>
+            <v-spacer />
+            <v-btn color="primary text-center black--text" class="accent" @click="saveChanges">
+                Save
+            </v-btn>
+            </v-row>
           </div>
           <v-overlay :value="showOverlay">
             <v-progress-circular indeterminate size="64"/>
@@ -55,6 +85,13 @@
               {{ snackbarText }}
           </v-snackbar>
         </v-col>
+      </v-row>
+    </v-container>
+
+  </v-app>
+  </div>
+</template>
+
 <!-- CREO Q ES MEJOR PONERLO APARTE ESTO PERO QUEDA RE VACIA ESTA PAG, ideas?-->
         <!-- <v-col cols="12" md="6">
           <v-card-text>
@@ -73,24 +110,6 @@
             </v-btn>
           </v-card-actions>
         </v-col> -->
-      </v-row>
-    </v-container>
-    <div v-if="this.delete==1"> 
-      <v-btn x-large block color="red darken-1" @click="Deletion_sequence">
-        Delete User ?
-      </v-btn>
-    </div>
-    <div v-if="this.delete==0">
-      <v-btn x-large block color="red darken-1" @click="Delete">
-       Press again to Delete User PERMANENTLY
-      </v-btn>
-    </div>
-
-  </v-app>
-  </div>
-</template>
-
-
 
 
 <script>
@@ -104,6 +123,7 @@ export default {
         password: '', 
         confirmPassword: '',
         username: '',
+        dialog: false,
         gender: '',
         phone:'', //falta phone rules
         genders: [{text:'Male', value:'male'}, {text:'Female', value:'female'}, {text:'Other', value:'other'}],
@@ -202,6 +222,7 @@ export default {
       },
       async Delete(){
         this.showOverlay = true;
+        this.dialog = false;
 
         try{
 
@@ -218,9 +239,6 @@ export default {
         this.showSnackbar = true;
 
       },
-      Deletion_sequence(){
-        this.delete--;
-      }
 
         
         

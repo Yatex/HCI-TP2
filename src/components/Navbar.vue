@@ -16,10 +16,6 @@
             <v-btn text to="/favourites"> Favourites </v-btn>
 
             <v-spacer></v-spacer>
-    
-            <v-btn icon color="secondary">
-                <v-icon>mdi-magnify</v-icon>
-            </v-btn>
 
             <v-menu bottom min-width="200px" rounded offset-y>
                 <template v-slot:activator="{ on }">
