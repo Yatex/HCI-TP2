@@ -19,9 +19,11 @@
 
             <v-menu bottom min-width="200px" rounded offset-y>
                 <template v-slot:activator="{ on }">
-                    <v-btn icon x-large v-on="on">
+                    <v-btn icon x-large v-on="on" @click="getUser()">
                     <v-avatar color="secondary" size="40">
-                        <span class="white--text headline">{{ user.initials }}</span>
+                        <v-icon dark>
+                             mdi-account-circle
+                        </v-icon>
                     </v-avatar>
                     </v-btn>
                 </template>
@@ -30,13 +32,15 @@
                     <v-list-item-content class="justify-center">
                         <div class="mx-auto text-center">
                             <v-avatar color="secondary">
-                                <span class="white--text headline">{{ user.initials }}</span>
+                                <v-icon dark>
+                                    mdi-account-circle
+                                </v-icon>
                             </v-avatar>
 
-                            <h3>{{ user.fullName }}</h3>
+                            <h3 class="mt-2">{{ this.user.fullName }}</h3>
 
                             <p class="caption mt-1">
-                                {{ user.email }}
+                                {{ this.user.email }}
                             </p>
 
                             <v-divider class="my-3"></v-divider>
@@ -71,9 +75,8 @@
         data: () => ({
             item: 0,
             user: {
-                initials: 'JD',
-                fullName: 'John Doe',
-                email: 'john.doe@doe.com'
+                fullName: '',
+                email: '',
             },
             items: [
                 { text: 'Profile', icon: 'mdi-pencil', to: '/editprofile' },
@@ -82,13 +85,20 @@
             ],
         }),
         methods: {
+            getUser(){
+                UserApi.getUser(null).then(data=>{
+                    this.user.fullName=data.fullName;
+                    this.user.email=data.email;
+            })
+            },
             signOut(){
-
                 UserApi.signout();
-
                 this.$router.push('/');
 
             }
+        },
+        created() {
+            this.getUser();
         }
     }
 </script>
