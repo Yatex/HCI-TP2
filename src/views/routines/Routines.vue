@@ -12,7 +12,7 @@
           
         </v-col>
       </v-row>
-      <v-pagination v-model="currPage" :length="amountOfPages" @input="changePage" ></v-pagination>
+      <v-pagination v-model="currPage" :length="amountOfPages" @input="getRoutines"/>
     </v-container>
     
     <div v-else class="text-h5 mb-6 text-center mt-15">
@@ -51,20 +51,13 @@
 
   export default {    
     methods:{
-      async changePage(){
+      async getRoutines(){
         if(this.$route.params.of == "own")
           this.Routines = await UserApi.getAllRoutines(null,this.currPage-1,8); 
         else
-          this.Routines = await RoutineApi.getAll(this.currPage-1, 8);
-      },
-
-      async fillRoutines(){
-        if(this.$route.params.of == "own"){
-          this.Routines = await UserApi.getAllRoutines(null,this.currPage-1,8); 
-        }else{
           this.Routines = await RoutineApi.getAll(this.currPage-1, 8);      
-        }
-        this.amountOfPages=Math.floor(this.Routines.totalCount / this.Routines.size) + 1;
+      
+        this.amountOfPages = Math.floor(this.Routines.totalCount / this.Routines.size) + 1;
       },
 
       isOwn(){
@@ -89,7 +82,7 @@
     }),
 
     created(){
-      this.fillRoutines();
+      this.getRoutines();
     },
 
     components: { Navbar, ActivityCard, AddRoutine},
