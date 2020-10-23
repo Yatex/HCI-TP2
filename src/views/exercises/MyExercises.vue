@@ -28,18 +28,18 @@
   import mockExercices from '../../mock_data/exercices';
 
   export default {
-      components: { Navbar, ActivityCard, AddExercise },
-      computed: {
-        exercises: function(){
-          return mockExercices.slice(this.currPage*8 - 8,this.currPage*8);
-        },
-        amountOfPages: function(){
-          return Math.floor(mockExercices.length / 8) + 1;
-        }
+    components: { Navbar, ActivityCard, AddExercise },
+    computed: {
+      exercises: function(){
+        return mockExercices.slice(this.currPage*8 - 8,this.currPage*8);
       },
-      data: ()=>({
-        currPage: 1,
-        detailComponent: ExerciseDetail
-      })
+      amountOfPages: function(){
+        return Math.floor(mockExercices.length / 8) + 1;
+      }
+    },
+    data: ()=>({
+      currPage: 1,
+      detailComponent: ExerciseDetail
+    })
   }
   </script>

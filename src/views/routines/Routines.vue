@@ -7,7 +7,7 @@
       <v-row class="mb-6" no-gutters>
         <v-col v-for="Routine in Routines.results" :key="Routine.id">
           
-          <ActivityCard :maxWidth="250" class="mt-4" :editable="$route.params.of == 'own'"
+          <ActivityCard :maxWidth="250" class="mt-4" :own="isOwn()"
             :data="Routine" :detailComponent="detailComponent"/>
           
         </v-col>
@@ -41,6 +41,7 @@
         else
           this.Routines = await RoutineApi.getAll(this.currPage-1, 8);
       },
+
       async fillRoutines(){
         if(this.$route.params.of == "own"){
           this.Routines = await UserApi.getAllRoutines(null,this.currPage-1,8); 
@@ -48,6 +49,10 @@
           this.Routines = await RoutineApi.getAll(this.currPage-1, 8);      
         }
         this.amountOfPages=Math.floor(this.Routines.totalCount / this.Routines.size) + 1;
+      },
+
+      isOwn(){
+        return this.$route.params.of == "own";
       }
     }, 
 
