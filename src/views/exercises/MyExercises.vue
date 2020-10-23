@@ -3,6 +3,10 @@
 
     <Navbar/>
     
+    <v-overlay :value="showOverlay">
+            <v-progress-circular indeterminate size="64"/>
+        </v-overlay>
+
     <v-container v-if="exercises.length > 0">
       <v-row class="mb-6" no-gutters>
         <v-col v-for="exercise in exercises" :key="exercise.id">
@@ -15,7 +19,7 @@
       <v-pagination v-model="currPage" :length="amountOfPages" @input="getExercises"/>
     </v-container>
 
-    <div v-else class="text-h5 mb-6 text-center mt-15">
+    <div v-else-if="!showOverlay" class="text-h5 mb-6 text-center mt-15">
       <div>
         <h1>You haven't created exercises yet! Add one in "My Routines"!</h1>
         <v-row>
@@ -63,6 +67,7 @@
         }
         
         this.amountOfPages = Math.ceil(ownRoutines.totalCount / ownRoutines.size);
+        this.showOverlay = false;
       }
     },
 
@@ -70,6 +75,7 @@
       currPage: 1,
       amountOfPages: undefined,
       exercises: [],
+      showOverlay: true,
       
       detailComponent: ExerciseDetail,
       img: require('../../assets/gym-animated.webp')

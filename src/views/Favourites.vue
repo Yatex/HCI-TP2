@@ -27,6 +27,10 @@
             Routines
           </v-expansion-panel-header> -->
 
+          <v-overlay :value="showOverlay">
+            <v-progress-circular indeterminate size="64"/>
+          </v-overlay>
+
           <v-container v-if="Routines.totalCount > 0">
             <v-row class="mb-6" no-gutters>
               <v-col v-for="Routine in Routines.results" :key="Routine.id">
@@ -39,7 +43,7 @@
             <v-pagination v-model="currPage" :length="amountOfPages" @input="getFavourites"/>
           </v-container>
           
-          <div v-else class="text-h5 mb-6 text-center mt-15">
+          <div v-else-if="!showOverlay" class="text-h5 mb-6 text-center mt-15">
             <div>
               <h1>There are no routines yet! Favourite some to see them here!</h1>
               <v-row>
@@ -72,6 +76,7 @@ import { UserApi } from '../api/user';
         exerciseDetailComponent: ExerciseDetail,
         routineDetailComponent: RoutineDetail,
         currPage: 1,
+        showOverlay: true,
         img: require('../assets/gym-animated.webp'),
         detailComponent: RoutineDetail,
         Routines:{
@@ -92,6 +97,7 @@ import { UserApi } from '../api/user';
           this.Routines = await UserApi.getAllFavourites(null,this.currPage-1, 8);      
       
         this.amountOfPages = Math.ceil(this.Routines.totalCount / this.Routines.size);
+        this.showOverlay = false;
       },
 
       isOwn(){
