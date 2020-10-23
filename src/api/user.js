@@ -54,6 +54,9 @@ class UserApi {
     static async removeFavouriteRoutine(routine_id,controller) {
         return await Api.delete(`${UserApi.url}/current/routines/${routine_id}/favourites`, true, controller);
     }
+    static async getAllFavourites(controller,page,size) {
+        return await Api.get(`${UserApi.url}/current/routines/favourites`, true,{page,size}, controller);
+    }
 }
 
 class Credentials {
