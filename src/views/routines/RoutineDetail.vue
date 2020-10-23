@@ -15,13 +15,10 @@
 
       <v-card-title>{{routine.name}}</v-card-title>
 
+      <v-card-subtitle>Designed for {{routine.difficulty}}</v-card-subtitle>
+
       <v-card-text>
-        <div>
-          {{routine.detail}}
-        </div>
-        <div>
-          Difficulty: {{capitalize(routine.difficulty.toString())}}
-        </div>
+        {{routine.detail}}
       </v-card-text>
 
       <v-divider class="mx-4"></v-divider>
@@ -37,15 +34,47 @@
             </v-expansion-panel-header>
 
             <v-expansion-panel-content>
+              
+              <v-card-text>
+                <div class="mb-4">
+                  <v-icon>mdi-information-outline</v-icon> {{cycle.detail}}
+                </div>
+
+                <div class="my-4">
+                  <v-icon>repeat</v-icon> {{cycle.repetitions}} times
+                </div>
+
+              </v-card-text>
+
+              <v-divider/>
+
               <PromiseBuilder v-slot="snapshot" :promise="getExercises(cycle.id)">
                 <div v-if="snapshot.isPending">
                   <v-progress-circular indeterminate/>
                 </div>
+                
                 <div v-else-if="snapshot.isSettled">
-                  
-                  <v-col v-for="exercise in snapshot.result" :key="exercise.id">
-                    {{exercise.name}} - {{exercise.duration}}
-                  </v-col>
+                  <v-card-title>Exercises</v-card-title>
+
+                  <v-card-text>
+                    <v-col v-for="exercise in snapshot.result" :key="exercise.id">          
+                      <v-row>
+
+                        Do {{exercise.name}} for {{exercise.duration}} secs, repeat {{exercise.repetitions}} times
+                        
+                        <v-spacer/>
+                        
+                        <v-btn icon @click="showExerciseDetail=true">
+                          <v-icon>mdi-information-outline</v-icon>
+                        </v-btn>
+
+                        <ExerciseDetail :data="exercise" :own="own" :dialog="showExerciseDetail"
+                          @close="showExerciseDetail=false"/>
+
+                      </v-row>
+                    </v-col>
+                  </v-card-text>
+
                 </div>
               </PromiseBuilder>
             </v-expansion-panel-content>
@@ -84,10 +113,6 @@
 
         <v-spacer/>
 
-        <v-btn color="accent darken-3" text @click="favouriteRoutine">
-          Add to Favourites
-        </v-btn>
-
         <v-btn color="accent darken-3"  @click="showEditDialog=true" v-if="own" text>
           Edit Routine
         </v-btn>
@@ -110,8 +135,9 @@
 <script>
   import Vue from 'vue';
   import { RoutineApi } from '../../api/routines.js';
-  import { UserApi } from '../../api/user.js';
   import { PromiseBuilder } from 'vue-promise-builder';
+
+  import ExerciseDetail from '../exercises/ExerciseDetail';
 
   String.prototype.capitalize = function() {
     return this.charAt(0).toUpperCase() + this.slice(1)
@@ -126,9 +152,12 @@
 
         showEditDialog: false,
         showDeleteDialog: false,
+        showExerciseDetail: false,
         showOverlay: false,
         showSnackbar: false,
         snackbarText: '',
+
+        exercises: [],
         
         img: require('../../assets/gym.jpg'),
       }
@@ -160,38 +189,17 @@
         }
       },
 
-      async getExercises(id){
-        return await RoutineApi.getExercises(this.routine.id, id);
+      async getExercises(cycleId){
+        let exercises = await RoutineApi.getExercises(this.routine.id, cycleId);
+        for(let i=0; i<exercises.length; i++){
+          exercises[i].routineId = this.routine.id;
+          exercises[i].cycleId = cycleId;
+        }
+        return exercises;
       },
 
-      async favouriteRoutine(){
-          try{
-
-            await UserApi.addFavouriteRoutine(this.routine.id,null)
-
-          }catch(e){
-                
-              if(e.code == 2){
-                  // this.showSnackbar = true;
-                  // this.snackbarText = 'Its already a Favourite of yours'; 
-                  // this.showSnackbar = true;
-                  // console.log('esto 1');
-                  this.isFavourite=true;
-              }else{
-                  // this.showSnackbar = true;
-                  // this.snackbarText = 'Ups! Something went wrong'; 
-                  // this.showSnackbar = true;
-                  // console.log('esto 2');
-              }
-          
-              console.log(e);
-
-          }
-          this.isFavourite=true;
-          // this.showOverlay = false;
-          // this.snackbarText = 'Success!'; 
-          // this.showSnackbar = true;
-
+      async deleteExercise(exercise){
+        this.exercises = this.exercises.filter(e => e.id != exercise.id);
       },
 
       capitalize(string) {
@@ -205,6 +213,6 @@
       }
     },
 
-    components: {PromiseBuilder}
+    components: {PromiseBuilder, ExerciseDetail}
   }
 </script>
