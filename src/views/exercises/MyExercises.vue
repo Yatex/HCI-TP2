@@ -75,7 +75,7 @@
       currPage: 1,
       amountOfPages: undefined,
       exercises: [],
-      showOverlay: false,
+      showOverlay: true,
       
       detailComponent: ExerciseDetail,
       img: require('../../assets/gym-animated.webp')
