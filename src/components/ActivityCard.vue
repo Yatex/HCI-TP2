@@ -45,7 +45,8 @@
                 showDetailDialog: false,
                 activity: Vue.util.extend({}, this.data),
                 img: require('../assets/gym.jpg'),
-                isFavourite:false
+                isFavourite:false,
+                totalCount:0
             }
         },
 
@@ -114,7 +115,28 @@
                 // this.snackbarText = 'Success!'; 
                 // this.showSnackbar = true;
 
+            },
+            async checkIfFavourite(){
+                await UserApi.getAllFavourites(null,0,10).then(data=>
+                {
+                    this.activity.totalCount=data.totalCount;
+                    while( this.activity.totalCount>0){
+                        data.results.forEach(element => {
+                            if(element.id==this.activity.id){
+                                this.isFavourite=true;
+                            }
+                        });
+                        this.activity.totalCount-=data.results.length;
+                        if(this.activity.totalCount>0){
+                            UserApi.getAllFavourites(null,0,10).then(data2=>{data=data2});
+                        }
+                    }
+                });
+                
             }
+        },
+        created(){
+            this.checkIfFavourite();
         }
     };
 </script>
