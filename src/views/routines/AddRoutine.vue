@@ -129,10 +129,10 @@
     <v-snackbar v-model="showSnackbar">
       {{ snackbarText }}
     </v-snackbar>
-
     <template v-slot:activator="{ on, attrs }">
-      <v-btn v-bind="attrs" v-on="on" color="accent" class="mt-5" elevation="2" fab fixed right bottom x-large>
-        <v-icon>mdi-plus</v-icon>
+      <v-btn v-bind="attrs" v-on="on" color="accent black--text" class="mt-5" elevation="2"
+          fab fixed right bottom dark x-large>
+        <v-icon dark>mdi-plus</v-icon>
       </v-btn>
     </template>
 

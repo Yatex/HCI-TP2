@@ -57,7 +57,7 @@
         else
           this.Routines = await RoutineApi.getAll(this.currPage-1, 8);      
       
-        this.amountOfPages = Math.floor(this.Routines.totalCount / this.Routines.size) + 1;
+        this.amountOfPages = Math.ceil(this.Routines.totalCount / this.Routines.size);
       },
 
       isOwn(){

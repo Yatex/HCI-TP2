@@ -83,7 +83,7 @@
           </v-card>
         </v-dialog>
 
-        <v-btn color="red darken-1" @click.stop="dialog = true" text>
+        <v-btn color="red darken-1" @click.stop="dialog = true" v-if="own" text>
           Delete
         </v-btn>
 
@@ -93,7 +93,7 @@
           Add to Favourites
         </v-btn>
 
-        <v-btn color="accent darken-3" :own="isOwn()" text>
+        <v-btn color="accent darken-3" v-if="own" text>
           Edit Routine
         </v-btn>
       </v-card-actions>
@@ -113,7 +113,7 @@
   }
 
   export default {
-    props: ['data', 'editable'],
+    props: ['data', 'own'],
 
     data: () => ({
       img: require('../../assets/gym.jpg'),
@@ -127,9 +127,6 @@
       deleteRoutine(){
         RoutineApi.delete(this.data.id);
         this.dialog = false;
-      },
-      isOwn(){
-        return this.$route.params.of == "own";
       }
     },
 

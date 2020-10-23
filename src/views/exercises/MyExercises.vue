@@ -54,7 +54,7 @@
 
         }
         
-        this.amountOfPages = Math.floor(ownRoutines.totalCount / ownRoutines.size) + 1;
+        this.amountOfPages = Math.ceil(ownRoutines.totalCount / ownRoutines.size);
       }
     },
 
