@@ -20,7 +20,8 @@
           {{data.detail}}
         </div>
         <div>
-          Difficulty: {{data.difficulty.capitalize()}}
+          <!--Difficulty: {{data.difficulty.capitalize()}}-->
+          Difficulty: {{capitalizeFirstLetter(data.difficulty.toString())}}
         </div>
       </v-card-text>
 
@@ -84,7 +85,7 @@
 
         <v-spacer/>
 
-        <v-btn color="accent darken-3" text>
+        <v-btn color="accent darken-3" text @click="favouriteRoutine">
           Add to Favourites
         </v-btn>
 
@@ -101,6 +102,7 @@
 
 <script>
   import { RoutineApi } from '../../api/routines.js';
+  import { UserApi } from '../../api/user.js';
   import { PromiseBuilder } from 'vue-promise-builder';
 
   String.prototype.capitalize = function() {
@@ -116,12 +118,47 @@
     }),
 
     methods: {
+      capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+      },
+
       async getExercises(id){
         return await RoutineApi.getExercises(this.data.id, id);
       },
+
       deleteRoutine(){
         RoutineApi.delete(this.data.id);
-        this.deleteDialog = false;
+        this.dialog = false;
+      },
+
+      async favouriteRoutine(){
+          try{
+
+            await UserApi.addFavouriteRoutine(this.data.id,null)
+
+          }catch(e){
+                
+              if(e.code == 2){
+                  // this.showSnackbar = true;
+                  // this.snackbarText = 'Its already a Favourite of yours'; 
+                  // this.showSnackbar = true;
+                  // console.log('esto 1');
+                  this.isFavourite=true;
+              }else{
+                  // this.showSnackbar = true;
+                  // this.snackbarText = 'Ups! Something went wrong'; 
+                  // this.showSnackbar = true;
+                  // console.log('esto 2');
+              }
+          
+              console.log(e);
+
+          }
+          this.isFavourite=true;
+          // this.showOverlay = false;
+          // this.snackbarText = 'Success!'; 
+          // this.showSnackbar = true;
+
       }
     },
 
