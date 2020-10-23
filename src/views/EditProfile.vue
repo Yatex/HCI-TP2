@@ -75,19 +75,14 @@
         </v-col> -->
       </v-row>
     </v-container>
-    <div v-if="this.delete==2"> 
+    <div v-if="this.delete==1"> 
       <v-btn x-large block color="red darken-1" @click="Deletion_sequence">
-        Delete User
-      </v-btn>
-    </div>
-    <div v-if="this.delete==1">
-      <v-btn x-large block color="red darken-1" @click="Deletion_sequence">
-        Delete User PERMANENTLY
+        Delete User ?
       </v-btn>
     </div>
     <div v-if="this.delete==0">
       <v-btn x-large block color="red darken-1" @click="Delete">
-        Last Warning
+       Press again to Delete User PERMANENTLY
       </v-btn>
     </div>
 
@@ -103,7 +98,7 @@ import Navbar from '../components/Navbar';
 import {UserApi} from '../api/user';
 export default {
   data:()=>({
-        delete:2,
+        delete:1,
         name: '',
         email: '',
         password: '', 

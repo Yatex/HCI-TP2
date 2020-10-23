@@ -46,7 +46,7 @@
                             <v-divider class="my-3"></v-divider>
 
                             <v-btn depressed rounded text to="/editprofile">
-                                Edit Profile
+                                Profile
                             </v-btn>
                             
                             <v-divider class="my-3"></v-divider>
@@ -80,7 +80,7 @@
                 email: 'john.doe@doe.com'
             },
             items: [
-                { text: 'Edit Profile', icon: 'mdi-pencil', to: '/editprofile' },
+                { text: 'Profile', icon: 'mdi-pencil', to: '/editprofile' },
                 { text: 'About Us', icon: 'mdi-information-variant', to: '/aboutus' },
                 { text: 'Sign Out', icon: 'mdi-logout-variant', to: '/' }
             ],
