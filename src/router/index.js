@@ -40,6 +40,11 @@ const routes = [
     path: '/editprofile',
     name: 'EditProfile',
     component: () => import('../views/EditProfile.vue')
+  },
+  {
+    path: '/VerifyAccount',
+    name: 'VerifyAccount',
+    component: () => import('../views/VerifyAccount.vue')
   }
 ]
 
