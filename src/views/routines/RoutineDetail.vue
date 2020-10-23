@@ -1,11 +1,5 @@
 <template>
-  <v-dialog max-width="600px">
-
-    <template v-slot:activator="{on, attrs}">
-      <v-btn icon v-bind="attrs" v-on="on">
-        <v-icon>mdi-eye</v-icon>
-      </v-btn>
-    </template>
+  <v-dialog :value="dialog" @input="$emit('close')" max-width="600px">
     
     <v-card>
 
@@ -63,7 +57,7 @@
       </v-card-text>
 
       <v-card-actions class="mt-4"> 
-        <v-dialog v-model="dialog" max-width="290" >
+        <v-dialog v-model="deleteDialog" max-width="290" >
           <v-card>
             <v-card-title class="headline">
               Delete {{ data.name }}
@@ -78,18 +72,18 @@
                 Yes, delete
               </v-btn>
               <v-spacer />
-              <v-btn color="grey lighten-1" text @click="dialog = false" >
+              <v-btn color="grey lighten-1" text @click="deleteDialog=false" >
                 No
               </v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
 
-        <v-btn color="red darken-1" @click.stop="dialog = true" v-if="own" text>
+        <v-btn color="red darken-1" @click.stop="deleteDialog=true" v-if="own" text>
           Delete
         </v-btn>
 
-        <v-spacer />
+        <v-spacer/>
 
         <v-btn color="accent darken-3" text @click="favouriteRoutine">
           Add to Favourites
@@ -116,56 +110,56 @@
   }
 
   export default {
-    props: ['data', 'own'],
+    props: ['dialog', 'data', 'own'],
 
     data: () => ({
       img: require('../../assets/gym.jpg'),
-      dialog: false
+      deleteDialog: false
     }),
 
     methods: {
       capitalizeFirstLetter(string) {
-      return string.charAt(0).toUpperCase() + string.slice(1);
+        return string.charAt(0).toUpperCase() + string.slice(1);
       },
+
       async getExercises(id){
         return await RoutineApi.getExercises(this.data.id, id);
       },
+
       deleteRoutine(){
         RoutineApi.delete(this.data.id);
         this.dialog = false;
       },
+
       async favouriteRoutine(){
-                try{
+          try{
 
-                await UserApi.addFavouriteRoutine(this.data.id,null)
-                    
+            await UserApi.addFavouriteRoutine(this.data.id,null)
+
+          }catch(e){
                 
+              if(e.code == 2){
+                  // this.showSnackbar = true;
+                  // this.snackbarText = 'Its already a Favourite of yours'; 
+                  // this.showSnackbar = true;
+                  // console.log('esto 1');
+                  this.isFavourite=true;
+              }else{
+                  // this.showSnackbar = true;
+                  // this.snackbarText = 'Ups! Something went wrong'; 
+                  // this.showSnackbar = true;
+                  // console.log('esto 2');
+              }
+          
+              console.log(e);
 
-                }catch(e){
-                     
-                    if(e.code == 2){
-                        // this.showSnackbar = true;
-                        // this.snackbarText = 'Its already a Favourite of yours'; 
-                        // this.showSnackbar = true;
-                        // console.log('esto 1');
-                        this.isFavourite=true;
-                    }
-                    else{
-                        // this.showSnackbar = true;
-                        // this.snackbarText = 'Ups! Something went wrong'; 
-                        // this.showSnackbar = true;
-                        // console.log('esto 2');
-                    }
-                
-               
-                console.log(e);
-                }
-                this.isFavourite=true;
-                // this.showOverlay = false;
-                // this.snackbarText = 'Success!'; 
-                // this.showSnackbar = true;
+          }
+          this.isFavourite=true;
+          // this.showOverlay = false;
+          // this.snackbarText = 'Success!'; 
+          // this.showSnackbar = true;
 
-            },
+      }
     },
 
     asyncComputed: {

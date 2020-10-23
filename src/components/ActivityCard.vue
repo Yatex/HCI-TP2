@@ -7,11 +7,11 @@
 
         <v-card-text>{{activity.detail}}</v-card-text>
 
+        <component :is="detailComponent" :data="activity" :own="own" @update="update($event)"
+                :dialog="showDetailDialog" @close="showDetailDialog=false"/>
+
         <v-card-actions class="justify-space-around">
             
-            <component :is="detailComponent" :data="activity" :own="own"
-                @update="update($event)" v-model="showDetailDialog"/>
-
             <div v-if="isRoutine==true && isFavourite==false">
                 <v-btn icon @click="favouriteRoutine">
                     <v-icon>mdi-heart</v-icon>
@@ -23,10 +23,6 @@
                     <v-icon>mdi-heart</v-icon>
                 </v-btn>
             </div>
-
-            <v-btn v-if="own" icon>
-                <v-icon>mdi-pencil</v-icon>
-            </v-btn>
 
         </v-card-actions>
 
@@ -108,7 +104,7 @@
                 
                
                     console.log(e);
-                    
+
                 }
                 this.isFavourite=false;
                 // this.showOverlay = false;
