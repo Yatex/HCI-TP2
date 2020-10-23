@@ -90,7 +90,7 @@
           Add to Favourites
         </v-btn>
         <v-btn color="accent darken-3" :own="isOwn()" text>
-          Edit Excercise
+          Edit Routine
         </v-btn>
       </v-card-actions>
 

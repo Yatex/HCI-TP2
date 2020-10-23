@@ -7,7 +7,7 @@
 
       <v-expansion-panels>
 
-        <v-expansion-panel>
+        <!-- <v-expansion-panel>
           <v-expansion-panel-header>
             Exercises
           </v-expansion-panel-header>
@@ -20,7 +20,7 @@
               </v-col>
             </v-row>
           </v-expansion-panel-content>
-        </v-expansion-panel>
+        </v-expansion-panel> -->
 
         <v-expansion-panel>
           <v-expansion-panel-header>

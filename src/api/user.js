@@ -47,6 +47,9 @@ class UserApi {
     static async addFavouriteRoutine(routine_id,controller) {
         return await Api.post(`${UserApi.url}/current/routines/${routine_id}/favourites`, true, controller);
     }
+    static async removeFavouriteRoutine(routine_id,controller) {
+        return await Api.delete(`${UserApi.url}/current/routines/${routine_id}/favourites`, true, controller);
+    }
 }
 
 class Credentials {

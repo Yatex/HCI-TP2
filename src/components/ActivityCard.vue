@@ -14,8 +14,8 @@
                     <v-icon>mdi-heart</v-icon>
                 </v-btn>
             </div>
-            <div v-else-if="isRoutine==true && isFavourite==true">
-                <v-btn color="red" icon @click="favouriteRoutine">
+            <div v-if="isRoutine==true && isFavourite==true">
+                <v-btn color="red" icon @click="unfavouriteRoutine">
                     <v-icon>mdi-heart</v-icon>
                 </v-btn>
             </div>
@@ -32,26 +32,72 @@ import {UserApi }from '../api/user.js';
     export default {
         props:['maxWidth', 'data', 'detailComponent', 'own','isRoutine'],
         data: () => ({
-            img: require('../assets/gym.jpg')
+            img: require('../assets/gym.jpg'),
+            isFavourite:false
         }),
         methods:{
         async favouriteRoutine(){
-            //console.log("pressed")
                 try{
 
                 await UserApi.addFavouriteRoutine(this.data.id,null)
                     
                 
 
-                }catch(e){ 
-                this.snackbarText = 'Ups! Something went wrong'; 
-                this.showSnackbar = true;
+                }catch(e){
+                     
+                    if(e.code == 2){
+                        // this.showSnackbar = true;
+                        // this.snackbarText = 'Its already a Favourite of yours'; 
+                        // this.showSnackbar = true;
+                        // console.log('esto 1');
+                        this.isFavourite=true;
+                    }
+                    else{
+                        // this.showSnackbar = true;
+                        // this.snackbarText = 'Ups! Something went wrong'; 
+                        // this.showSnackbar = true;
+                        // console.log('esto 2');
+                    }
+                
+               
                 console.log(e);
                 }
+                this.isFavourite=true;
+                // this.showOverlay = false;
+                // this.snackbarText = 'Success!'; 
+                // this.showSnackbar = true;
 
-                this.showOverlay = false;
-                this.snackbarText = 'Success!'; 
-                this.showSnackbar = true;
+            },
+            async unfavouriteRoutine(){
+                try{
+
+                await UserApi.removeFavouriteRoutine(this.data.id,null)
+                    
+                
+
+                }catch(e){
+                     
+                    if(e.code == 2){
+                        // this.showSnackbar = true;
+                        // this.snackbarText = 'Its already a Favourite of yours'; 
+                        // this.showSnackbar = true;
+                        // console.log('esto 1');
+                        this.isFavourite=true;
+                    }
+                    else{
+                        // this.showSnackbar = true;
+                        // this.snackbarText = 'Ups! Something went wrong'; 
+                        // this.showSnackbar = true;
+                        // console.log('esto 2');
+                    }
+                
+               
+                console.log(e);
+                }
+                this.isFavourite=false;
+                // this.showOverlay = false;
+                // this.snackbarText = 'Success!'; 
+                // this.showSnackbar = true;
 
             }
         }
