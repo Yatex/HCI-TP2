@@ -23,15 +23,15 @@ class RoutineApi {
   }
 
   static async getAll(page, size, controller) {
-    return await Api.get(RoutineApi.url, true,{page,size}, controller);
+    return await Api.get(RoutineApi.url, true, {page,size}, controller);
   }
 
   static async get(id, controller) {
     return await Api.get(`${RoutineApi.url}/${id}`,true,  controller);
   }
 
-  static async getCycles(routieId, controller) {
-    let res = await Api.get(`${RoutineApi.url}/${routieId}/cycles`
+  static async getCycles(routineId, controller) {
+    let res = await Api.get(`${RoutineApi.url}/${routineId}/cycles`
       +`?page=0&size=50`,true,  controller);
     return res.results;
   }

@@ -7,7 +7,7 @@
       <v-row class="mb-6" no-gutters>
         <v-col v-for="exercise in exercises" :key="exercise.id">
 
-          <ActivityCard :maxWidth="250" class="mt-4" editable="true"
+          <ActivityCard :maxWidth="250" class="mt-4" :own="true"
             :data="exercise" :detailComponent="detailComponent"/>
 
         </v-col>

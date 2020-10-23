@@ -7,7 +7,7 @@
       <v-row class="mb-6" no-gutters>
         <v-col v-for="Routine in Routines.results" :key="Routine.id">
           
-          <ActivityCard :maxWidth="250" class="mt-4" editable="true"
+          <ActivityCard :maxWidth="250" class="mt-4" :editable="$route.params.of == 'own'"
             :data="Routine" :detailComponent="detailComponent"/>
           
         </v-col>
@@ -30,22 +30,27 @@
   import Navbar from '../../components/Navbar';
   import ActivityCard from '../../components/ActivityCard';
 
-  //import { RoutineApi } from '../../api/routines.js';
+  import { RoutineApi } from '../../api/routines.js';
   import { UserApi } from '../../api/user.js';
 
-  export default {
-    components: { Navbar, ActivityCard, AddRoutine},
+  export default {    
     methods:{
-      changePage(){
-        UserApi.getAllRoutines(null,this.currPage-1,8).then(data=>{this.Routines=data;});
+      async changePage(){
+        if(this.$route.params.of == "own")
+          this.Routines = await UserApi.getAllRoutines(null,this.currPage-1,8); 
+        else
+          this.Routines = await RoutineApi.getAll(this.currPage-1, 8);
       },
-      fillRoutines(){
-        UserApi.getAllRoutines(null,this.currPage-1,8).then(data=>{
-          this.Routines=data;
-          this.amountOfPages=Math.floor(this.Routines.totalCount / this.Routines.size) + 1;}
-          );
-      }      
+      async fillRoutines(){
+        if(this.$route.params.of == "own"){
+          this.Routines = await UserApi.getAllRoutines(null,this.currPage-1,8); 
+        }else{
+          this.Routines = await RoutineApi.getAll(this.currPage-1, 8);      
+        }
+        this.amountOfPages=Math.floor(this.Routines.totalCount / this.Routines.size) + 1;
+      }
     }, 
+
     data: ()=>({
       currPage: 1,
       detailComponent: RoutineDetail,
@@ -60,8 +65,11 @@
       },
       amountOfPages:undefined 
     }),
+
     created(){
       this.fillRoutines();
-    }
+    },
+
+    components: { Navbar, ActivityCard, AddRoutine},
   } 
 </script>

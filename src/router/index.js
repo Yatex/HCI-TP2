@@ -12,12 +12,7 @@ const routes = [
     component: Home
   },
   {
-    path: '/allroutines',
-    name: 'AllRoutines',
-    component: () => import('../views/routines/AllRoutines.vue')
-  },
-  {
-    path: '/routines',
+    path: '/routines/:of',
     name: 'Routines',
     component: () => import('../views/routines/Routines.vue')
   },
@@ -27,9 +22,9 @@ const routes = [
     component: () => import('../views/Favourites.vue')
   },
   {
-    path: '/exercises',
-    name: 'Exercises',
-    component: () => import('../views/exercises/Exercises.vue')
+    path: '/my-exercises',
+    name: 'MyExercises',
+    component: () => import('../views/exercises/MyExercises.vue')
   },
   {
     path: '/aboutus',

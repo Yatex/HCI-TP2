@@ -23,7 +23,7 @@
               <ImageTitleCard :card="{ title: 'My Exercises', img:'https://images.pexels.com/photos/4058411/pexels-photo-4058411.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500', link:'/exercises'}"/>
             </v-col>
             <v-col cols="5">
-              <ImageTitleCard :card="{ title: 'All Routines', img:'https://images.pexels.com/photos/841131/pexels-photo-841131.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500', link:'/allroutines'}"/>
+              <ImageTitleCard :card="{ title: 'All Routines', img:'https://images.pexels.com/photos/841131/pexels-photo-841131.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500', link:'/routines/all'}"/>
             </v-col>
           </v-row>
         </v-container>
@@ -35,18 +35,19 @@
 </template>
 
 <script>
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
-import HomeCard from '../components/HomeCard';
-import ImageTitleCard from '../components/ImageTitleCard';
 
-export default {
+  import Navbar from '../components/Navbar';
+  import Footer from '../components/Footer';
+  import HomeCard from '../components/HomeCard';
+  import ImageTitleCard from '../components/ImageTitleCard';
+
+  export default {
     components: {
-        Navbar,
-        Footer,
-        HomeCard,
-        ImageTitleCard  
-},
+      Navbar,
+      Footer,
+      HomeCard,
+      ImageTitleCard
+    },
+  }
 
-}
 </script>

@@ -17,9 +17,9 @@
         ></v-progress-linear>
       </template>
 
-      <v-img height="250" :src="data.img"></v-img>
+      <v-img :src="img" height="200px" width="300"/>
 
-      <v-card-title>{{data.title}}</v-card-title>
+      <v-card-title>{{data.name}}</v-card-title>
 
       <v-card-text>
         <div class="subtitle-1">
@@ -43,6 +43,9 @@
         <v-btn color="accent darken-3" text>
           Add to Favs
         </v-btn>
+        <v-btn v-if="own" color="accent darken-3" text>
+          Edit Excercise
+        </v-btn>
       </v-card-actions>
     </v-card>
 
@@ -52,6 +55,9 @@
 
 <script>
     export default {
-      props: ['data']
+      props: ['data', 'own'],
+      data: () => ({
+          img: require('../../assets/gym2.jpg')
+      })
     }
 </script>
