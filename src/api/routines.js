@@ -7,7 +7,6 @@ class RoutineApi {
     return `${Api.baseUrl}/routines`;
   }
 
-  static rid = 0;
   static async add(routine, controller) {
     // console.log(RoutineApi.url);
     // console.log(JSON.stringify(routine));
@@ -30,14 +29,10 @@ class RoutineApi {
     return await Api.get(`${RoutineApi.url}/${id}`,true,  controller);
   }
 
+  // ---------------------------------- Cycles ----------------------------------
+
   static async getCycles(routineId, controller) {
     let res = await Api.get(`${RoutineApi.url}/${routineId}/cycles`
-      +`?page=0&size=50`,true,  controller);
-    return res.results;
-  }
-
-  static async getExercises(routineId, cycleId, controller) {
-    let res = await Api.get(`${RoutineApi.url}/${routineId}/cycles/${cycleId}/exercises`
       +`?page=0&size=50`,true,  controller);
     return res.results;
   }
@@ -46,6 +41,14 @@ class RoutineApi {
     // console.log(`${RoutineApi.url}/${routineId}/cycles`);
     // console.log(JSON.stringify(cycle));
     return await Api.post(`${RoutineApi.url}/${routineId}/cycles`, true, cycle, controller);
+  }
+
+  // ---------------------------------- Exercises ----------------------------------
+
+  static async getExercises(routineId, cycleId, controller) {
+    let res = await Api.get(`${RoutineApi.url}/${routineId}/cycles/${cycleId}/exercises`
+      +`?page=0&size=50`,true,  controller);
+    return res.results;
   }
 
   static async addExercise(routineId, cycleId, exercise, controller) {
@@ -59,9 +62,13 @@ class RoutineApi {
         true, data, controller);
   }
   
-  
+  static async deleteExercise(routineId, cycleId, exerciseId, controller) {
+    return await Api.delete(`${RoutineApi.url}/${routineId}/cycles/${cycleId}/exercises/${exerciseId}`,
+      true, controller);
+  }
 
 }
+
 /*
 class Routine {
     constructor(id, name, detail,dateCreated,averageRating,isPublic,difficulty,creator,category) {
