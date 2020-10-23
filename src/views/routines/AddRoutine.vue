@@ -175,7 +175,7 @@
       verifyCycles(){
         for(let i=0; i<this.cycles.length; i++){
           if((i == 0 && this.cycles[i].type != "warmup") || (i == this.cycles.length-1 && this.cycles[i].type != "cooldown")){
-            this.snackbarText = "Warmup cycle should be first and cooldon cycle should be last";
+            this.snackbarText = "Warmup cycle should be first and cooldown cycle should be last";
             this.showSnackbar = true;
             return;
           }
