@@ -17,18 +17,15 @@
             Join the community!
             </v-card-text>
 
-            <v-card-text class="white--text pt-0">
-                <v-btn v-for="icon in icons" :key="icon" class="mx-4 white--text" icon>
-                    <v-icon size="24px">
-                    {{ icon }}
-                    </v-icon>
-                </v-btn>
-            </v-card-text>
-
             <v-divider></v-divider>
 
             <v-card-text class="white--text">
-            {{ new Date().getFullYear() }} — <strong>LOGO</strong>
+            <v-row>
+            <v-spacer />
+            {{ new Date().getFullYear() }} — <strong><v-img src="../assets/logo.png" width="30" height="30" class="ml-2"></v-img>
+            </strong>
+            <v-spacer />
+            </v-row>
             </v-card-text>
         </v-card>
         </v-footer>
@@ -39,12 +36,6 @@
 <script>
 export default {
     data: () => ({
-    icons: [
-      'mdi-facebook',
-      'mdi-twitter',
-      'mdi-linkedin',
-      'mdi-instagram',
-    ],
     links: [
       { id: 0, name: 'About Us', to: "/aboutus"},
       { id: 1, name: 'Team', to: "/aboutus"},
