@@ -123,11 +123,11 @@
     </v-stepper>
 
     <v-overlay :value="showOverlay">
-        <v-progress-circular indeterminate size="64"/>
+      <v-progress-circular indeterminate size="64"/>
     </v-overlay>
 
     <v-snackbar v-model="showSnackbar">
-        {{ snackbarText }}
+      {{ snackbarText }}
     </v-snackbar>
 
     <template v-slot:activator="{ on, attrs }">
@@ -164,7 +164,7 @@
 
       addCycle(cycle){
         this.showAddCycleDialog = false;
-        cycle.id = this.cid++;
+        cycle.id = this.cycles.length;
         this.cycles.push(cycle);
       },
 
@@ -197,9 +197,8 @@
 
       addExercise(exercise){
         this.showAddExerciseDialog = false;
-        exercise.id = this.eid++;
+        exercise.id = this.exercises.length;
         this.exercises.push(exercise);
-        console.log(this.exercises);
       },
 
       removeExercise(exercise){
@@ -272,7 +271,6 @@
       showAddCycleDialog: false,
       showAddExerciseDialog: false,
       showSnackbar: false, snackbarText: '',
-      cid: 3, eid: 1,
       difficulties: [
         {name: 'Rookie', value: 'rookie'}, {name: 'Begginer', value: 'begginer'},
         {name: 'Intermediate', value: 'intermediate'}, {name: 'Advanced', value: 'advanced'},
@@ -296,15 +294,19 @@
         category: {id: 1},
       },
 
-      cycles: [
-        {id: 0, name: 'Move The Booty', detail: "It's time to move the ass!", type: 'warmup', repetitions: 2},
-        {id: 1, name: 'Shake The Booty', detail: "It's time to shake the ass!", type: 'exercise', repetitions: 2},
-        {id: 2, name: 'Cool The Booty', detail: "It's time to cool the ass!", type: 'cooldown', repetitions: 2},
-      ],
+      cycles: [],
 
-      exercises: [
-        {id: 0, name: 'Jumping frog', detail: "Ever felt like a frog? Let it be!", type: 'exercise', cycle: 1, repetitions: 6, duration: 10}
-      ]
+      exercises: []
+
+      // cycles: [
+      //   {id: 0, name: 'Move The Booty', detail: "It's time to move the ass!", type: 'warmup', repetitions: 2},
+      //   {id: 1, name: 'Shake The Booty', detail: "It's time to shake the ass!", type: 'exercise', repetitions: 2},
+      //   {id: 2, name: 'Cool The Booty', detail: "It's time to cool the ass!", type: 'cooldown', repetitions: 2},
+      // ],
+
+      // exercises: [
+      //   {id: 0, name: 'Jumping frog', detail: "Ever felt like a frog? Let it be!", type: 'exercise', cycle: 1, repetitions: 6, duration: 10}
+      // ]
       
     }),
 

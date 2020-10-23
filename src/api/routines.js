@@ -22,8 +22,24 @@ class RoutineApi {
     return await Api.delete(`${RoutineApi.url}/${id}`, true, controller);
   }
 
+  static async getAll(page, size, controller) {
+    return await Api.get(RoutineApi.url, true, {page,size}, controller);
+  }
+
   static async get(id, controller) {
     return await Api.get(`${RoutineApi.url}/${id}`,true,  controller);
+  }
+
+  static async getCycles(routineId, controller) {
+    let res = await Api.get(`${RoutineApi.url}/${routineId}/cycles`
+      +`?page=0&size=50`,true,  controller);
+    return res.results;
+  }
+
+  static async getExercises(routineId, cycleId, controller) {
+    let res = await Api.get(`${RoutineApi.url}/${routineId}/cycles/${cycleId}/exercises`
+      +`?page=0&size=50`,true,  controller);
+    return res.results;
   }
 
   static async addCycle(routineId, cycle, controller) {
@@ -37,12 +53,8 @@ class RoutineApi {
     // console.log(JSON.stringify(exercise));
     return await Api.post(`${RoutineApi.url}/${routineId}/cycles/${cycleId}/exercises`, true, exercise, controller);
   }
-  static async getAll(controller,page,size) {
-      return await Api.get(RoutineApi.url, true,{page,size}, controller);
-    }
-
-    
-
+  
+  
 
 }
 /*

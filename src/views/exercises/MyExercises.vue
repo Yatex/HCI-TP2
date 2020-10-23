@@ -7,7 +7,7 @@
       <v-row class="mb-6" no-gutters>
         <v-col v-for="exercise in exercises" :key="exercise.id">
 
-          <ActivityCardEditable :maxWidth="250" class="mt-4"
+          <ActivityCard :maxWidth="250" class="mt-4" :own="true"
             :data="exercise" :detailComponent="detailComponent"/>
 
         </v-col>
@@ -24,22 +24,22 @@
   import AddExercise from './AddExercise';
   import ExerciseDetail from './ExerciseDetail';
   import Navbar from '../../components/Navbar';
-  import ActivityCardEditable from '../../components/ActivityCardEditable';
+  import ActivityCard from '../../components/ActivityCard';
   import mockExercices from '../../mock_data/exercices';
 
   export default {
-      components: { Navbar, ActivityCardEditable, AddExercise },
-      computed: {
-        exercises: function(){
-          return mockExercices.slice(this.currPage*8 - 8,this.currPage*8);
-        },
-        amountOfPages: function(){
-          return Math.floor(mockExercices.length / 8) + 1;
-        }
+    components: { Navbar, ActivityCard, AddExercise },
+    computed: {
+      exercises: function(){
+        return mockExercices.slice(this.currPage*8 - 8,this.currPage*8);
       },
-      data: ()=>({
-        currPage: 1,
-        detailComponent: ExerciseDetail
-      })
+      amountOfPages: function(){
+        return Math.floor(mockExercices.length / 8) + 1;
+      }
+    },
+    data: ()=>({
+      currPage: 1,
+      detailComponent: ExerciseDetail
+    })
   }
   </script>

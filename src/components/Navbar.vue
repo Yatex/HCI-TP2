@@ -11,8 +11,8 @@
             <v-spacer></v-spacer>
 
             <v-btn text to="/main"> Home </v-btn> | <!-- Aca confunde pero Home vendria a ser la view Main!!!!! -->
-            <v-btn text to="/exercises"> My Exercises </v-btn> |
-            <v-btn text to="/routines"> My Routines </v-btn> |
+            <v-btn text to="/my-exercises"> My Exercises </v-btn> |
+            <v-btn text to="/routines/own"> My Routines </v-btn> |
             <v-btn text to="/favourites"> Favourites </v-btn>
 
             <v-spacer></v-spacer>

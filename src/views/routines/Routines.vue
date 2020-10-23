@@ -7,8 +7,8 @@
       <v-row class="mb-6" no-gutters>
         <v-col v-for="Routine in Routines.results" :key="Routine.id">
           
-          <ActivityCardEditable :maxWidth="250" class="mt-4"
-            :data="{title:Routine.name,desc:Routine.detail,id:Routine.id}"  :detailComponent="detailComponent"/>
+          <ActivityCard :maxWidth="250" class="mt-4" :own="isOwn()"
+            :data="Routine" :detailComponent="detailComponent"/>
           
         </v-col>
       </v-row>
@@ -26,30 +26,39 @@
 
 <script>
   import AddRoutine from './AddRoutine'
-  import MyRoutineDetailEditable from './MyRoutineDetailEditable';
+  import RoutineDetail from './RoutineDetail';
   import Navbar from '../../components/Navbar';
-  import ActivityCardEditable from '../../components/ActivityCardEditable';
+  import ActivityCard from '../../components/ActivityCard';
 
-  //import { RoutineApi } from '../../api/routines.js';
+  import { RoutineApi } from '../../api/routines.js';
   import { UserApi } from '../../api/user.js';
 
-  export default {
-     
-      components: { Navbar, ActivityCardEditable, AddRoutine},
-      methods:{
-        changePage(){
-          UserApi.getAllRoutines(null,this.currPage-1,8).then(data=>{this.Routines=data;});
-        },
-        fillRoutines(){
-          UserApi.getAllRoutines(null,this.currPage-1,8).then(data=>{
-            this.Routines=data;
-            this.amountOfPages=Math.floor(this.Routines.totalCount / this.Routines.size) + 1;}
-            );
-        }      
-      }, 
+  export default {    
+    methods:{
+      async changePage(){
+        if(this.$route.params.of == "own")
+          this.Routines = await UserApi.getAllRoutines(null,this.currPage-1,8); 
+        else
+          this.Routines = await RoutineApi.getAll(this.currPage-1, 8);
+      },
+
+      async fillRoutines(){
+        if(this.$route.params.of == "own"){
+          this.Routines = await UserApi.getAllRoutines(null,this.currPage-1,8); 
+        }else{
+          this.Routines = await RoutineApi.getAll(this.currPage-1, 8);      
+        }
+        this.amountOfPages=Math.floor(this.Routines.totalCount / this.Routines.size) + 1;
+      },
+
+      isOwn(){
+        return this.$route.params.of == "own";
+      }
+    }, 
+
     data: ()=>({
       currPage: 1,
-      detailComponent: MyRoutineDetailEditable,
+      detailComponent: RoutineDetail,
       Routines:{
         totalCount: undefined,
         orderBy: '',
@@ -61,8 +70,11 @@
       },
       amountOfPages:undefined 
     }),
-     created(){
-        this.fillRoutines();
-      }
+
+    created(){
+      this.fillRoutines();
+    },
+
+    components: { Navbar, ActivityCard, AddRoutine},
   } 
 </script>
