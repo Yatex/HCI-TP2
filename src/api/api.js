@@ -4,7 +4,7 @@ class Api {
   static token;
 
   static get baseUrl() {
-    return 'http://localhost:58528/api';
+    return 'http://localhost:8081/api';
   }
 
   static get timeout() {
