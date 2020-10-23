@@ -1,17 +1,19 @@
 <template>
-    <v-card :max-width="maxWidth" @click="showDetailDialog=true">
+    <v-card :max-width="maxWidth">
 
-        <v-img :src="img" height="200px" width="300"/>
+        <div @click="showDetailDialog=true">
+            <v-img :src="img" height="200px" width="300"/>
 
-        <v-card-title>{{activity.name}}</v-card-title>
+            <v-card-title>{{activity.name}}</v-card-title>
 
-        <v-card-text>{{activity.detail}}</v-card-text>
+            <v-card-text>{{activity.detail}}</v-card-text>
 
-        <component :is="detailComponent" :data="activity" :own="own" @update="update($event)"
-                :dialog="showDetailDialog" @close="showDetailDialog=false"/>
+            <component :is="detailComponent" :data="activity" :own="own" :dialog="showDetailDialog"
+                @update="update($event)" @delete="remove($event)" @close="showDetailDialog=false"/>
+        </div>
 
         <v-card-actions class="justify-space-around">
-            
+
             <div v-if="isRoutine==true && isFavourite==false">
                 <v-btn icon @click="favouriteRoutine">
                     <v-icon>mdi-heart</v-icon>
@@ -50,11 +52,14 @@
                 this.activity = activity;
             },
 
+            remove(activity){
+                this.$emit('delete', activity);
+            },
+
             async favouriteRoutine(){
                 try{
 
                     await UserApi.addFavouriteRoutine(this.activity.id, null);
-                    
 
                 }catch(e){
                      
@@ -78,8 +83,8 @@
                 // this.showOverlay = false;
                 // this.snackbarText = 'Success!'; 
                 // this.showSnackbar = true;
-
             },
+
             async unfavouriteRoutine(){
                 try{
 
@@ -109,7 +114,6 @@
                 // this.showOverlay = false;
                 // this.snackbarText = 'Success!'; 
                 // this.showSnackbar = true;
-
             }
         }
     };

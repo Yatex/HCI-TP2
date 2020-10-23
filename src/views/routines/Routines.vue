@@ -3,12 +3,12 @@
 
     <Navbar/>
 
-    <v-container v-if="Routines.totalCount > 0">
+    <v-container v-if="routines.length > 0">
       <v-row class="mb-6" no-gutters>
-        <v-col v-for="Routine in Routines.results" :key="Routine.id">
+        <v-col v-for="routine in routines" :key="routine.id">
           
-          <ActivityCard :maxWidth="250" class="mt-4" :own="isOwn()"
-            :data="Routine" :isRoutine="true" :detailComponent="detailComponent"/>
+          <ActivityCard :maxWidth="250" class="mt-4" :own="isOwn()" :isRoutine="true"
+            :data="routine" :detailComponent="detailComponent" @delete="deleteRoutine($event)"/>
           
         </v-col>
       </v-row>
@@ -51,13 +51,20 @@
 
   export default {    
     methods:{
+      async deleteRoutine(routine){
+        this.routines = this.routines.filter(r => r.id != routine.id);
+      },
+
       async getRoutines(){
+        let routines;
+
         if(this.$route.params.of == "own")
-          this.Routines = await UserApi.getAllRoutines(null,this.currPage-1,8); 
+          routines = await UserApi.getAllRoutines(null,this.currPage-1,8); 
         else
-          this.Routines = await RoutineApi.getAll(this.currPage-1, 8);      
+          routines = await RoutineApi.getAll(this.currPage-1, 8);      
       
-        this.amountOfPages = Math.ceil(this.Routines.totalCount / this.Routines.size);
+        this.routines = routines.results;
+        this.amountOfPages = Math.ceil(routines.totalCount / routines.size);
       },
 
       isOwn(){
@@ -67,19 +74,20 @@
 
     data: ()=>({
       currPage: 1,
-      img: require('../../assets/gym-animated.webp'),
+      amountOfPages: undefined,
+      routines: [],
+
       detailComponent: RoutineDetail,
-      Routines:{
-        totalCount: undefined,
-        orderBy: '',
-        direction: '',
-        results: [],
-        size: undefined,
-        page: undefined,
-        isLastPage: true
-      },
-      amountOfPages:undefined 
+      img: require('../../assets/gym-animated.webp'),
     }),
+
+    watch: { 
+     '$route.params.of': {
+        handler: function() {
+          this.getRoutines();
+        }
+      }
+    },
 
     created(){
       this.getRoutines();

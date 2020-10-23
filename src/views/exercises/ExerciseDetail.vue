@@ -17,7 +17,7 @@
 
       <v-card-text>
         <div class="subtitle-1">
-          {{exercise.type.capitalize()}}
+          {{capitalize(exercise.type)}}
         </div>
 
         <div class="my-2">
@@ -36,7 +36,7 @@
       <v-divider class="mx-4"></v-divider>
 
       <v-card-actions>
-        <v-dialog v-model="deleteDialog" max-width="290" >
+        <v-dialog v-model="showDeleteDialog" max-width="290" >
           <v-card>
               <v-card-title class="headline">
               Delete {{ data.name }}
@@ -51,71 +51,97 @@
                   Yes, delete
               </v-btn>
               <v-spacer />
-              <v-btn color="grey lighten-1" text @click="deleteDialog=false" >
+              <v-btn color="grey lighten-1" text @click="showDeleteDialog=false" >
                   No
               </v-btn>
               </v-card-actions>
           </v-card>
         </v-dialog>
 
-        <v-btn color="red darken-1" @click.stop="deleteDialog=true" v-if="own" text>
+        <v-btn color="red darken-1" @click="showDeleteDialog=true" v-if="own" text>
           Delete
         </v-btn>
 
         <v-spacer/>
         
-        <v-btn v-if="own" color="accent darken-3" @click="showAddExerciseDialog=true" text>
+        <v-btn color="accent darken-3" @click="showEditDialog=true" v-if="own" text>
           Edit Excercise
         </v-btn>
 
       </v-card-actions>
     </v-card>
 
-    <EditExercise :dialog="showAddExerciseDialog" :data="exercise"
-        @save="updateExercise($event)" @cancel="showAddExerciseDialog=false"/>
+    <v-overlay :value="showOverlay">
+        <v-progress-circular indeterminate size="64"/>
+    </v-overlay>
+
+    <v-snackbar v-model="showSnackbar">
+        {{ snackbarText }}
+    </v-snackbar>
+
+    <EditExercise :dialog="showEditDialog" :data="exercise"
+        @save="updateExercise($event)" @cancel="showEditDialog=false"/>
 
   </v-dialog>
 </template>
 
 
 <script>
-    import Vue from 'vue';
-    
+  import Vue from 'vue';
+  import { RoutineApi } from '../../api/routines';
 
-    import EditExercise from './EditExercise';
-import { RoutineApi } from '../../api/routines';
+  import EditExercise from './EditExercise';
 
-    String.prototype.capitalize = function() {
-      return this.charAt(0).toUpperCase() + this.slice(1)
-    }
+  export default {
+    props: ['data', 'own', 'dialog'],
 
-    export default {
-      props: ['data', 'own', 'dialog'],
+    data: function(){
+      return {
+        exercise: Vue.util.extend({}, this.data),
 
-      data: function(){
-        return {
-          showAddExerciseDialog: false,
-          img: require('../../assets/gym2.jpg'),
-          exercise: Vue.util.extend({}, this.data),
-          deleteDialog: false
-        }
-      },
-
-      methods: {
-        updateExercise(exercise){
-          this.showAddExerciseDialog = false;
-          this.exercise = exercise;
-          this.$emit('update', exercise);
-        },
-
-        deleteRoutine(){
-          RoutineApi.deleteExercise(this.exercise.routineId, this.exercise.cycleId, this.exercise.id);
-          this.deleteDialog = false;
-        }
-      },
-
-      components: { 
-        EditExercise,
+        showEditDialog: false,
+        showDeleteDialog: false,
+        showOverlay: false,
+        showSnackbar: false,
+        snackbarText: '',
+        
+        img: require('../../assets/gym2.jpg'),
       }
+    },
+
+    methods: {
+      updateExercise(exercise){
+        this.showEditDialog = false;
+        this.exercise = exercise;
+        this.$emit('update', exercise);
+      },
+
+      async deleteExercise(){
+        this.showDeleteDialog = false;
+        this.showOverlay = true;
+
+        try{
+          this.showOverlay = true;
+          
+          await RoutineApi.deleteExercise(this.exercise.routineId, this.exercise.cycleId, this.exercise.id);
+
+          this.showOverlay = false;
+          this.$emit('delete', this.exercise);
+        }catch(e){
+            this.showOverlay = false;
+            this.showSnackbar = true;
+            this.snackbarText = 'Ups! Something went wrong'; 
+            console.log(e);
+        }
+      },
+
+      capitalize(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+      }
+    },
+
+    components: { 
+      EditExercise,
     }
+  }
 </script>

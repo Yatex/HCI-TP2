@@ -3,17 +3,28 @@
 
     <Navbar/>
     
-    <v-container>
+    <v-container v-if="exercises.length > 0">
       <v-row class="mb-6" no-gutters>
         <v-col v-for="exercise in exercises" :key="exercise.id">
 
           <ActivityCard :maxWidth="250" class="mt-4" :own="true" :isRoutine="false"
-            :data="exercise" :detailComponent="detailComponent"/>
+            :data="exercise" :detailComponent="detailComponent" @delete="deleteExercise($event)"/>
 
         </v-col>
       </v-row>
-      <v-pagination v-model="currPage" :length="amountOfPages"></v-pagination>
+      <v-pagination v-model="currPage" :length="amountOfPages" @input="getExercises"/>
     </v-container>
+
+    <div v-else class="text-h5 mb-6 text-center mt-15">
+      <div>
+        <h1>You haven't created exercises yet! Add one in "My Routines"!</h1>
+        <v-row>
+          <v-spacer />
+          <v-img class="mt-6" :src="img" max-width="500"></v-img>
+          <v-spacer />
+        </v-row>
+      </div>
+    </div>
 
   </div>
 </template>
@@ -28,6 +39,10 @@
 
   export default {
     methods: {
+      async deleteExercise(exercise){
+        this.exercises = this.exercises.filter(e => e.id != exercise.id);
+      },
+
       async getExercises(){
 
         let ownRoutines = await UserApi.getAllRoutines(null, this.currPage-1, 8);
@@ -53,9 +68,11 @@
 
     data: ()=>({
       currPage: 1,
-      exercises: [],
       amountOfPages: undefined,
-      detailComponent: ExerciseDetail
+      exercises: [],
+      
+      detailComponent: ExerciseDetail,
+      img: require('../../assets/gym-animated.webp')
     }),
 
     created(){
