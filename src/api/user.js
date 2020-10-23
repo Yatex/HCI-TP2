@@ -23,6 +23,10 @@ class UserApi {
         // Vue.$cookies.set('api-token', Api.token);
     }
 
+    static async verifyEmail(data, controller) {
+        return await Api.post(`${UserApi.url}/verify_email`, false, data, controller);
+    }
+
     static async resendVerifyEmail(data, controller) {
         return await Api.post(`${UserApi.url}/resend_verification`, false, data, controller);
     }
