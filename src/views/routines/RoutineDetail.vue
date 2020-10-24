@@ -161,7 +161,7 @@
                 Write a review
               </v-card-title>
               <v-card-text>
-                <v-rating value="0" v-model="rating" length="5" color="yellow" background-color="grey lighten-1"></v-rating>
+                <v-rating value="0" v-model="rating" length="5" color="orange darken-4" background-color="grey darken-4"></v-rating>
                 <v-text-field v-model="review" label="Review"></v-text-field>
               </v-card-text>
 
