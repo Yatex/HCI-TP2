@@ -60,7 +60,7 @@
           </v-card-subtitle>
   
           <v-card-text>
-              <v-text-field label="Enter Code" type="text" color="teal-accent-3" v-model="this.code"/>
+              <v-text-field label="Enter Code" type="text" color="teal-accent-3" v-model="code"/>
           </v-card-text>
   
           <v-card-actions>
