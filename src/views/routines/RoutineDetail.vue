@@ -314,10 +314,8 @@
 
         try{
           this.showOverlay = true;
-          console.log(this.routine.id);
           await RoutineApi.delete(this.routine.id);
           
-
           this.showOverlay = false;
           this.$emit('delete', this.routine);
         }catch(e){
