@@ -264,6 +264,15 @@
             delete this.exercises[i].id;
             let res = await RoutineApi.addExercise(this.routine.id, this.exercises[i].cycle, this.exercises[i]);
             this.exercises[i].id = res.id;
+            if(this.exercises[i].imgUrl!=undefined){
+              await RoutineApi.createImage(this.routine.id, this.exercises[i].cycle, this.exercises[i].id,{number:1,url:this.exercises[i].imgUrl},null);
+            }
+            if(this.exercises[i].videoUrl!=undefined){
+              await RoutineApi.createVideo(this.routine.id, this.exercises[i].cycle, this.exercises[i].id,{number:1,url:this.exercises[i].videoUrl},null);
+            }
+            
+           
+            
           }
 
         }catch(e){
@@ -317,7 +326,7 @@
       ],
 
       exercises: [
-        {id: 0, name: 'Jumping frog', detail: "Ever felt like a frog? Let it be!", type: 'exercise', cycle: 1, repetitions: 6, duration: 10}
+        {id: 0, name: 'Jumping frog', detail: "Ever felt like a frog? Let it be!", type: 'exercise', cycle: 1, repetitions: 6, duration: 10,imgId:undefined, imgUrl:undefined,videoId:undefined,videoUrl:undefined}
       ]
       
     }),

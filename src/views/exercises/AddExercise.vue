@@ -23,6 +23,9 @@
 
           <v-select label="Cycle" v-model="exercise.cycle" :items="cycles"
             :rules="rules.cycle" item-value="id" item-text="name" outlined/>
+
+            <v-text-field label="Image" v-model="exercise.imgUrl" outlined/>
+             <v-text-field label="Video" v-model="exercise.videoUrl" outlined/>
         </v-form>
       </v-card-text>
 
@@ -41,6 +44,10 @@
 <script>
   export default {
       props: ['dialog', 'cycles'],
+
+      methods:{
+        
+      },
 
       data: ()=>({
         validForm: false,

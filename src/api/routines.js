@@ -76,35 +76,32 @@ class RoutineApi {
     return await Api.delete(`${RoutineApi.url}/${routineId}/cycles/${cycleId}/exercises/${exerciseId}`,
       true, controller);
   }
+  // ---------------------------------- IMAGES ----------------------------------
+  static async createImage(routineId, cycleId, exerciseId,{number,imgUrl} ,controller) {
+    return await Api.post(`${RoutineApi.url}/${routineId}/cycles/${cycleId}/exercises/${exerciseId}/images`,
+      true,{number,imgUrl} ,controller);
+  }
+  static async getImage(routineId, cycleId, exerciseId,controller) {
+    return await Api.get(`${RoutineApi.url}/${routineId}/cycles/${cycleId}/exercises/${exerciseId}/images`,
+      true ,controller);
+  }
+  static async putImage(routineId, cycleId, exerciseId,imageId,{number,url},controller) {
+    return await Api.put(`${RoutineApi.url}/${routineId}/cycles/${cycleId}/exercises/${exerciseId}/videos/${imageId}`,
+      true,{number,url} ,controller);
+  }
+   // ---------------------------------- VIDEO ----------------------------------
+  static async createVideo(routineId, cycleId, exerciseId,{number,imgUrl} ,controller) {
+    return await Api.post(`${RoutineApi.url}/${routineId}/cycles/${cycleId}/exercises/${exerciseId}/video`,
+      true,{number,imgUrl} ,controller);
+  }
+  static async getVideo(routineId, cycleId, exerciseId ,controller) {
+    return await Api.get(`${RoutineApi.url}/${routineId}/cycles/${cycleId}/exercises/${exerciseId}/videos`,
+      true ,controller);
+  }
+  static async putVideo(routineId, cycleId, exerciseId,videoId,{number,url},controller) {
+    return await Api.put(`${RoutineApi.url}/${routineId}/cycles/${cycleId}/exercises/${exerciseId}/videos/${videoId}`,
+      true,{number,url} ,controller);
+  }
 
 }
 
-/*
-class Routine {
-    constructor(id, name, detail,dateCreated,averageRating,isPublic,difficulty,creator,category) {
-        // if (id) {
-        this.id = id;
-        // }
-        this.name = name;
-        this.detail = detail;
-        this.dateCreated=dateCreated;
-        this.averageRating=averageRating;
-        this.isPublic=isPublic;
-        this.difficulty=difficulty
-        this.creator=creator;
-        this.category=category;
-    }
-}*/
-
-// class Routines {
-//     constructor(totalCount,orderBy) {
-
-//         this.totalCount=totalCount;
-//         this.orderBy=orderBy;
-//         this.direction;
-//         this.results= [];
-//         this.size;
-//         this.page;
-//         this.isLastPage;
-//     }
-// }

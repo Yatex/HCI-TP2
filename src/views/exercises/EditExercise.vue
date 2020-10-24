@@ -20,6 +20,13 @@
 
           <v-select label="Type" :items="types" :value="data.type" @input="exercise.type=$event"
             :rules="rules.type" item-text="name" item-value="value" outlined/>
+          
+          <v-text-field label="ImageUrl" :value="data.imgUrl" @input="exercise.imgUrl=$event"
+             outlined/>
+          
+          <v-text-field label="VideoUrl" :value="data.videoUrl" @input="exercise.videoUrl=$event"
+             outlined/>
+          
         </v-form>
       </v-card-text>
 
@@ -60,11 +67,25 @@
 
             let cycleId = this.exercise.cycleId;
             delete this.exercise.cycleId;
+
+            let imageId = this.exercise.imageId;
+            delete this.exercise.imageId;
+
+            let videoId = this.exercise.videoId;
+            delete this.exercise.videoId;
             
             await RoutineApi.updateExercise(routineId, cycleId, this.exercise.id, this.exercise);
 
             this.exercise.routineId = routineId;
             this.exercise.cycleId = cycleId;
+
+            await RoutineApi.putImage(routineId,cycleId,this.exercise.id,imageId,{number:1,url:this.data.imgUrl});
+            await RoutineApi.putVideo(routineId,cycleId,this.exercise.id,videoId,{number:1,url:this.data.videoUrl});
+
+            this.exercise.imageId =imageId;
+            this.exercise.videoId=videoId;
+
+           
 
             this.showOverlay = false;
             this.$emit('save', this.exercise);

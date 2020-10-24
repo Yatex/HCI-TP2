@@ -59,6 +59,16 @@
             for(let i=0; i<cycleExercises.length; i++){
               cycleExercises[i].routineId = routine.id;
               cycleExercises[i].cycleId = cycle.id;
+              let imageobj = await RoutineApi.getImage(routine.id, cycle.id,cycleExercises[i].id,null); 
+              if(imageobj.totalCount>0){
+                cycleExercises[i].imgUrl=imageobj.results[0].url;
+                cycleExercises[i].imgId=imageobj.results[0].id;
+              }
+              imageobj = await RoutineApi.getVideo(routine.id, cycle.id,cycleExercises[i].id,null); 
+              if(imageobj.totalCount>0){
+                cycleExercises[i].videoUrl=imageobj.results[0].url;
+                cycleExercises[i].videoId=imageobj.results[0].id;
+              }
               this.exercises.push(cycleExercises[i]);
             }
 

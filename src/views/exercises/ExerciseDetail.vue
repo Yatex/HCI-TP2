@@ -10,9 +10,13 @@
           indeterminate
         ></v-progress-linear>
       </template>
-
-      <v-img :src="img" height="200px"/>
-
+      <div v-if="exercise.imgUrl!=undefined"> 
+        <v-img :src="exercise.imgUrl" height="200px"/>
+      </div>
+      <div v-else>
+        <v-img :src="img" height="200px"/>
+      </div>
+      
       <v-card-title>{{exercise.name}}</v-card-title>
 
       <v-card-text>
