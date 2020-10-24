@@ -60,6 +60,9 @@
 
             let cycleId = this.exercise.cycleId;
             delete this.exercise.cycleId;
+
+            this.exercise.duration=parseInt( this.exercise.duration);
+            this.exercise.repetitions=parseInt( this.exercise.repetitions);
             
             await RoutineApi.updateExercise(routineId, cycleId, this.exercise.id, this.exercise);
 
