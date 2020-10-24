@@ -12,7 +12,8 @@
         <v-col v-for="routine in routines" :key="routine.id">
           
           <ActivityCard :maxWidth="250" class="mt-4" :own="isOwn()" :isRoutine="true"
-            :data="routine" :detailComponent="detailComponent" @delete="deleteRoutine($event)"/>
+            :data="routine" :detailComponent="detailComponent"
+            @update="updatedRoutine($event)" @delete="deletedRoutine($event)"/>
           
         </v-col>
       </v-row>
@@ -41,6 +42,7 @@
     <div v-if="isOwn()">
       <AddRoutine/>
     </div>
+    
   </div>
 </template>
 
@@ -55,7 +57,13 @@
 
   export default {    
     methods:{
-      async deleteRoutine(routine){
+      async updatedRoutine(routine){
+        for(let i=0; i<this.routines.length; i++)
+          if(this.routines[i].id == routine.id)
+            this.routines[i] = routine;
+      },
+
+      async deletedRoutine(routine){
         this.routines = this.routines.filter(r => r.id != routine.id);
       },
 
