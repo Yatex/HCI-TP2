@@ -28,7 +28,7 @@
       <v-card-text>
         <v-expansion-panels>
 
-          <v-expansion-panel v-for="cycle in cycles" :key="cycle.id">
+          <v-expansion-panel v-for="cycle in cycles" :key="cycle.id" @change="getExercises(cycle.id)">
             <v-expansion-panel-header>
               {{cycle.name}}
             </v-expansion-panel-header>
@@ -48,35 +48,34 @@
 
               <v-divider/>
 
-              <PromiseBuilder v-slot="snapshot" :promise="getExercises(cycle.id)">
-                <div v-if="snapshot.isPending">
-                  <v-progress-circular indeterminate/>
-                </div>
-                
-                <div v-else-if="snapshot.isSettled">
-                  <v-card-title>Exercises</v-card-title>
+              <div v-if="loadingExercises">
+                <v-progress-circular indeterminate/>
+              </div>
+              
+              <div v-else>
+                <v-card-title>Exercises</v-card-title>
 
-                  <v-card-text>
-                    <v-col v-for="exercise in snapshot.result" :key="exercise.id">          
-                      <v-row>
+                <v-card-text>
+                  <v-col v-for="exercise in exercises" :key="exercise.id">          
+                    <v-row>
 
-                        Do {{exercise.name}} for {{exercise.duration}} secs, repeat {{exercise.repetitions}} times
-                        
-                        <v-spacer/>
-                        
-                        <v-btn icon @click="showExerciseDetail=true">
-                          <v-icon>mdi-information-outline</v-icon>
-                        </v-btn>
+                      Do {{exercise.name}} for {{exercise.duration}} secs, repeat {{exercise.repetitions}} times
+                      
+                      <v-spacer/>
+                      
+                      <v-btn icon @click="showExerciseDetail=true">
+                        <v-icon>mdi-information-outline</v-icon>
+                      </v-btn>
 
-                        <ExerciseDetail :data="exercise" :own="own" :dialog="showExerciseDetail"
-                          @close="showExerciseDetail=false"/>
+                      <ExerciseDetail :data="exercise" :own="own" :dialog="showExerciseDetail"
+                        @close="showExerciseDetail=false" @update="updateExercise($event)"
+                          @delete="deleteExercise($event)"/>
 
-                      </v-row>
-                    </v-col>
-                  </v-card-text>
+                    </v-row>
+                  </v-col>
+                </v-card-text>
+              </div>
 
-                </div>
-              </PromiseBuilder>
             </v-expansion-panel-content>
             
           </v-expansion-panel>
@@ -135,7 +134,6 @@
 <script>
   import Vue from 'vue';
   import { RoutineApi } from '../../api/routines.js';
-  import { PromiseBuilder } from 'vue-promise-builder';
 
   import ExerciseDetail from '../exercises/ExerciseDetail';
 
@@ -157,6 +155,7 @@
         showSnackbar: false,
         snackbarText: '',
 
+        loadingExercises: false,
         exercises: [],
         
         img: require('../../assets/gym.jpg'),
@@ -190,12 +189,24 @@
       },
 
       async getExercises(cycleId){
+        this.loadingExercises = true;
         let exercises = await RoutineApi.getExercises(this.routine.id, cycleId);
+
         for(let i=0; i<exercises.length; i++){
           exercises[i].routineId = this.routine.id;
           exercises[i].cycleId = cycleId;
         }
-        return exercises;
+
+        this.exercises = exercises;
+        this.loadingExercises = false;
+      },
+
+      async updateExercise(exercise){
+        console.log('Updating');
+        console.log(exercise);
+        for(let i=0; i<this.exercises.length; i++)
+          if(this.exercises[i].id == exercise.id)
+            this.exercises[i] = exercise;
       },
 
       async deleteExercise(exercise){
@@ -213,6 +224,6 @@
       }
     },
 
-    components: {PromiseBuilder, ExerciseDetail}
+    components: {ExerciseDetail}
   }
 </script>

@@ -4,8 +4,8 @@
     <Navbar/>
 
     <v-overlay :value="showOverlay">
-            <v-progress-circular indeterminate size="64"/>
-        </v-overlay>
+        <v-progress-circular indeterminate size="64"/>
+    </v-overlay>
 
     <v-container v-if="routines.length > 0">
       <v-row class="mb-6" no-gutters>
