@@ -86,8 +86,12 @@ class RoutineApi {
       true ,controller);
   }
   static async putImage(routineId, cycleId, exerciseId,imageId,{number,url},controller) {
-    return await Api.put(`${RoutineApi.url}/${routineId}/cycles/${cycleId}/exercises/${exerciseId}/videos/${imageId}`,
+    return await Api.put(`${RoutineApi.url}/${routineId}/cycles/${cycleId}/exercises/${exerciseId}/images/${imageId}`,
       true,{number,url} ,controller);
+  }
+  static async deleteImage(routineId, cycleId, exerciseId,imageId, controller) {
+    return await Api.delete(`${RoutineApi.url}/${routineId}/cycles/${cycleId}/exercises/${exerciseId}/images/${imageId}`,
+      true, controller);
   }
    // ---------------------------------- VIDEO ----------------------------------
   static async createVideo(routineId, cycleId, exerciseId,{number,imgUrl} ,controller) {
@@ -101,6 +105,10 @@ class RoutineApi {
   static async putVideo(routineId, cycleId, exerciseId,videoId,{number,url},controller) {
     return await Api.put(`${RoutineApi.url}/${routineId}/cycles/${cycleId}/exercises/${exerciseId}/videos/${videoId}`,
       true,{number,url} ,controller);
+  }
+  static async deleteVideo(routineId, cycleId, exerciseId,videoId, controller) {
+    return await Api.delete(`${RoutineApi.url}/${routineId}/cycles/${cycleId}/exercises/${exerciseId}/videos/${videoId}`,
+      true, controller);
   }
 
 }

@@ -128,6 +128,8 @@
           this.showOverlay = true;
           
           await RoutineApi.deleteExercise(this.exercise.routineId, this.exercise.cycleId, this.exercise.id);
+          await RoutineApi.deleteImage(this.exercise.routineId, this.exercise.cycleId, this.exercise.id,this.exercise.imageId);
+          await RoutineApi.deleteVideo(this.exercise.routineId, this.exercise.cycleId, this.exercise.id,this.exercise.videoId);
 
           this.showOverlay = false;
           this.$emit('delete', this.exercise);
