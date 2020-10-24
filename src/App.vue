@@ -25,9 +25,9 @@
     components: {Navbar, Footer},
 
     data: () => ({
+      noContainer: ['/'],
       noNavbar: ['/'],
-      noFooter: ['/', '/my-exercises', '/routines/own', '/routines/all', '/favourites'],
-      noContainer: ['/']
+      footer: ['/main', '/my-exercises', '/routines/own', '/routines/all', '/favourites'],
     }),
 
     methods: {
@@ -35,7 +35,7 @@
         return this.noNavbar.findIndex(path => path == this.$router.currentRoute.path) == -1
       },
       renderFooter(){
-        return this.noFooter.findIndex(path => path == this.$router.currentRoute.path) == -1
+        return this.footer.findIndex(path => path == this.$router.currentRoute.path) != -1
       },
       renderContainer(){
         return this.noContainer.findIndex(path => path == this.$router.currentRoute.path) == -1

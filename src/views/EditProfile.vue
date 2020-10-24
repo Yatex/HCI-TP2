@@ -1,6 +1,5 @@
 <template>
   <div class="EditProfile">
-    <Navbar />
     <v-app id="editprofile">
     <v-container>
       <v-row justify="center">
@@ -113,166 +112,162 @@
 
 
 <script>
-import Navbar from '../components/Navbar';
-import {UserApi} from '../api/user';
-export default {
-  data:()=>({
-        delete:1,
-        name: '',
-        email: '',
-        password: '', 
-        confirmPassword: '',
-        username: '',
-        dialog: false,
-        gender: '',
-        phone:'', //falta phone rules
-        genders: [{text:'Male', value:'male'}, {text:'Female', value:'female'}, {text:'Other', value:'other'}],
-        date: '',
-        menu: false,
+  import {UserApi} from '../api/user';
+  export default {
+    data:()=>({
+          delete:1,
+          name: '',
+          email: '',
+          password: '', 
+          confirmPassword: '',
+          username: '',
+          dialog: false,
+          gender: '',
+          phone:'', //falta phone rules
+          genders: [{text:'Male', value:'male'}, {text:'Female', value:'female'}, {text:'Other', value:'other'}],
+          date: '',
+          menu: false,
 
-        rdonly:true,
-        validForm: true,
-        showPass: false,
-        showConfPass: false,
+          rdonly:true,
+          validForm: true,
+          showPass: false,
+          showConfPass: false,
 
-        showOverlay: false,
-        showSnackbar: false,
-        snackbarText: '',
-        usernameRules: [
-            v => !!v || 'Username is required',
-            v => (v && v.length < 50) || 'Name must be less than 50 characters',
-        ],
-        nameRules: [
-            v => !!v || 'Full name is required',
-            v => (v && v.length < 100) || 'Name must be less than 100 characters',
-        ],
-        PhoneRules: [
-            v => /^[0-9]+$/.test(v) || 'Phone must be valid',
-            v => (v && v.length >= 8) || 'Phone number must be greater than 8 characters',
-            v => (v && v.length < 15) || 'Phone number must be less than 15 characters',
-        ],
-        emailRules: [
-            v => !!v || 'E-mail is required',
-            v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
-            v => v.length < 100 || 'Email must be less than 100 characters',
-        ],
-        passwordRules: [
-          value => !!value || 'Required.',
-          v => v.length < 50 || 'Password must be less than 50 characters',
-          v => v.length >= 8 || 'Minimum 8 characters',
-        ]}),
-   
-    methods:{
-        save (date) {
-            this.$refs.menu.save(date)
-        },
-        enableEdit(){
-          this.rdonly=false;
-        },
-        disableEdit(){
-           this.rdonly=true;
-        },
-        getUser(){
-          UserApi.getUser(null).then(data=>{
-            this.username=data.username;
-            this.password=data.password;
-            this.name=data.fullName;
-            this.gender=data.gender;
-            this.date=data.birthdate;
-            this.email=data.email;
-            this.phone=data.phone;
-          })
-        },
-        Cancel(){
-            this.getUser();
-            this.disableEdit();
-        },
-        saveChanges(){
-          this.upload();
-          this.disableEdit();
-        },
-        async upload(){
-        
-        this.showOverlay = true;
-      
-        try{
-
-         await UserApi.modify({
-            username: this.username,
-            fullName: this.name,
-            gender: this.gender,
-            birthdate: this.date,
-            email: this.email,
-            phone: this.phone,
-            avatarUrl: "https://flic.kr/p/3ntH2u" //lo dejo fijo
-         },null)
-            
-          
-
-        }catch(e){
-          this.snackbarText = 'Ups! Something went wrong'; 
-          this.showSnackbar = true;
-          console.log(e);
-        }
-
-        this.showOverlay = false;
-        this.snackbarText = 'Success!'; 
-        this.showSnackbar = true;
-
-      },
-      async Delete(){
-        this.showOverlay = true;
-        this.dialog = false;
-
-        try{
-
-         await UserApi.delete(null);
-            
-        }catch(e){
-          this.snackbarText = 'Ups! Something went wrong'; 
-          this.showSnackbar = true;
-          console.log(e);
-        }
-        if(!this.showSnackbar){
-                    this.showOverlay = false;
-                    this.snackbarText = 'Success!'; 
-                    this.showSnackbar = true;
-        }  
-        
-      },
-
-        
-        
-    },
-    components: {
-        Navbar
-    },
-    created(){
-        this.getUser();
-    }
-  
-    //data: () => ({
-    //   name: '',
-    //   show1: false,      
-    //   show2: false,
-    //   show3: false,
-    //   password: '',
-    //   newPassword: '',
-    //   cNewPassword: '',
-    //   nameRules: [
-    //     v => !!v || 'Name is required',
-    //     v => (v && v.length <= 10) || 'Name must be less than 10 characters',
-    //   ],
-    //   email: '',
-    //   emailRules: [
-    //     v => !!v || 'E-mail is required',
-    //     v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
-    //   ],
-    //   passwordRules: [
-    //     value => !!value || 'Required.',
-    //     v => v.length >= 8 || 'Min 8 characters',
-    //   ],
-    // }),
+          showOverlay: false,
+          showSnackbar: false,
+          snackbarText: '',
+          usernameRules: [
+              v => !!v || 'Username is required',
+              v => (v && v.length < 50) || 'Name must be less than 50 characters',
+          ],
+          nameRules: [
+              v => !!v || 'Full name is required',
+              v => (v && v.length < 100) || 'Name must be less than 100 characters',
+          ],
+          PhoneRules: [
+              v => /^[0-9]+$/.test(v) || 'Phone must be valid',
+              v => (v && v.length >= 8) || 'Phone number must be greater than 8 characters',
+              v => (v && v.length < 15) || 'Phone number must be less than 15 characters',
+          ],
+          emailRules: [
+              v => !!v || 'E-mail is required',
+              v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+              v => v.length < 100 || 'Email must be less than 100 characters',
+          ],
+          passwordRules: [
+            value => !!value || 'Required.',
+            v => v.length < 50 || 'Password must be less than 50 characters',
+            v => v.length >= 8 || 'Minimum 8 characters',
+          ]}),
     
-}
+      methods:{
+          save (date) {
+              this.$refs.menu.save(date)
+          },
+          enableEdit(){
+            this.rdonly=false;
+          },
+          disableEdit(){
+            this.rdonly=true;
+          },
+          getUser(){
+            UserApi.getUser(null).then(data=>{
+              this.username=data.username;
+              this.password=data.password;
+              this.name=data.fullName;
+              this.gender=data.gender;
+              this.date=data.birthdate;
+              this.email=data.email;
+              this.phone=data.phone;
+            })
+          },
+          Cancel(){
+              this.getUser();
+              this.disableEdit();
+          },
+          saveChanges(){
+            this.upload();
+            this.disableEdit();
+          },
+          async upload(){
+          
+          this.showOverlay = true;
+        
+          try{
+
+          await UserApi.modify({
+              username: this.username,
+              fullName: this.name,
+              gender: this.gender,
+              birthdate: this.date,
+              email: this.email,
+              phone: this.phone,
+              avatarUrl: "https://flic.kr/p/3ntH2u" //lo dejo fijo
+          },null)
+              
+            
+
+          }catch(e){
+            this.snackbarText = 'Ups! Something went wrong'; 
+            this.showSnackbar = true;
+            console.log(e);
+          }
+
+          this.showOverlay = false;
+          this.snackbarText = 'Success!'; 
+          this.showSnackbar = true;
+
+        },
+        async Delete(){
+          this.showOverlay = true;
+          this.dialog = false;
+
+          try{
+
+          await UserApi.delete(null);
+              
+          }catch(e){
+            this.snackbarText = 'Ups! Something went wrong'; 
+            this.showSnackbar = true;
+            console.log(e);
+          }
+          if(!this.showSnackbar){
+                      this.showOverlay = false;
+                      this.snackbarText = 'Success!'; 
+                      this.showSnackbar = true;
+          }  
+          
+        },
+
+          
+          
+      },
+      created(){
+          this.getUser();
+      }
+    
+      //data: () => ({
+      //   name: '',
+      //   show1: false,      
+      //   show2: false,
+      //   show3: false,
+      //   password: '',
+      //   newPassword: '',
+      //   cNewPassword: '',
+      //   nameRules: [
+      //     v => !!v || 'Name is required',
+      //     v => (v && v.length <= 10) || 'Name must be less than 10 characters',
+      //   ],
+      //   email: '',
+      //   emailRules: [
+      //     v => !!v || 'E-mail is required',
+      //     v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+      //   ],
+      //   passwordRules: [
+      //     value => !!value || 'Required.',
+      //     v => v.length >= 8 || 'Min 8 characters',
+      //   ],
+      // }),
+      
+  }
 </script>
