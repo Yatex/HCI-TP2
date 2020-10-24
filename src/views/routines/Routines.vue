@@ -1,18 +1,12 @@
 <template>
   <div>
-
-    <Navbar/>
-
-    <v-overlay :value="showOverlay">
-        <v-progress-circular indeterminate size="64"/>
-    </v-overlay>
-
     <v-container v-if="routines.length > 0">
       <v-row class="mb-6" no-gutters>
         <v-col v-for="routine in routines" :key="routine.id">
           
           <ActivityCard :maxWidth="250" class="mt-4" :own="isOwn()" :isRoutine="true"
-            :data="routine" :detailComponent="detailComponent" @delete="deleteRoutine($event)"/>
+            :data="routine" :detailComponent="detailComponent"
+            @update="updatedRoutine($event)" @delete="deletedRoutine($event)"/>
           
         </v-col>
       </v-row>
@@ -41,13 +35,16 @@
     <div v-if="isOwn()">
       <AddRoutine/>
     </div>
+
+    <v-overlay :value="showOverlay">
+        <v-progress-circular indeterminate size="64"/>
+    </v-overlay>
   </div>
 </template>
 
 <script>
   import AddRoutine from './AddRoutine'
   import RoutineDetail from './RoutineDetail';
-  import Navbar from '../../components/Navbar';
   import ActivityCard from '../../components/ActivityCard';
 
   import { RoutineApi } from '../../api/routines.js';
@@ -55,7 +52,13 @@
 
   export default {    
     methods:{
-      async deleteRoutine(routine){
+      async updatedRoutine(routine){
+        for(let i=0; i<this.routines.length; i++)
+          if(this.routines[i].id == routine.id)
+            this.routines[i] = routine;
+      },
+
+      async deletedRoutine(routine){
         this.routines = this.routines.filter(r => r.id != routine.id);
       },
 
@@ -99,6 +102,6 @@
       this.getRoutines();
     },
 
-    components: { Navbar, ActivityCard, AddRoutine},
+    components: {ActivityCard, AddRoutine},
   } 
 </script>

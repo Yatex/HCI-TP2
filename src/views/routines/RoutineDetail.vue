@@ -203,6 +203,9 @@
 
     </v-card>
 
+    <EditRoutine :data="routine" :dialog="showEditRoutineDialog" @save="updatedRoutine($event)"
+        @cancel="showEditRoutineDialog=false"/>
+
     <EditCycle :data="currCycle" :dialog="showEditCycleDialog" @save="updatedCycle($event)"
         @cancel="showEditCycleDialog=false"/>
 
@@ -222,6 +225,7 @@
   import Vue from 'vue';
   import { RoutineApi } from '../../api/routines.js';
 
+  import EditRoutine from './EditRoutine';
   import EditCycle from './EditCycle';
   import ExerciseDetail from '../exercises/ExerciseDetail';
   import ReviewCard from '../../components/ReviewCard';
@@ -401,6 +405,7 @@
       this.getCycles();
     },
 
-    components: {EditCycle, ExerciseDetail, ReviewCard}
+    components: {EditCycle, ExerciseDetail, ReviewCard, EditRoutine}
+
   }
 </script>
