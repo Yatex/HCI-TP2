@@ -34,8 +34,8 @@
             <v-textarea label="Detail" v-model="routine.detail"
               :rules="rules.detail" outlined/>
 
-            <v-btn color="primary" @click="verifyRoutine">
-              <v-icon>mdi-chevron-right</v-icon>
+            <v-btn aria-label="next" color="primary" @click="verifyRoutine">
+              Next
             </v-btn>
           </v-form>
         </v-stepper-content>
@@ -69,11 +69,9 @@
 
           <div class="mt-4">
             <v-btn color="primary" @click="showAddCycleDialog=true">Add Cycle</v-btn>
-            <v-btn color="primary" @click="e1=1" class="ml-4">
-              <v-icon>mdi-chevron-left</v-icon>
-            </v-btn>
-            <v-btn color="primary" @click="verifyCycles" class="ml-4">
-              <v-icon>mdi-chevron-right</v-icon>
+            
+            <v-btn aria-label="next" color="primary" @click="verifyCycles" class="ml-4">
+             Next
             </v-btn>
           </div>
 
@@ -106,11 +104,9 @@
 
           <div class="mt-4">
             <v-btn color="primary" @click="showAddExerciseDialog=true">Add Exercise</v-btn>
-            <v-btn color="primary" @click="e1=2" class="ml-4">
-              <v-icon>mdi-chevron-left</v-icon>
-            </v-btn>
-            <v-btn color="primary" @click="verifyExercises" class="ml-4">
-              <v-icon>mdi-chevron-right</v-icon>
+            
+            <v-btn aria-label="next" color="primary" @click="verifyExercises" class="ml-4">
+              Next
             </v-btn>
           </div>
 
@@ -131,7 +127,7 @@
     </v-snackbar>
     
     <template v-slot:activator="{ on, attrs }">
-      <v-btn v-bind="attrs" v-on="on" color="accent black--text" class="mt-5" elevation="2"
+      <v-btn aria-label="add routine" v-bind="attrs" v-on="on" color="accent black--text" class="mt-5" elevation="2"
           fab absolute right bottom dark x-large>
         <v-icon dark>mdi-plus</v-icon>
       </v-btn>
