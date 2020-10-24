@@ -18,8 +18,20 @@ class RoutineApi {
   }
 
   static async delete(id, controller) {
+    let routine = await RoutineApi.getCycles(id);
+    console.log(routine,routine.totalCount);
+    if (routine.totalCount>0){
+      console.log("deleting cycles");
+      for (let index = 0; index < routine.results.length; index++) {
+        console.log("deleting a cycle");
+        const element = routine.results[index];
+        await RoutineApi.deleteCycle(id,element.id,null);
+
+      }
+    }
     return await Api.delete(`${RoutineApi.url}/${id}`, true, controller);
   }
+
 
   static async getAll(page, size, controller) {
     return await Api.get(RoutineApi.url, true, {page,size}, controller);
@@ -49,6 +61,15 @@ class RoutineApi {
   }
 
   static async deleteCycle(routineId, cycleId, controller) {
+    let cycle= await RoutineApi.getExercises(routineId,cycleId);
+    if (cycle.totalCount>0){
+      console.log("deleting exercises");
+      for (let index = 0; index < cycle.results.length; index++) {
+        console.log("deleting an exercise");
+        const element = cycle.results[index];
+        await RoutineApi.deleteExercise(routineId,cycleId,element.id,null);
+      }
+   }
     return await Api.delete(`${RoutineApi.url}/${routineId}/cycles/${cycleId}/`,
       true, controller);
   }

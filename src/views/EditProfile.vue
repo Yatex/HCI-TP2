@@ -212,11 +212,12 @@
             this.showSnackbar = true;
             console.log(e);
           }
+          if(!this.showSnackbar){
 
-          this.showOverlay = false;
-          this.snackbarText = 'Success!'; 
-          this.showSnackbar = true;
-
+            this.showOverlay = false;
+            this.snackbarText = 'Success!'; 
+            this.showSnackbar = true;
+           }
         },
         async Delete(){
           this.showOverlay = true;
