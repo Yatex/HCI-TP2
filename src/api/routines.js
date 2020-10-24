@@ -28,7 +28,7 @@ class RoutineApi {
   static async get(id, controller) {
     return await Api.get(`${RoutineApi.url}/${id}`,true,  controller);
   }
-
+  
   // ---------------------------------- Cycles ----------------------------------
 
   static async getCycles(routineId, controller) {
@@ -77,6 +77,15 @@ class RoutineApi {
       true, controller);
   }
 
+  // ---------------------------------- Ratings ---------------------------------
+
+  static async getRatings(routineId, controller) {
+    return await Api.get(`${RoutineApi.url}/${routineId}/ratings`, routineId, controller);
+  }
+
+  static async rateRoutine(routineId, body, controller) {
+    return await Api.post(`${RoutineApi.url}/${routineId}/ratings`, routineId, body, controller);
+  }
 }
 
 /*
