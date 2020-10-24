@@ -20,15 +20,15 @@
           {{capitalize(exercise.type)}}
         </div>
 
-        <div class="my-2">
-          {{exercise.detail}}
+        <div class="my-4">
+          <v-icon>mdi-information-outline</v-icon> {{exercise.detail}}
         </div>
 
-        <div class="my-2">
+        <div class="my-4">
           <v-icon>mdi-timer-outline</v-icon> {{exercise.duration}} secs
         </div>
 
-        <div class="my-2">
+        <div class="my-4">
          <v-icon>repeat</v-icon> {{exercise.repetitions}} times
         </div>
       </v-card-text>

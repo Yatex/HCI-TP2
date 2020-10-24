@@ -6,8 +6,6 @@
 
       <v-card-text>
         <v-form v-model="validForm">
-          {{exercise.routineId}} - {{exercise.cycleId}}
-
           <v-text-field label="Name" v-model="exercise.name"
             :rules="rules.name" outlined/>
 
@@ -64,6 +62,9 @@
             delete this.exercise.cycleId;
             
             await RoutineApi.updateExercise(routineId, cycleId, this.exercise.id, this.exercise);
+
+            this.exercise.routineId = routineId;
+            this.exercise.cycleId = cycleId;
 
             this.showOverlay = false;
             this.$emit('save', this.exercise);

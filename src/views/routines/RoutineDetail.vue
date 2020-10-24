@@ -15,13 +15,10 @@
 
       <v-card-title>{{routine.name}}</v-card-title>
 
+      <v-card-subtitle>Designed for {{routine.difficulty}}</v-card-subtitle>
+
       <v-card-text>
-        <div>
-          {{routine.detail}}
-        </div>
-        <div>
-          Difficulty: {{capitalize(routine.difficulty.toString())}}
-        </div>
+        {{routine.detail}}
       </v-card-text>
 
       <v-divider class="mx-4"></v-divider>
@@ -31,23 +28,54 @@
       <v-card-text>
         <v-expansion-panels>
 
-          <v-expansion-panel v-for="cycle in cycles" :key="cycle.id">
+          <v-expansion-panel v-for="cycle in cycles" :key="cycle.id" @change="getExercises(cycle.id)">
             <v-expansion-panel-header>
               {{cycle.name}}
             </v-expansion-panel-header>
 
             <v-expansion-panel-content>
-              <PromiseBuilder v-slot="snapshot" :promise="getExercises(cycle.id)">
-                <div v-if="snapshot.isPending">
-                  <v-progress-circular indeterminate/>
+              
+              <v-card-text>
+                <div class="mb-4">
+                  <v-icon>mdi-information-outline</v-icon> {{cycle.detail}}
                 </div>
-                <div v-else-if="snapshot.isSettled">
-                  
-                  <v-col v-for="exercise in snapshot.result" :key="exercise.id">
-                    {{exercise.name}} - {{exercise.duration}}
+
+                <div class="my-4">
+                  <v-icon>repeat</v-icon> {{cycle.repetitions}} times
+                </div>
+
+              </v-card-text>
+
+              <v-divider/>
+
+              <div v-if="loadingExercises">
+                <v-progress-circular indeterminate/>
+              </div>
+              
+              <div v-else>
+                <v-card-title>Exercises</v-card-title>
+
+                <v-card-text>
+                  <v-col v-for="exercise in exercises" :key="exercise.id">          
+                    <v-row>
+
+                      Do {{exercise.name}} for {{exercise.duration}} secs, repeat {{exercise.repetitions}} times
+                      
+                      <v-spacer/>
+                      
+                      <v-btn icon @click="showExerciseDetail=true">
+                        <v-icon>mdi-information-outline</v-icon>
+                      </v-btn>
+
+                      <ExerciseDetail :data="exercise" :own="own" :dialog="showExerciseDetail"
+                        @close="showExerciseDetail=false" @update="updateExercise($event)"
+                          @delete="deleteExercise($event)"/>
+
+                    </v-row>
                   </v-col>
-                </div>
-              </PromiseBuilder>
+                </v-card-text>
+              </div>
+
             </v-expansion-panel-content>
             
           </v-expansion-panel>
@@ -84,10 +112,6 @@
 
         <v-spacer/>
 
-        <v-btn color="accent darken-3" text @click="favouriteRoutine">
-          Add to Favourites
-        </v-btn>
-
         <v-btn color="accent darken-3"  @click="showEditDialog=true" v-if="own" text>
           Edit Routine
         </v-btn>
@@ -110,8 +134,8 @@
 <script>
   import Vue from 'vue';
   import { RoutineApi } from '../../api/routines.js';
-  import { UserApi } from '../../api/user.js';
-  import { PromiseBuilder } from 'vue-promise-builder';
+
+  import ExerciseDetail from '../exercises/ExerciseDetail';
 
   String.prototype.capitalize = function() {
     return this.charAt(0).toUpperCase() + this.slice(1)
@@ -126,9 +150,13 @@
 
         showEditDialog: false,
         showDeleteDialog: false,
+        showExerciseDetail: false,
         showOverlay: false,
         showSnackbar: false,
         snackbarText: '',
+
+        loadingExercises: false,
+        exercises: [],
         
         img: require('../../assets/gym.jpg'),
       }
@@ -160,38 +188,29 @@
         }
       },
 
-      async getExercises(id){
-        return await RoutineApi.getExercises(this.routine.id, id);
+      async getExercises(cycleId){
+        this.loadingExercises = true;
+        let exercises = await RoutineApi.getExercises(this.routine.id, cycleId);
+
+        for(let i=0; i<exercises.length; i++){
+          exercises[i].routineId = this.routine.id;
+          exercises[i].cycleId = cycleId;
+        }
+
+        this.exercises = exercises;
+        this.loadingExercises = false;
       },
 
-      async favouriteRoutine(){
-          try{
+      async updateExercise(exercise){
+        console.log('Updating');
+        console.log(exercise);
+        for(let i=0; i<this.exercises.length; i++)
+          if(this.exercises[i].id == exercise.id)
+            this.exercises[i] = exercise;
+      },
 
-            await UserApi.addFavouriteRoutine(this.routine.id,null)
-
-          }catch(e){
-                
-              if(e.code == 2){
-                  // this.showSnackbar = true;
-                  // this.snackbarText = 'Its already a Favourite of yours'; 
-                  // this.showSnackbar = true;
-                  // console.log('esto 1');
-                  this.isFavourite=true;
-              }else{
-                  // this.showSnackbar = true;
-                  // this.snackbarText = 'Ups! Something went wrong'; 
-                  // this.showSnackbar = true;
-                  // console.log('esto 2');
-              }
-          
-              console.log(e);
-
-          }
-          this.isFavourite=true;
-          // this.showOverlay = false;
-          // this.snackbarText = 'Success!'; 
-          // this.showSnackbar = true;
-
+      async deleteExercise(exercise){
+        this.exercises = this.exercises.filter(e => e.id != exercise.id);
       },
 
       capitalize(string) {
@@ -205,6 +224,6 @@
       }
     },
 
-    components: {PromiseBuilder}
+    components: {ExerciseDetail}
   }
 </script>
