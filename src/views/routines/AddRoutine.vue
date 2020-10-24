@@ -88,7 +88,7 @@
               <v-list-item :key="exercise.id">
                 <v-list-item-content>
                   <v-list-item-title v-text="exercise.name"/>
-                  <v-list-item-subtitle v-text="getCycleName(exercise.cycle).name"/>
+                  <v-list-item-subtitle v-text="getCycleName(exercise.cycle)"/>
                 </v-list-item-content>
 
                 <v-list-item-action>
@@ -165,7 +165,7 @@
 
       addCycle(cycle){
         this.showAddCycleDialog = false;
-        cycle.id = this.cycles.length;
+        cycle.id = this.cid++;
         let cycleCopy = Object.assign({}, cycle);
         this.cycles.push(cycleCopy);
       },
@@ -207,7 +207,7 @@
       addExercise(exercise){
         this.showAddExerciseDialog = false;
         let exerciseCopy = Object.assign({}, exercise);
-        exerciseCopy.id = this.exercises.length;
+        exerciseCopy.id = this.eid++;
         this.exercises.push(exerciseCopy);
       },
 
@@ -225,8 +225,6 @@
           this.snackbarText = 'You have to add at least 1 exercise per cycle';
           this.showSnackbar = true;
         }else{
-          this.snackbarText = 'Verified';
-          this.showSnackbar = true;
           this.upload();
         }
       },
@@ -273,10 +271,11 @@
           console.log(e);
         }
 
-        this.showOverlay = false;
-        this.snackbarText = 'Success!'; 
-        this.showSnackbar = true;
+        this.$emit('create', this.routine);
 
+        this.showOverlay = false;
+        this.dialog = false;
+        
       }
     },
 
@@ -293,6 +292,9 @@
         {name: 'Intermediate', value: 'intermediate'}, {name: 'Advanced', value: 'advanced'},
         {name: 'Expert', value: 'expert'}
       ],
+
+      cid: 0,
+      eid: 0,
 
       rules: {
         name: [ v => !!v || 'Name is required',
@@ -311,15 +313,15 @@
         category: {id: 1},
       },
 
-      cycles: [
-        {id: 0, name: 'Move The Booty 1', detail: "It's time to move the ass!", type: 'warmup', repetitions: 2},
-        {id: 1, name: 'Shake The Booty 1', detail: "It's time to shake the ass!", type: 'exercise', repetitions: 2},
-        {id: 2, name: 'Cool The Booty 1', detail: "It's time to cool the ass!", type: 'cooldown', repetitions: 2},
-      ],
+      // cycles: [
+      //   {id: 0, name: 'Move The Booty', detail: "It's time to move the ass!", type: 'warmup', repetitions: 2},
+      //   {id: 1, name: 'Shake The Booty', detail: "It's time to shake the ass!", type: 'exercise', repetitions: 2},
+      //   {id: 2, name: 'Cool The Booty', detail: "It's time to cool the ass!", type: 'cooldown', repetitions: 2},
+      // ],
 
-      exercises: [
-        {id: 0, name: 'Jumping frog', detail: "Ever felt like a frog? Let it be!", type: 'exercise', cycle: 1, repetitions: 6, duration: 10}
-      ]
+      cycles: [],
+
+      exercises: []
       
     }),
 

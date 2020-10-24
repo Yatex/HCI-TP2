@@ -33,7 +33,7 @@
     </div>
 
     <div v-if="isOwn()">
-      <AddRoutine/>
+      <AddRoutine @create="createdRoutine($event)"/>
     </div>
 
     <v-overlay :value="showOverlay">
@@ -52,13 +52,17 @@
 
   export default {    
     methods:{
-      async updatedRoutine(routine){
+      createdRoutine(routine){
+        this.routines.push(routine);
+      },
+
+      updatedRoutine(routine){
         for(let i=0; i<this.routines.length; i++)
           if(this.routines[i].id == routine.id)
             this.routines[i] = routine;
       },
 
-      async deletedRoutine(routine){
+      deletedRoutine(routine){
         this.routines = this.routines.filter(r => r.id != routine.id);
       },
 
