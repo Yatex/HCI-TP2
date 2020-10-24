@@ -8,8 +8,6 @@ class RoutineApi {
   }
 
   static async add(routine, controller) {
-    // console.log(RoutineApi.url);
-    // console.log(JSON.stringify(routine));
     return await Api.post(RoutineApi.url, true, routine, controller);
   }
 
@@ -18,17 +16,13 @@ class RoutineApi {
   }
 
   static async delete(id, controller) {
-    let routine = await RoutineApi.getCycles(id);
-    console.log(routine,routine.totalCount);
-    if (routine.totalCount>0){
-      console.log("deleting cycles");
-      for (let index = 0; index < routine.results.length; index++) {
-        console.log("deleting a cycle");
-        const element = routine.results[index];
-        await RoutineApi.deleteCycle(id,element.id,null);
+    let cycles = await RoutineApi.getCycles(id);
 
-      }
+    for (let i=0; i < cycles.length; i++) {
+      console.log("Deleting a cycle");
+      await RoutineApi.deleteCycle(id, cycles[i].id);
     }
+
     return await Api.delete(`${RoutineApi.url}/${id}`, true, controller);
   }
 
@@ -50,8 +44,6 @@ class RoutineApi {
   }
 
   static async addCycle(routineId, cycle, controller) {
-    // console.log(`${RoutineApi.url}/${routineId}/cycles`);
-    // console.log(JSON.stringify(cycle));
     return await Api.post(`${RoutineApi.url}/${routineId}/cycles`, true, cycle, controller);
   }
 
@@ -61,15 +53,13 @@ class RoutineApi {
   }
 
   static async deleteCycle(routineId, cycleId, controller) {
-    let cycle= await RoutineApi.getExercises(routineId,cycleId);
-    if (cycle.totalCount>0){
-      console.log("deleting exercises");
-      for (let index = 0; index < cycle.results.length; index++) {
-        console.log("deleting an exercise");
-        const element = cycle.results[index];
-        await RoutineApi.deleteExercise(routineId,cycleId,element.id,null);
-      }
-   }
+    let exercises = await RoutineApi.getExercises(routineId,cycleId);
+    
+    for (let i=0; i < exercises.length; i++) {
+      console.log("Deleting an exercise");
+      await RoutineApi.deleteExercise(routineId, cycleId, exercises[i].id);
+    }
+
     return await Api.delete(`${RoutineApi.url}/${routineId}/cycles/${cycleId}/`,
       true, controller);
   }
@@ -83,8 +73,6 @@ class RoutineApi {
   }
 
   static async addExercise(routineId, cycleId, exercise, controller) {
-    // console.log(`${RoutineApi.url}/${routineId}/cycles/${cycleId}/exercises`);
-    // console.log(JSON.stringify(exercise));
     return await Api.post(`${RoutineApi.url}/${routineId}/cycles/${cycleId}/exercises`, true, exercise, controller);
   }
 
