@@ -155,7 +155,7 @@
                     if(e.code == 4){
                         this.snackbarText = 'Wrong username or password';
                     }else if(e.code == 8){
-                        this.snackbarText = 'You have to verify your email first. If you did not recieve an email, go to Resend Verification';
+                        this.snackbarText = 'You have to verify your email first. If you did not recieve an email, go to resend verification';
                         this.snackbarShowResend = true;
                     }else{
                         this.snackbarText = 'Ups! Something went wrong';

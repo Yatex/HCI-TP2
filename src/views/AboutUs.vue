@@ -1,10 +1,10 @@
 <template>
   <div class="AboutUs">
 
-    <v-container class="my-5">
+    <v-container>
       <h1>Team:</h1>
-      <v-layout row wrap>
-        <v-flex v-for="person in team" :key="person.name">
+      <v-layout row>
+        <v-flex v-for="person in group" :key="person.name">
           <v-card max-width="290" class="mt-4">
             <v-img :src="person.img" height="200px" width="300"></v-img>
         
@@ -40,8 +40,8 @@
 <script>
   export default {
       data: () => ({
-        team: [
-          { //CAMBIEN SUS FOTOS CUANDO PUEDAN
+        group: [
+          {
             name: "Ángeles A. Borracci", legajo: "56648", mail: "aborracci@itba.edu.ar", img: require('../assets/blackw.png')
           },
           {
