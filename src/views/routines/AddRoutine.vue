@@ -88,7 +88,7 @@
               <v-list-item :key="exercise.id">
                 <v-list-item-content>
                   <v-list-item-title v-text="exercise.name"/>
-                  <v-list-item-subtitle v-text="getCycleById(exercise.cycle).name"/>
+                  <v-list-item-subtitle v-text="getCycleName(exercise.cycle).name"/>
                 </v-list-item-content>
 
                 <v-list-item-action>
@@ -197,8 +197,9 @@
         }
       },
 
-      getCycleById(id){
-        return this.cycles.filter(c => c.id == id)[0];
+      getCycleName(id){
+        let cycle = this.cycles.filter(c => c.id == id)[0];
+        return cycle!=undefined ? cycle.name : '';
       },
 
       // --------------------------  EXERCISES  ------------------------------------------
