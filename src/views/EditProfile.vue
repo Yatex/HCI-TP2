@@ -176,7 +176,7 @@
               this.password=data.password;
               this.name=data.fullName;
               this.gender=data.gender;
-              this.date=data.birthdate;
+              this.date= new Date(data.birthdate);
               this.email=data.email;
               this.phone=data.phone;
             })
@@ -199,7 +199,7 @@
               username: this.username,
               fullName: this.name,
               gender: this.gender,
-              birthdate: this.date,
+              birthdate: new Date(this.date).getTime(),
               email: this.email,
               phone: this.phone,
               avatarUrl: "https://flic.kr/p/3ntH2u" //lo dejo fijo
