@@ -46,7 +46,7 @@
               </v-card-text>
       
               <v-card-actions>
-                <v-btn color="red lighten-1" text @click="Delete()" >
+                <v-btn color="red darken-4" text @click="Delete()" >
                   Yes, delete
                 </v-btn>
                 <v-spacer />

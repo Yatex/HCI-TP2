@@ -47,7 +47,7 @@
               </v-card-text>
       
               <v-card-actions>
-              <v-btn color="red darken-1" text @click="deleteExercise()" >
+              <v-btn color="red darken-4" text @click="deleteExercise()" >
                   Yes, delete
               </v-btn>
               <v-spacer />
@@ -58,7 +58,7 @@
           </v-card>
         </v-dialog>
 
-        <v-btn color="red darken-1" @click="showDeleteDialog=true" v-if="own" text>
+        <v-btn color="red darken-4" @click="showDeleteDialog=true" v-if="own" text>
           Delete
         </v-btn>
 

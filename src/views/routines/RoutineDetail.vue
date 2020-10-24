@@ -63,7 +63,7 @@
                     </v-card-text>
             
                     <v-card-actions>
-                      <v-btn color="red darken-1" text @click="deleteCycle(cycle)" >
+                      <v-btn color="red darken-4" text @click="deleteCycle(cycle)" >
                         Yes, delete
                       </v-btn>
                       <v-spacer />
@@ -74,7 +74,7 @@
                   </v-card>
                 </v-dialog>
 
-                <v-btn class="ml-5" color="darken-1" @click="showDeleteCycleDialog=true" v-if="own" icon>
+                <v-btn class="ml-5" color="darken-4" @click="showDeleteCycleDialog=true" v-if="own" icon>
                   <v-icon>delete</v-icon>
                 </v-btn>
 
