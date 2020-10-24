@@ -135,7 +135,7 @@
             </v-card-text>
     
             <v-card-actions>
-              <v-btn color="red darken-1" text @click="deleteRoutine()" >
+              <v-btn color="red darken-3" text @click="deleteRoutine()" >
                 Yes, delete
               </v-btn>
               <v-spacer />
@@ -146,7 +146,7 @@
           </v-card>
         </v-dialog>
 
-        <v-btn color="red darken-1" @click="showDeleteRoutineDialog=true" v-if="own" text>
+        <v-btn color="red darken-3" @click="showDeleteRoutineDialog=true" v-if="own" text>
           Delete
         </v-btn>
 
@@ -192,11 +192,11 @@
           </v-card>
         </v-dialog>
         
-        <v-btn color="accent darken-3" @click="openReviews()" text>
+        <v-btn bold color="accent darken-4" @click="openReviews()" text>
           Reviews
         </v-btn>
 
-        <v-btn color="accent darken-3" @click="showEditRoutineDialog=true" v-if="own" text>
+        <v-btn bold color="accent darken-4" @click="showEditRoutineDialog=true" v-if="own" text>
           Edit Routine
         </v-btn>
       </v-card-actions>

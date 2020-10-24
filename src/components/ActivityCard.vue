@@ -15,13 +15,13 @@
         <v-card-actions class="justify-space-around">
 
             <div v-if="isRoutine==true && isFavourite==false">
-                <v-btn icon @click="favouriteRoutine">
+                <v-btn aria-label="Favourite_inactive" icon @click="favouriteRoutine">
                     <v-icon>mdi-heart</v-icon>
                 </v-btn>
             </div>
             
             <div v-if="isRoutine==true && isFavourite==true">
-                <v-btn aria-label="Favourite" color="red" icon @click="unfavouriteRoutine">
+                <v-btn aria-label="Favourite_active" color="red" icon @click="unfavouriteRoutine">
                     <v-icon>mdi-heart</v-icon>
                 </v-btn>
             </div>
