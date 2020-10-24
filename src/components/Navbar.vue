@@ -1,7 +1,7 @@
 <template>
     <v-app-bar app dark color="primary">
         <v-toolbar-title>
-            <v-btn width="50" height="50" to="/main">
+            <v-btn aria-label="home" width="50" height="50" to="/main">
                 <v-img src="../assets/logo.png" width="50"></v-img>
             </v-btn> 
         </v-toolbar-title>
@@ -17,7 +17,7 @@
 
         <v-menu bottom min-width="200px" rounded offset-y>
             <template v-slot:activator="{ on }">
-                <v-btn icon x-large v-on="on" @click="getUser()">
+                <v-btn aria-label="User Profile" icon x-large v-on="on" @click="getUser()">
                 <v-avatar color="accent" size="40">
                     <v-icon dark>
                             mdi-account-circle

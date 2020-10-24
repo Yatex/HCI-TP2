@@ -25,10 +25,12 @@
                 v-model="phone"  :rules="PhoneRules" :readonly="rdonly"/>
 
             <v-menu ref="menu" v-model="menu" :close-on-content-click="false" transition="scale-transition" offset-y min-width="290px" >
-                <template v-slot:activator="{ on, attrs }">
-                    <v-text-field v-model="date" label="Birthday date" prepend-icon="mdi-calendar" :readonly="rdonly" v-bind="attrs" v-on="on" ></v-text-field>
-                </template>
-                <v-date-picker ref="picker" v-model="date" max="2030-01-01" min="1950-01-01" @change="save" ></v-date-picker>
+                <!-- <v-menu-item> -->
+                  <template v-slot:activator="{ on, attrs }">
+                      <v-text-field v-model="date" label="Birthday date" prepend-icon="mdi-calendar" :readonly="rdonly" v-bind="attrs" v-on="on" ></v-text-field>
+                  </template>
+                  <v-date-picker ref="picker" v-model="date" max="2030-01-01" min="1950-01-01" @change="save" ></v-date-picker>
+                <!-- </v-menu-item> -->
             </v-menu>
             
             <v-select :items="genders" label="Gender" prepend-icon="mdi-gender-male-female" v-model="gender" item-value="value" item-text="text" :readonly="rdonly"></v-select>
@@ -56,7 +58,7 @@
           </v-dialog>
           <div v-if="rdonly">
             <v-row>
-            <v-btn color="red darken-1" @click.stop="dialog = true" text>
+            <v-btn color="red darken-4" @click.stop="dialog = true" text>
               Delete User
             </v-btn>
             <v-spacer />
