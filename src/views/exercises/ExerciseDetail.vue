@@ -64,7 +64,7 @@
 
         <v-spacer/>
         
-        <v-btn color="accent darken-3" @click="showEditDialog=true" v-if="own" text>
+        <v-btn bold color="accent darken-4" @click="showEditDialog=true" v-if="own" text>
           Edit Excercise
         </v-btn>
 

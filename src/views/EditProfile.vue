@@ -21,8 +21,7 @@
             <v-text-field label="Email" prepend-icon="email" type="text" color="teal-accent-3"
                   v-model="email"  :rules="emailRules" :readonly="true"/>
 
-            <v-text-field label="PhoneNumber" prepend-icon="mdi-phone" type="text" color="teal-accent-3"
-                v-model="phone"  :rules="PhoneRules" :readonly="rdonly"/>
+            <v-text-field label="PhoneNumber" prepend-icon="mdi-phone" type="text" color="teal-accent-3" v-model="phone"  :rules="PhoneRules" :readonly="rdonly"/>
                 
             <v-text-field v-model="date" label="Birthday date" prepend-icon="mdi-calendar" :readonly="rdonly" v-bind="attrs" v-on="on" ></v-text-field>
               
