@@ -1,6 +1,6 @@
 <template>
   <div class="AboutUs">
-    <Navbar />
+
     <v-container class="my-5">
       <h1>Team:</h1>
       <v-layout row wrap>
@@ -38,27 +38,22 @@
 </template>
 
 <script>
-import Navbar from '../components/Navbar';
-
-export default {
-    data: () => ({
-      team: [
-        { //CAMBIEN SUS FOTOS CUANDO PUEDAN
-          name: "Ángeles A. Borracci", legajo: "56648", mail: "aborracci@itba.edu.ar", img: require('../assets/blackw.png')
-        },
-        {
-          name: "Felipe Oliver", legajo: "58439", mail: "foliver@itba.edu.ar", img: require('../assets/capamerica.jpeg')
-        },
-        {
-          name: "Matías J. Apablaza", legajo: "59714", mail: "mapablaza@itba.edu.ar", img: require('../assets/hulk.jpg')
-        },
-        {
-          name: "Juan I. Sackmann Sala", legajo: "60340", mail: "jsackmann@itba.edu.ar", img: require('../assets/ironman.jpeg')
-        },
-      ]
-    }),
-    components: {
-        Navbar,
-    },
-}
+  export default {
+      data: () => ({
+        team: [
+          { //CAMBIEN SUS FOTOS CUANDO PUEDAN
+            name: "Ángeles A. Borracci", legajo: "56648", mail: "aborracci@itba.edu.ar", img: require('../assets/blackw.png')
+          },
+          {
+            name: "Felipe Oliver", legajo: "58439", mail: "foliver@itba.edu.ar", img: require('../assets/capamerica.jpeg')
+          },
+          {
+            name: "Matías J. Apablaza", legajo: "59714", mail: "mapablaza@itba.edu.ar", img: require('../assets/hulk.jpg')
+          },
+          {
+            name: "Juan I. Sackmann Sala", legajo: "60340", mail: "jsackmann@itba.edu.ar", img: require('../assets/ironman.jpeg')
+          },
+        ]
+      }),
+  }
 </script>

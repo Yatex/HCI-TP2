@@ -1,7 +1,5 @@
 <template>
   <div>
-
-    <Navbar/>
     
     <v-overlay :value="showOverlay">
             <v-progress-circular indeterminate size="64"/>
@@ -35,7 +33,6 @@
 
 <script>
   import ExerciseDetail from './ExerciseDetail';
-  import Navbar from '../../components/Navbar';
   import ActivityCard from '../../components/ActivityCard';
 
   import { RoutineApi } from '../../api/routines.js';
@@ -95,6 +92,6 @@
       this.getExercises();
     },
 
-    components: { Navbar, ActivityCard }
+    components: {ActivityCard}
   }
   </script>

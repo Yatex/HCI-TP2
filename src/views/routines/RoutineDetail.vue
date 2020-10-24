@@ -152,12 +152,59 @@
 
         <v-spacer/>
 
-        <v-btn color="accent darken-3"  @click="showEditRoutineDialog=true" v-if="own" text>
+        <v-dialog v-model="showReviewDialog" max-width="450" >
+          <v-card>
+            <v-row>
+              
+              <v-card class="ml-5 mt-2 mr-5" width="100%">
+              <v-card-title class="headline">
+                Write a review
+              </v-card-title>
+              <v-card-text>
+                <v-rating value="0" v-model="rating" length="5" color="yellow" background-color="grey lighten-1"></v-rating>
+                <v-text-field v-model="review" label="Review"></v-text-field>
+              </v-card-text>
+
+              <v-card-actions>
+                <v-spacer />
+                <v-btn text color="primary text-center black--text" class="accent" @click="sendRating()">Send Review</v-btn>
+              </v-card-actions>
+              </v-card>
+
+              <v-card-title class="headline ml-3 mt-5">
+                Reviews about {{ routine.name }}:
+              </v-card-title>
+
+              <v-card-text>
+                <div v-if="reviews.length > 0">
+                  <v-col v-for="review in reviews" :key="review.id">
+              
+                    <ReviewCard :maxWidth="500" class="mt-4" :card="{ rating: review.score, review: review.review}" />
+                    
+                  </v-col>
+                </div>
+                <div v-else>
+                  <p class="ml-5">There are no reviews about {{ routine.name }}, be the first one!</p>
+                </div>
+              </v-card-text>
+
+            </v-row>
+          </v-card>
+        </v-dialog>
+        
+        <v-btn color="accent darken-3" @click="openReviews()" text>
+          Reviews
+        </v-btn>
+
+        <v-btn color="accent darken-3" @click="showEditRoutineDialog=true" v-if="own" text>
           Edit Routine
         </v-btn>
       </v-card-actions>
 
     </v-card>
+
+    <EditRoutine :data="routine" :dialog="showEditRoutineDialog" @save="updatedRoutine($event)"
+        @cancel="showEditRoutineDialog=false"/>
 
     <EditCycle :data="currCycle" :dialog="showEditCycleDialog" @save="updatedCycle($event)"
         @cancel="showEditCycleDialog=false"/>
@@ -178,8 +225,10 @@
   import Vue from 'vue';
   import { RoutineApi } from '../../api/routines.js';
 
+  import EditRoutine from './EditRoutine';
   import EditCycle from './EditCycle';
   import ExerciseDetail from '../exercises/ExerciseDetail';
+  import ReviewCard from '../../components/ReviewCard';
 
   String.prototype.capitalize = function() {
     return this.charAt(0).toUpperCase() + this.slice(1)
@@ -193,6 +242,11 @@
         showOverlay: false,
         showSnackbar: false,
         snackbarText: '',
+
+        showReviewDialog: false,
+        rating: 0,
+        review: '',
+        reviews: [],
 
         showEditRoutineDialog: false,
         showDeleteRoutineDialog: false,
@@ -213,6 +267,39 @@
     },
 
     methods: {
+      // --------------------------------- REVIEWS ---------------------------------
+
+      async getRatings(){
+        try{
+          let answer;
+          answer = await RoutineApi.getRatings(this.routine.id);
+          this.reviews = answer.results;
+        }catch(e){
+          this.showSnackbar = true;
+          this.snackbarText = 'Ups! Something went wrong while bringing the reviews'; 
+        }
+      },
+
+      async sendRating(){
+          try{
+            await RoutineApi.rateRoutine(this.routine.id, {
+              "score": this.rating,
+              "review": this.review
+            });
+            this.showSnackbar = true;
+            this.snackbarText = 'Review sent with success!'; 
+          }catch(e){
+            this.showSnackbar = true;
+            this.snackbarText = 'Ups! Something went wrong while sending the review'; 
+          }
+          this.showReviewDialog = false;
+      },
+
+      openReviews(){
+        this.getRatings();
+        this.showReviewDialog = true;
+      },
+
       // --------------------------------- ROUTINE ---------------------------------
 
       updatedRoutine(routine){
@@ -318,6 +405,7 @@
       this.getCycles();
     },
 
-    components: {EditCycle, ExerciseDetail}
+    components: {EditCycle, ExerciseDetail, ReviewCard, EditRoutine}
+
   }
 </script>

@@ -132,7 +132,7 @@
     
     <template v-slot:activator="{ on, attrs }">
       <v-btn v-bind="attrs" v-on="on" color="accent black--text" class="mt-5" elevation="2"
-          fab fixed right bottom dark x-large>
+          fab absolute right bottom dark x-large>
         <v-icon dark>mdi-plus</v-icon>
       </v-btn>
     </template>
