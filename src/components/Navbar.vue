@@ -18,7 +18,7 @@
         <v-menu bottom min-width="200px" rounded offset-y>
             <template v-slot:activator="{ on }">
                 <v-btn icon x-large v-on="on" @click="getUser()">
-                <v-avatar color="secondary" size="40">
+                <v-avatar color="accent" size="40">
                     <v-icon dark>
                             mdi-account-circle
                     </v-icon>
@@ -29,7 +29,7 @@
             <v-card>
                 <v-list-item-content class="justify-center">
                     <div class="mx-auto text-center">
-                        <v-avatar color="secondary">
+                        <v-avatar color="accent">
                             <v-icon dark>
                                 mdi-account-circle
                             </v-icon>
