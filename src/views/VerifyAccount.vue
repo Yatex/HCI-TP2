@@ -79,7 +79,7 @@
         },
         async verifyEmail(){
             try{
-                await UserApi.verifyEmail({
+                return await UserApi.verifyEmail({
                     "email":this.email,
                     "code":this.code
                 },null);
@@ -88,11 +88,17 @@
                 this.showSnackbar = true;
                 this.snackbarText = 'Ups! Something went wrong'; 
                 this.showSnackbar = true;
+                console.log(e);
                     
-            }            
-            this.showOverlay = false;
-            this.snackbarText = 'Success!'; 
-            this.showSnackbar = true;
+            }finally{
+                if(!this.showSnackbar){
+                    this.showOverlay = false;
+                    this.snackbarText = 'Success!'; 
+                    this.showSnackbar = true;
+                    this.$router.push('/');
+                }            
+            
+            }
         }
     },
     created(){

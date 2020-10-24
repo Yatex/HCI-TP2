@@ -10,11 +10,6 @@
             <div class="text-center">
                 <v-btn rounded outlined v-on:click="$emit('go-signin')">SIGN IN</v-btn>
             </div>
-            <v-row>
-                <v-spacer />
-                    <v-img src="../../assets/logo.png" width="100" class="mt-2"></v-img>
-                <v-spacer />
-            </v-row>
         </v-col>
 
         <v-col cols="12" md="8">
@@ -65,7 +60,7 @@
           </v-card-subtitle>
   
           <v-card-text>
-              <v-text-field label="Enter Code" type="text" color="teal-accent-3" v-model="code"/>
+              <v-text-field label="Enter Code" type="text" color="teal-accent-3" v-model="this.code"/>
           </v-card-text>
   
           <v-card-actions>

@@ -233,11 +233,12 @@ export default {
           this.showSnackbar = true;
           console.log(e);
         }
-
-        this.showOverlay = false;
-        this.snackbarText = 'Success!'; 
-        this.showSnackbar = true;
-
+        if(!this.showSnackbar){
+                    this.showOverlay = false;
+                    this.snackbarText = 'Success!'; 
+                    this.showSnackbar = true;
+        }  
+        
       },
 
         

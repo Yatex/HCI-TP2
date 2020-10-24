@@ -17,17 +17,17 @@
                 <v-dialog v-model="dialog" width="500" overlay-color="white">
                     <template v-slot:activator="{ on, attrs }">
                         <v-btn class="text-decoration-underline text-center mt-3" v-bind="attrs" v-on="on" text>
-                            Forgot your password?
+                            Resend verification?
                         </v-btn>
                     </template>
             
                     <v-card>
                         <v-card-title class="headline teal darken-1">
-                            Forgot your password?
+                            Resend verification
                         </v-card-title>
                 
                         <v-card-text>
-                            <p>Dont worry. Resetting your password is easy, just tell us the email address you registered with.</p>
+                            <p>Dont worry. You will be enjoying our service in a couple of minutes!</p>
                             <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field>
                         </v-card-text>
                 
@@ -38,13 +38,40 @@
                                 Cancel
                             </v-btn>
                             <v-spacer></v-spacer>
-                            <v-btn color="yellow darken-1" class="mr-4" @click="dialog = false">
+                            <v-btn color="yellow darken-1" class="mr-4" @click="resendVerifyEmail()">
                                 Send
                             </v-btn>
                         </v-card-actions>
                     </v-card>
                 </v-dialog>
             </v-card-text>
+
+                    <v-dialog v-model="dialogVE" max-width="290" >
+                        <v-card>
+                        <v-card-title class="headline">
+                            Verify your email
+                        </v-card-title>
+                        <v-card-subtitle class="mt-1">
+                            Check your email
+                        </v-card-subtitle>
+                
+                        <v-card-text>
+                            <v-text-field label="Enter Code" type="text" color="teal-accent-3" v-model="this.code"/>
+                        </v-card-text>
+                
+                        <v-card-actions>
+                            <v-btn color="grey lighten-1" text @click="dialogVE = false" >
+                            Cancel
+                            </v-btn>
+
+                            <v-spacer />
+
+                            <v-btn color="primary text-center black--text" class="accent" text @click="verifyEmail()" >
+                            Verify
+                            </v-btn>
+                        </v-card-actions>
+                        </v-card>
+                    </v-dialog>
 
 
             <div class="text-center mt-3">
@@ -75,11 +102,6 @@
 
         <v-snackbar v-model="showSnackbar">
             {{ snackbarText }}
-            <template v-slot:action="{ attrs }">
-                <v-btn v-if="snackbarShowResend" color="pink" text v-bind="attrs" @click="resendVerifyEmail">
-                    Resend email
-                </v-btn>
-            </template>
         </v-snackbar>
 
     </v-row>
@@ -97,6 +119,8 @@
         validForm: true,
         showPass: false,
         dialog: false,
+        dialogVE: false,
+        code: '',
 
         showOverlay: false,
         showSnackbar: false,
@@ -131,7 +155,7 @@
                     if(e.code == 4){
                         this.snackbarText = 'Wrong username or password';
                     }else if(e.code == 8){
-                        this.snackbarText = 'You have to verify your email first';
+                        this.snackbarText = 'You have to verify your email first. If you did not recieve an email, go to Resend Verification';
                         this.snackbarShowResend = true;
                     }else{
                         this.snackbarText = 'Ups! Something went wrong';
@@ -146,16 +170,38 @@
                 this.showOverlay = false;
             }
         },
-
+        async verifyEmail(){
+            try{
+                this.showOverlay = true;
+                await UserApi.verifyEmail({
+                    "email": this.email,
+                    "code": this.code,
+                });
+                this.dialogVE = false;
+                this.snackbarText = 'Email verified! Welcome!';
+            }catch(e){
+                this.snackbarText = 'Ups! Something went wrong with the verification';
+            }
+            this.showOverlay = false;
+            this.showSnackbar = true;
+        },
         async resendVerifyEmail(){
+            try{
             UserApi.resendVerifyEmail({
                 "email": this.email
             });
 
             this.snackbarText = 'Email sent!'
             this.snackbarShowResend = false;
-
+            }catch(e){
+                if(e.code == 3)
+                    this.snackbarText = 'That email is unregistered, please sign up';
+                else
+                    this.snackbarText = 'Ups! Something went wrong';
+            }
             this.showSnackbar = true;
+            this.dialog = false;
+            this.dialogVE = true;
         }
     },
 
