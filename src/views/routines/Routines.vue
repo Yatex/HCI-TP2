@@ -1,12 +1,5 @@
 <template>
   <div>
-
-    <Navbar/>
-
-    <v-overlay :value="showOverlay">
-        <v-progress-circular indeterminate size="64"/>
-    </v-overlay>
-
     <v-container v-if="routines.length > 0">
       <v-row class="mb-6" no-gutters>
         <v-col v-for="routine in routines" :key="routine.id">
@@ -42,14 +35,16 @@
     <div v-if="isOwn()">
       <AddRoutine/>
     </div>
-    
+
+    <v-overlay :value="showOverlay">
+        <v-progress-circular indeterminate size="64"/>
+    </v-overlay>
   </div>
 </template>
 
 <script>
   import AddRoutine from './AddRoutine'
   import RoutineDetail from './RoutineDetail';
-  import Navbar from '../../components/Navbar';
   import ActivityCard from '../../components/ActivityCard';
 
   import { RoutineApi } from '../../api/routines.js';
@@ -107,6 +102,6 @@
       this.getRoutines();
     },
 
-    components: { Navbar, ActivityCard, AddRoutine},
+    components: {ActivityCard, AddRoutine},
   } 
 </script>

@@ -1,7 +1,5 @@
 <template>
   <div class="Favourites">
-
-    <Navbar/>
     
     <!-- <v-container>
 
@@ -61,13 +59,12 @@
 </template>
 
 <script>
-  import Navbar from '../components/Navbar';
   import ActivityCard from '../components/ActivityCard';
   import ExerciseDetail from './exercises/ExerciseDetail';
   import RoutineDetail from './routines/RoutineDetail';
   import mockExercises from '../mock_data/exercices';
   import mockRoutines from '../mock_data/routines';
-import { UserApi } from '../api/user';
+  import { UserApi } from '../api/user';
 
   export default {
       data: () => ({
@@ -90,7 +87,7 @@ import { UserApi } from '../api/user';
         },
         amountOfPages:undefined 
         }),
-      components: { Navbar, ActivityCard },
+      components: {ActivityCard},
       methods:{
       async getFavourites(){
         
