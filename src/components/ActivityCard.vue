@@ -21,7 +21,7 @@
             </div>
             
             <div v-if="isRoutine==true && isFavourite==true">
-                <v-btn color="red" icon @click="unfavouriteRoutine">
+                <v-btn aria-label="Favourite" color="red" icon @click="unfavouriteRoutine">
                     <v-icon>mdi-heart</v-icon>
                 </v-btn>
             </div>
