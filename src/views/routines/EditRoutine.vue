@@ -23,10 +23,9 @@
       </v-card-text>
     
       <v-card-actions>
-        <v-spacer/>
-        <v-btn :disabled="!validForm" color="primary" @click="save()" bottom large>Save</v-btn>
-        <v-btn color="primary" @click="$emit('cancel');" bottom large>Cancel</v-btn>
-        <v-spacer/>
+        <v-btn color="grey lighten-1" @click="$emit('cancel');" bottom large>Cancel</v-btn>
+        <v-spacer />
+        <v-btn :disabled="!validForm" color="primary text-center black--text" class="accent" @click="save()" bottom large>Save</v-btn>
       </v-card-actions>
 
       <v-overlay :value="showOverlay">
