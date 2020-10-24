@@ -27,10 +27,9 @@
       </v-card-text>
 
       <v-card-actions>
+        <v-btn color="grey lighten-1" @click="$emit('cancel');" bottom large>Cancel</v-btn>
         <v-spacer/>
-        <v-btn :disabled="!validForm" color="primary" @click="$emit('save', exercise);" bottom large>Save</v-btn>
-        <v-btn color="primary" @click="$emit('cancel');" bottom large>Cancel</v-btn>
-        <v-spacer/>
+        <v-btn :disabled="!validForm" color="primary text-center black--text" class="accent" @click="$emit('save', exercise);" bottom large>Save</v-btn>
       </v-card-actions>
       
     </v-card>

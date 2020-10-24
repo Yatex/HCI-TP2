@@ -13,13 +13,13 @@
         
             <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field> -->
             <v-text-field label="Username" prepend-icon="person" type="text" color="teal-accent-3"
-                        v-model="username" :rules="usernameRules" :readonly="rdonly"/>
+                        v-model="username" :rules="usernameRules" :readonly="true"/>
                     
             <v-text-field label="Full Name" prepend-icon="person" type="text" color="teal-accent-3"
                 v-model="name" :rules="nameRules" :readonly="rdonly"/>
 
             <v-text-field label="Email" prepend-icon="email" type="text" color="teal-accent-3"
-                  v-model="email"  :rules="emailRules" :readonly="rdonly"/>
+                  v-model="email"  :rules="emailRules" :readonly="true"/>
 
             <v-text-field label="PhoneNumber" prepend-icon="mdi-phone" type="text" color="teal-accent-3"
                 v-model="phone"  :rules="PhoneRules" :readonly="rdonly"/>
@@ -176,7 +176,7 @@
               this.password=data.password;
               this.name=data.fullName;
               this.gender=data.gender;
-              this.date=data.birthdate;
+              this.date= new Date(data.birthdate);
               this.email=data.email;
               this.phone=data.phone;
             })
@@ -199,7 +199,7 @@
               username: this.username,
               fullName: this.name,
               gender: this.gender,
-              birthdate: this.date,
+              birthdate: new Date(this.date).getTime(),
               email: this.email,
               phone: this.phone,
               avatarUrl: "https://flic.kr/p/3ntH2u" //lo dejo fijo

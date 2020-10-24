@@ -26,7 +26,7 @@
 
     data: () => ({
       noContainer: ['/'],
-      noNavbar: ['/'],
+      noNavbar: ['/','/VerifyAccount'],
       footer: ['/main', '/my-exercises', '/routines/own', '/routines/all', '/favourites'],
     }),
 
