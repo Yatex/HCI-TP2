@@ -6,19 +6,19 @@
 
       <v-card-text>
         <v-form v-model="validForm">
-          <v-text-field label="Name" v-model="exercise.name"
+          <v-text-field label="Name" :value="data.name" @input="exercise.name=$event"
             :rules="rules.name" outlined/>
 
-          <v-textarea label="Detail" v-model="exercise.detail"
+          <v-textarea label="Detail" :value="data.detail" @input="exercise.detail=$event"
             :rules="rules.detail" outlined/>
 
-          <v-text-field label="Duration" v-model="exercise.duration"
+          <v-text-field label="Duration" :value="data.duration" @input="exercise.duration=$event"
             :rules="rules.duration" type="numeric" outlined/>
 
-          <v-text-field label="Repetitions" v-model="exercise.repetitions"
+          <v-text-field label="Repetitions" :value="data.repetitions" @input="exercise.repetitions=$event"
             :rules="rules.repetitions" type="numeric" outlined/>
 
-          <v-select label="Type" :items="types" v-model="exercise.type"
+          <v-select label="Type" :items="types" :value="data.type" @input="exercise.type=$event"
             :rules="rules.type" item-text="name" item-value="value" outlined/>
         </v-form>
       </v-card-text>
@@ -73,7 +73,7 @@
               console.log(e);
 
               this.showOverlay = false;
-              this.showSnackbar = true
+              this.showSnackbar = true;
           }
         }
       },
@@ -104,5 +104,6 @@
           }
         }
       }
+
   }
 </script>

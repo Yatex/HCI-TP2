@@ -35,28 +35,28 @@
 
 <script>
   export default {
-      props: ['dialog'],
+    props: ['dialog'],
 
-      data: ()=>({
-        validForm: false,
+    data: ()=>({
+      validForm: false,
 
-        types: [
-          {name: 'Warm up', value: 'warmup'}, {name: 'Exercise', value: 'exercise'}, {name: 'Cool down', value: 'cooldown'}
-        ],
+      types: [
+        {name: 'Warm up', value: 'warmup'}, {name: 'Exercise', value: 'exercise'}, {name: 'Cool down', value: 'cooldown'}
+      ],
 
-        cycle: {
-          name: 'Shake The Booty 2', detail: "It's time to shake the ass!", type: 'warmup', repetitions: 2
-        },
+      cycle: {
+        name: 'Shake The Booty 2', detail: "It's time to shake the ass!", type: 'warmup', repetitions: 2
+      },
 
-        rules: {
-          name: [ v => !!v || 'Name is required',
-            v => (v && v.length < 100) || 'Name must be less than 100 characters'],
-          detail: [ v => !!v || 'Detail is required',
-            v => (v && v.length < 200) || 'Detail must be less than 200 characters'],
-          repetitions: [ v => !!v || 'Repetitions is required',
-            v => v > 0 || 'Repetitions must be positive'],
-          type: [ v => !!v || 'Type is required'],
-        },
-      })
+      rules: {
+        name: [ v => !!v || 'Name is required',
+          v => (v && v.length < 100) || 'Name must be less than 100 characters'],
+        detail: [ v => !!v || 'Detail is required',
+          v => (v && v.length < 200) || 'Detail must be less than 200 characters'],
+        repetitions: [ v => !!v || 'Repetitions is required',
+          v => v > 0 || 'Repetitions must be positive'],
+        type: [ v => !!v || 'Type is required'],
+      },
+    })
   }
 </script>

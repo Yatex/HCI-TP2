@@ -43,6 +43,16 @@ class RoutineApi {
     return await Api.post(`${RoutineApi.url}/${routineId}/cycles`, true, cycle, controller);
   }
 
+  static async updateCycle(routineId, cycleId, data, controller) {
+    return await Api.put(`${RoutineApi.url}/${routineId}/cycles/${cycleId}`,
+      true, data, controller);
+  }
+
+  static async deleteCycle(routineId, cycleId, controller) {
+    return await Api.delete(`${RoutineApi.url}/${routineId}/cycles/${cycleId}/`,
+      true, controller);
+  }
+
   // ---------------------------------- Exercises ----------------------------------
 
   static async getExercises(routineId, cycleId, controller) {

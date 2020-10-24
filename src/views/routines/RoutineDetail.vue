@@ -26,7 +26,11 @@
       <v-card-title class="grey--text text--darken-3">Cycles</v-card-title>
 
       <v-card-text>
-        <v-expansion-panels>
+        <div v-if="loadingCycles">
+          <v-progress-circular indeterminate/>
+        </div>
+
+        <v-expansion-panels v-else>
 
           <v-expansion-panel v-for="cycle in cycles" :key="cycle.id" @change="getExercises(cycle.id)">
             <v-expansion-panel-header>
@@ -36,6 +40,7 @@
             <v-expansion-panel-content>
               
               <v-card-text>
+
                 <div class="mb-4">
                   <v-icon>mdi-information-outline</v-icon> {{cycle.detail}}
                 </div>
@@ -46,7 +51,42 @@
 
               </v-card-text>
 
-              <v-divider/>
+              <v-row>
+                <v-dialog v-model="showDeleteCycleDialog" max-width="290">
+                  <v-card>
+                    <v-card-title class="headline">
+                      Delete {{ cycle.name }}
+                    </v-card-title>
+            
+                    <v-card-text>
+                      This can not be undone! Continue?
+                    </v-card-text>
+            
+                    <v-card-actions>
+                      <v-btn color="red darken-1" text @click="deleteCycle(cycle)" >
+                        Yes, delete
+                      </v-btn>
+                      <v-spacer />
+                      <v-btn color="grey lighten-1" text @click="showDeleteCycleDialog=false" >
+                        No
+                      </v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
+
+                <v-btn class="ml-5" color="darken-1" @click="showDeleteCycleDialog=true" v-if="own" icon>
+                  <v-icon>delete</v-icon>
+                </v-btn>
+
+                <v-spacer/>
+
+                <v-btn color="darken-3" @click="currCycle=cycle; showEditCycleDialog=true;" v-if="own" icon>
+                  <v-icon>mdi-pencil</v-icon>
+                </v-btn>
+                
+              </v-row>
+
+              <v-divider class="mt-2"/>
 
               <div v-if="loadingExercises">
                 <v-progress-circular indeterminate/>
@@ -68,8 +108,8 @@
                       </v-btn>
 
                       <ExerciseDetail :data="exercise" :own="own" :dialog="showExerciseDetail"
-                        @close="showExerciseDetail=false" @update="updateExercise($event)"
-                          @delete="deleteExercise($event)"/>
+                        @close="showExerciseDetail=false" @update="updatedExercise($event)"
+                          @delete="deletedExercise($event)"/>
 
                     </v-row>
                   </v-col>
@@ -84,7 +124,7 @@
       </v-card-text>
 
       <v-card-actions class="mt-4"> 
-        <v-dialog v-model="showDeleteDialog" max-width="290" >
+        <v-dialog v-model="showDeleteRoutineDialog" max-width="290">
           <v-card>
             <v-card-title class="headline">
               Delete {{ routine.name }}
@@ -99,25 +139,28 @@
                 Yes, delete
               </v-btn>
               <v-spacer />
-              <v-btn color="grey lighten-1" text @click="showDeleteDialog=false" >
+              <v-btn color="grey lighten-1" text @click="showDeleteRoutineDialog=false" >
                 No
               </v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
 
-        <v-btn color="red darken-1" @click="showDeleteDialog=true" v-if="own" text>
+        <v-btn color="red darken-1" @click="showDeleteRoutineDialog=true" v-if="own" text>
           Delete
         </v-btn>
 
         <v-spacer/>
 
-        <v-btn color="accent darken-3"  @click="showEditDialog=true" v-if="own" text>
+        <v-btn color="accent darken-3"  @click="showEditRoutineDialog=true" v-if="own" text>
           Edit Routine
         </v-btn>
       </v-card-actions>
 
     </v-card>
+
+    <EditCycle :data="currCycle" :dialog="showEditCycleDialog" @save="updatedCycle($event)"
+        @cancel="showEditCycleDialog=false"/>
 
     <v-overlay :value="showOverlay">
         <v-progress-circular indeterminate size="64"/>
@@ -135,6 +178,7 @@
   import Vue from 'vue';
   import { RoutineApi } from '../../api/routines.js';
 
+  import EditCycle from './EditCycle';
   import ExerciseDetail from '../exercises/ExerciseDetail';
 
   String.prototype.capitalize = function() {
@@ -146,31 +190,39 @@
 
     data: function(){
       return {
-        routine: Vue.util.extend({}, this.data),
-
-        showEditDialog: false,
-        showDeleteDialog: false,
-        showExerciseDetail: false,
         showOverlay: false,
         showSnackbar: false,
         snackbarText: '',
 
+        showEditRoutineDialog: false,
+        showDeleteRoutineDialog: false,
+        routine: Vue.util.extend({}, this.data),
+
+        showExerciseDetail: false,
         loadingExercises: false,
         exercises: [],
+
+        showEditCycleDialog: false,
+        showDeleteCycleDialog: false,
+        loadingCycles: false,
+        cycles: [],
+        currCycle: undefined,
         
         img: require('../../assets/gym.jpg'),
       }
     },
 
     methods: {
-      updateRoutine(routine){
-        this.showEditDialog = false;
+      // --------------------------------- ROUTINE ---------------------------------
+
+      updatedRoutine(routine){
+        this.showEditRoutineDialog = false;
         this.routine = routine;
         this.$emit('update', routine);
       },
 
       async deleteRoutine(){
-        this.showDeleteDialog = false;
+        this.showDeleteRoutineDialog = false;
         this.showOverlay = true;
 
         try{
@@ -188,6 +240,50 @@
         }
       },
 
+      // --------------------------------- CYCLES ---------------------------------
+
+      async getCycles(){
+        this.loadingCycles = true;
+        let cycles = await RoutineApi.getCycles(this.routine.id);
+
+        for(let i=0; i<cycles.length; i++)
+          cycles[i].routineId = this.routine.id;
+
+        this.cycles = cycles;
+        this.currCycle = cycles[0];
+        this.loadingCycles = false;
+      },
+
+      updatedCycle(cycle){
+        this.showEditCycleDialog = false;
+
+        for(let i=0; i<this.cycles.length; i++)
+          if(this.cycles[i].id == cycle.id)
+            this.cycles[i] = cycle;
+      },
+
+      async deleteCycle(cycle){
+        this.showDeleteCycleDialog = false;
+        this.showOverlay = true;
+
+        try{
+          this.showOverlay = true;
+          
+          await RoutineApi.deleteCycle(this.routine.id, cycle.id);
+
+          this.cycles = this.cycles.filter(c => c.id != cycle.id)
+
+          this.showOverlay = false;
+        }catch(e){
+            this.showOverlay = false;
+            this.showSnackbar = true;
+            this.snackbarText = 'Ups! Something went wrong'; 
+            console.log(e);
+        }
+      },
+
+      // --------------------------------- EXERCISES ---------------------------------
+
       async getExercises(cycleId){
         this.loadingExercises = true;
         let exercises = await RoutineApi.getExercises(this.routine.id, cycleId);
@@ -201,29 +297,27 @@
         this.loadingExercises = false;
       },
 
-      async updateExercise(exercise){
-        console.log('Updating');
-        console.log(exercise);
+      updatedExercise(exercise){
         for(let i=0; i<this.exercises.length; i++)
           if(this.exercises[i].id == exercise.id)
             this.exercises[i] = exercise;
       },
 
-      async deleteExercise(exercise){
+      deletedExercise(exercise){
         this.exercises = this.exercises.filter(e => e.id != exercise.id);
       },
+
+      // --------------------------------- OTHERS ---------------------------------
 
       capitalize(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
       }
     },
 
-    asyncComputed: {
-      async cycles(){
-        return await RoutineApi.getCycles(this.routine.id);
-      }
+    created(){
+      this.getCycles();
     },
 
-    components: {ExerciseDetail}
+    components: {EditCycle, ExerciseDetail}
   }
 </script>
