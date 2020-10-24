@@ -13,13 +13,13 @@
         
             <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field> -->
             <v-text-field label="Username" prepend-icon="person" type="text" color="teal-accent-3"
-                        v-model="username" :rules="usernameRules" :readonly="rdonly"/>
+                        v-model="username" :rules="usernameRules" :readonly="true"/>
                     
             <v-text-field label="Full Name" prepend-icon="person" type="text" color="teal-accent-3"
                 v-model="name" :rules="nameRules" :readonly="rdonly"/>
 
             <v-text-field label="Email" prepend-icon="email" type="text" color="teal-accent-3"
-                  v-model="email"  :rules="emailRules" :readonly="rdonly"/>
+                  v-model="email"  :rules="emailRules" :readonly="true"/>
 
             <v-text-field label="PhoneNumber" prepend-icon="mdi-phone" type="text" color="teal-accent-3"
                 v-model="phone"  :rules="PhoneRules" :readonly="rdonly"/>
