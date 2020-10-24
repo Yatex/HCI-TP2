@@ -282,7 +282,7 @@
 
       async sendRating(){
           try{
-            await RoutineApi.sendRating(this.routine.id, {
+            await RoutineApi.rateRoutine(this.routine.id, {
               "score": this.rating,
               "review": this.review
             });
